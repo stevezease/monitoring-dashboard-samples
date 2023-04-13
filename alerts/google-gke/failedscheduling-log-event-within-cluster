@@ -1,0 +1,21 @@
+{
+  'displayName': 'GKE Pod - FailedScheduling Log Event (${CLUSTER_NAME})',
+  'documentation': {
+    'content':
+        '- This alert fires when there is any log with event reason `FailedSceduling\' in the Kubernetes events; limited to notifying once per hour.',
+    'mimeType': 'text/markdown'
+  },
+  'userLabels': {},
+  'conditions': [{
+    'displayName':
+        '${CLUSTER_NAME} cluster has an unschedulable pod',
+    'conditionMatchedLog': {
+      'filter':
+          'resource.type="k8s_pod" AND resource.labels.cluster_name="${CLUSTER_NAME}" AND jsonPayload.reason="FailedScheduling"'
+    }
+  }],
+  'alertStrategy':
+      {'notificationRateLimit': {'period': '3600s'}, 'autoClose': '604800s'},
+  'combiner': 'OR',
+  'enabled': true,
+}
