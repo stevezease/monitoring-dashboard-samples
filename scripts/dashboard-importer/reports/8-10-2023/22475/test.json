@@ -1,0 +1,505 @@
+{
+    "displayName": "Kubernetes cluster monitoring (via Prometheus)",
+    "dashboardFilters": [
+        {
+            "labelKey": "label_values(kubernetes_io_hostname",
+            "templateVariable": "Node",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "Network I/O pressure",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}]))"
+                                },
+                                "legendTemplate": "Received"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}]))"
+                                },
+                                "legendTemplate": "Sent"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 4,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_memory_working_set_bytes{id=\"/\",kubernetes_io_hostname=~\"^${Node.value}$\"}) / sum (machine_memory_bytes{kubernetes_io_hostname=~\"^${Node.value}$\"}) * 100"
+                        }
+                    },
+                    "title": "Cluster memory usage"
+                },
+                "xPos": 0,
+                "yPos": 4,
+                "height": 4,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) / sum (machine_cpu_cores{kubernetes_io_hostname=~\"^${Node.value}$\"}) * 100"
+                        }
+                    },
+                    "title": "Cluster CPU usage ($interval avg)"
+                },
+                "xPos": 2,
+                "yPos": 4,
+                "height": 4,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_fs_usage_bytes{device=~\"^/dev/xvda.$\",id=\"/\",kubernetes_io_hostname=~\"^${Node.value}$\"}) / sum (container_fs_limit_bytes{device=~\"^/dev/xvda.$\",id=\"/\",kubernetes_io_hostname=~\"^${Node.value}$\"}) * 100"
+                        }
+                    },
+                    "title": "Cluster filesystem usage"
+                },
+                "xPos": 4,
+                "yPos": 4,
+                "height": 4,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_memory_working_set_bytes{id=\"/\",kubernetes_io_hostname=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Used"
+                },
+                "xPos": 6,
+                "yPos": 4,
+                "height": 4,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (machine_memory_bytes{kubernetes_io_hostname=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Total"
+                },
+                "xPos": 8,
+                "yPos": 4,
+                "height": 4,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}]))"
+                        }
+                    },
+                    "title": "Used"
+                },
+                "xPos": 10,
+                "yPos": 4,
+                "height": 4,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (machine_cpu_cores{kubernetes_io_hostname=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Total"
+                },
+                "xPos": 12,
+                "yPos": 4,
+                "height": 4,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_fs_usage_bytes{device=~\"^/dev/xvda.$\",id=\"/\",kubernetes_io_hostname=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Used"
+                },
+                "xPos": 14,
+                "yPos": 4,
+                "height": 4,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_fs_limit_bytes{device=~\"^/dev/xvda.$\",id=\"/\",kubernetes_io_hostname=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Total"
+                },
+                "xPos": 16,
+                "yPos": 4,
+                "height": 4,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "title": "Pods CPU usage ($interval avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (pod_name)"
+                                },
+                                "legendTemplate": "{{ pod_name }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 8,
+                "height": 4,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "System services CPU usage ($interval avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{kubernetes_io_role=\"master\",pod_name!=\"\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (container_name)"
+                                },
+                                "legendTemplate": "{{ container_name }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 12,
+                "height": 4,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Containers CPU usage ($interval avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",container_name!=\"POD\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (container_name, pod_name)"
+                                },
+                                "legendTemplate": "pod: {{ pod_name }} | {{ container_name }}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name!~\"^k8s_.*\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (kubernetes_io_hostname, name, image)"
+                                },
+                                "legendTemplate": "docker: {{ kubernetes_io_hostname }} | {{ image }} ({{ name }})"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{rkt_container_name!=\"\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (kubernetes_io_hostname, rkt_container_name)"
+                                },
+                                "legendTemplate": "rkt: {{ kubernetes_io_hostname }} | {{ rkt_container_name }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 16,
+                "height": 4,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "All processes CPU usage ($interval avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{id!=\"/\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (id)"
+                                },
+                                "legendTemplate": "{{ id }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 20,
+                "height": 4,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Pods memory usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^${Node.value}$\"}) by (pod_name)"
+                                },
+                                "legendTemplate": "{{ pod_name }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 24,
+                "height": 4,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "System services memory usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{kubernetes_io_role=\"master\",pod_name!=\"\",kubernetes_io_hostname=~\"^${Node.value}$\"}) by (container_name)"
+                                },
+                                "legendTemplate": "{{ container_name }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 28,
+                "height": 4,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Containers memory usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",container_name!=\"POD\",kubernetes_io_hostname=~\"^${Node.value}$\"}) by (container_name, pod_name)"
+                                },
+                                "legendTemplate": "pod: {{ pod_name }} | {{ container_name }}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{image!=\"\",name!~\"^k8s_.*\",kubernetes_io_hostname=~\"^${Node.value}$\"}) by (kubernetes_io_hostname, name, image)"
+                                },
+                                "legendTemplate": "docker: {{ kubernetes_io_hostname }} | {{ image }} ({{ name }})"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{rkt_container_name!=\"\",kubernetes_io_hostname=~\"^${Node.value}$\"}) by (kubernetes_io_hostname, rkt_container_name)"
+                                },
+                                "legendTemplate": "rkt: {{ kubernetes_io_hostname }} | {{ rkt_container_name }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 32,
+                "height": 4,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "All processes memory usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{id!=\"/\",kubernetes_io_hostname=~\"^${Node.value}$\"}) by (id)"
+                                },
+                                "legendTemplate": "{{ id }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 36,
+                "height": 4,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Pods network I/O ($interval avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (pod_name)"
+                                },
+                                "legendTemplate": "-> {{ pod_name }}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (pod_name)"
+                                },
+                                "legendTemplate": "<- {{ pod_name }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 40,
+                "height": 4,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Containers network I/O ($interval avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (container_name, pod_name)"
+                                },
+                                "legendTemplate": "-> pod: {{ pod_name }} | {{ container_name }}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (container_name, pod_name)"
+                                },
+                                "legendTemplate": "<- pod: {{ pod_name }} | {{ container_name }}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{image!=\"\",name!~\"^k8s_.*\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (kubernetes_io_hostname, name, image)"
+                                },
+                                "legendTemplate": "-> docker: {{ kubernetes_io_hostname }} | {{ image }} ({{ name }})"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name!~\"^k8s_.*\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (kubernetes_io_hostname, name, image)"
+                                },
+                                "legendTemplate": "<- docker: {{ kubernetes_io_hostname }} | {{ image }} ({{ name }})"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_transmit_bytes_total{rkt_container_name!=\"\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (kubernetes_io_hostname, rkt_container_name)"
+                                },
+                                "legendTemplate": "-> rkt: {{ kubernetes_io_hostname }} | {{ rkt_container_name }}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{rkt_container_name!=\"\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (kubernetes_io_hostname, rkt_container_name)"
+                                },
+                                "legendTemplate": "<- rkt: {{ kubernetes_io_hostname }} | {{ rkt_container_name }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 44,
+                "height": 4,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "All processes network I/O ($interval avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{id!=\"/\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (id)"
+                                },
+                                "legendTemplate": "-> {{ id }}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{id!=\"/\",kubernetes_io_hostname=~\"^${Node.value}$\"}[${__interval}])) by (id)"
+                                },
+                                "legendTemplate": "<- {{ id }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 48,
+                "height": 4,
+                "width": 24
+            }
+        ]
+    }
+}

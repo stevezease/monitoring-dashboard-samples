@@ -1,0 +1,24 @@
+{
+    "id": "194234",
+    "results": [
+        {
+            "displayName": "Cluster cost & utilization metrics",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "Panel CPU Metrics: Collapsible groups currently are not yet fully supported. Charts will be displayed without grouping",
+                "CPU Metrics has type 'row' which is not supported for conversion and has been replaced with a line chart",
+                "Panel Memory Metrics: Collapsible groups currently are not yet fully supported. Charts will be displayed without grouping",
+                "Memory Metrics has type 'row' which is not supported for conversion and has been replaced with a line chart",
+                "Panel Storage Metrics: Collapsible groups currently are not yet fully supported. Charts will be displayed without grouping",
+                "Storage Metrics has type 'row' which is not supported for conversion and has been replaced with a line chart",
+                "Panel Network: Collapsible groups currently are not yet fully supported. Charts will be displayed without grouping",
+                "Network has type 'row' which is not supported for conversion and has been replaced with a line chart"
+            ],
+            "errors": [],
+            "outputPath": "reports/8-20-2023/194234/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-20-2023/194234/",
+    "date": "8-20-2023"
+}

@@ -1,0 +1,32 @@
+{
+    "id": "163036",
+    "results": [
+        {
+            "displayName": "Node Exporter Full",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "Panel Quick CPU / Mem / Disk is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Basic CPU / Mem / Net / Disk is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel CPU / Memory / Net / Disk: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Memory Meminfo: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Memory Vmstat: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel System Timesync: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel System Processes: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel System Misc: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Hardware Misc: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Systemd: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Storage Disk: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Storage Filesystem: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Network Traffic: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Network Sockstat: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Network Netstat: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Node Exporter: Collapsible groups currently are not yet supported. Charts will displayed as is"
+            ],
+            "errors": [],
+            "outputPath": "reports/8-14-2023/163036/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-14-2023/163036/",
+    "date": "8-14-2023"
+}

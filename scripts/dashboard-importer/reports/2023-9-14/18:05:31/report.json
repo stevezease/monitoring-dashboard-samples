@@ -1,0 +1,20 @@
+{
+    "id": "18:05:31",
+    "results": [
+        {
+            "displayName": "Node Exporter for Prometheus Dashboard based on 11074",
+            "sourcePath": "./json/15172_rev6.json",
+            "warnings": [
+                "Query query_result(topk(1,sort_desc (max(node_filesystem_size_bytes{origin_prometheus=~\"$origin_prometheus\",instance=~'$node',fstype=~\"ext.?|xfs\",mountpoint!~\".*pods.*\"}) by (mountpoint)))) was skipped because its template variable format was unsupported",
+                "Query query_result(count(node_uname_info{origin_prometheus=~\"$origin_prometheus\",job=~\"$job\"})) was skipped because its template variable format was unsupported",
+                "Panel 'Resource Overview': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Resource Details: [$show_hostname]': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-14/18:05:31/15172_rev6.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-14/18:05:31/",
+    "date": "2023-9-14"
+}

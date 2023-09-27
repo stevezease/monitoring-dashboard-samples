@@ -1,0 +1,25 @@
+{
+    "id": "22:27:09",
+    "results": [
+        {
+            "displayName": "RabbitMQ-Overview",
+            "sourcePath": "./json/10991_rev12.json",
+            "warnings": [
+                "datasource template variable with name DS_PROMETHEUS was skipped because it's type was not supported",
+                "Panel 'Ready messages' was missing one of (x, y, h, w) attributes and so the tile was skipped",
+                "Panel 'NODES': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'QUEUED MESSAGES': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'INCOMING MESSAGES': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'OUTGOING MESSAGES': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'QUEUES': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'CHANNELS': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'CONNECTIONS': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-13/22:27:09/10991_rev12.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-13/22:27:09/",
+    "date": "2023-9-13"
+}

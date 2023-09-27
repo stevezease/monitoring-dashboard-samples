@@ -1,0 +1,17 @@
+{
+    "id": "16:06:09",
+    "results": [
+        {
+            "displayName": "Redis Dashboard for Prometheus Redis Exporter (helm stable/redis-ha)",
+            "sourcePath": "./json/11835_rev1.json",
+            "warnings": [
+                "datasource template variable with name DS_PROMETHEUS was skipped because it's type was not supported"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-14/16:06:09/11835_rev1.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-14/16:06:09/",
+    "date": "2023-9-14"
+}

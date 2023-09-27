@@ -1,0 +1,59 @@
+{
+    "id": "19:20:10",
+    "results": [
+        {
+            "displayName": "Kubernetes Cluster (Prometheus)",
+            "sourcePath": "./json/6417_rev1.json",
+            "warnings": [
+                "datasource template variable with name datasource was skipped because it's type was not supported",
+                "constant template variable with name node was skipped because it's type was not supported",
+                "constant template variable with name namespace was skipped because it's type was not supported",
+                "Panel 'Cluster Health': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Deployments': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Node': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Pods': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Containers': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Jobs': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-13/19:20:10/6417_rev1.json"
+        },
+        {
+            "displayName": "Kubernetes Nodes",
+            "sourcePath": "./json/8171_rev1.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/2023-9-13/19:20:10/8171_rev1.json"
+        },
+        {
+            "displayName": "kube-state-metrics-v2",
+            "sourcePath": "./json/kube-state-metrics-v2.json",
+            "warnings": [
+                "constant template variable with name datasource was skipped because it's type was not supported",
+                "Panel 'Cluster': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Node': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Deployments': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Statefuleset': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Pods': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Containers': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'HPA': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Jobs': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'PVC': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'pvc is not bound' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'pvc' was skipped as the maximum number of tiles: 40 has been reached"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-13/19:20:10/kube-state-metrics-v2.json"
+        },
+        {
+            "displayName": "Kubernetes Nodes",
+            "sourcePath": "./json/kubernetes_nodes.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/2023-9-13/19:20:10/kubernetes_nodes.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-13/19:20:10/",
+    "date": "2023-9-13"
+}

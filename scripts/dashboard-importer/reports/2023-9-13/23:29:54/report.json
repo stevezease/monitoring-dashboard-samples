@@ -1,0 +1,24 @@
+{
+    "id": "23:29:54",
+    "results": [
+        {
+            "displayName": "K8s / Storage / Volumes / Namespace",
+            "sourcePath": "./json/11455_rev6.json",
+            "warnings": [
+                "datasource template variable with name DS_OPENSHIFT_PROMETHEUS was skipped because it's type was not supported",
+                "textbox template variable with name pvc_percent_used_warning_threshold was skipped because it's type was not supported",
+                "Panel 'Current Alerts': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Alert Details': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Stats': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Use': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Use vs Capacity': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Use Rate': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-13/23:29:54/11455_rev6.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-13/23:29:54/",
+    "date": "2023-9-13"
+}

@@ -1,0 +1,603 @@
+{
+    "displayName": "Kubernetes Cluster (Prometheus)",
+    "dashboardFilters": [],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_info{node=~\"$node\"}) / sum(kube_node_status_allocatable_pods{node=~\".*\"})"
+                        }
+                    },
+                    "title": "Cluster Pod Usage"
+                },
+                "xPos": 0,
+                "yPos": 1,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_container_resource_requests_cpu_cores{node=~\"$node\"}) / sum(kube_node_status_allocatable_cpu_cores{node=~\"$node\"})"
+                        }
+                    },
+                    "title": "Cluster CPU Usage"
+                },
+                "xPos": 6,
+                "yPos": 1,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_container_resource_requests_memory_bytes{node=~\"$node\"}) / sum(kube_node_status_allocatable_memory_bytes{node=~\"$node\"})"
+                        }
+                    },
+                    "title": "Cluster Memory Usage"
+                },
+                "xPos": 12,
+                "yPos": 1,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(sum (node_filesystem_size{nodename=~\"$node\"}) - sum (node_filesystem_free{nodename=~\"$node\"})) / sum (node_filesystem_size{nodename=~\"$node\"})"
+                        }
+                    },
+                    "title": "Cluster Disk Usage"
+                },
+                "xPos": 18,
+                "yPos": 1,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Cluster Pod Capacity",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_node_status_allocatable_pods{node=~\"$node\"})"
+                                },
+                                "legendTemplate": "allocatable"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_node_status_capacity_pods{node=~\"$node\"})"
+                                },
+                                "legendTemplate": "capacity"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_pod_info{node=~\"$node\"})"
+                                },
+                                "legendTemplate": "requested"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 5,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Cluster CPU Capacity",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_node_status_capacity_cpu_cores{node=~\"$node\"})"
+                                },
+                                "legendTemplate": "allocatable"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_node_status_allocatable_cpu_cores{node=~\"$node\"})"
+                                },
+                                "legendTemplate": "capacity"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_pod_container_resource_requests_cpu_cores{node=~\"$node\"})"
+                                },
+                                "legendTemplate": "requested"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 6,
+                "yPos": 5,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Cluster Mem Capacity",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_node_status_allocatable_memory_bytes{node=~\"$node\"})"
+                                },
+                                "legendTemplate": "allocatable"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_node_status_capacity_memory_bytes{node=~\"$node\"})"
+                                },
+                                "legendTemplate": "capacity"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_pod_container_resource_requests_memory_bytes{node=~\"$node\"})"
+                                },
+                                "legendTemplate": "requested"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 5,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Cluster Disk Capacity",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(node_filesystem_size{nodename=~\"$node\"}) - sum(node_filesystem_free{nodename=~\"$node\"})"
+                                },
+                                "legendTemplate": "usage"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(node_filesystem_size{nodename=~\"$node\"})"
+                                },
+                                "legendTemplate": "limit"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 18,
+                "yPos": 5,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Deployment Replicas - Up To Date",
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "kube_deployment_status_replicas{namespace=~\"$namespace\"}"
+                                }
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 0,
+                "yPos": 11,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_deployment_status_replicas{namespace=~\"$namespace\"})"
+                        }
+                    },
+                    "title": "Deployment Replicas"
+                },
+                "xPos": 6,
+                "yPos": 11,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_deployment_status_replicas_updated{namespace=~\"$namespace\"})"
+                        }
+                    },
+                    "title": "Deployment Replicas - Updated"
+                },
+                "xPos": 12,
+                "yPos": 11,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_deployment_status_replicas_unavailable{namespace=~\"$namespace\"})"
+                        }
+                    },
+                    "title": "Deployment Replicas - Unavailable"
+                },
+                "xPos": 18,
+                "yPos": 11,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_node_info{node=~\"$node\"})"
+                        }
+                    },
+                    "title": "Number Of Nodes"
+                },
+                "xPos": 0,
+                "yPos": 17,
+                "height": 3,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_node_status_condition{condition=\"OutOfDisk\", node=~\"$node\", status=\"true\"})"
+                        }
+                    },
+                    "title": "Nodes Out of Disk"
+                },
+                "xPos": 8,
+                "yPos": 17,
+                "height": 3,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_node_spec_unschedulable{node=~\"$node\"})"
+                        }
+                    },
+                    "title": "Nodes Unavailable"
+                },
+                "xPos": 16,
+                "yPos": 17,
+                "height": 3,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Running\"})"
+                        }
+                    },
+                    "title": "Pods Running"
+                },
+                "xPos": 0,
+                "yPos": 21,
+                "height": 3,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Pending\"})"
+                        }
+                    },
+                    "title": "Pods Pending"
+                },
+                "xPos": 12,
+                "yPos": 21,
+                "height": 3,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Failed\"})"
+                        }
+                    },
+                    "title": "Pods Failed"
+                },
+                "xPos": 0,
+                "yPos": 24,
+                "height": 3,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Succeeded\"})"
+                        }
+                    },
+                    "title": "Pods Succeeded"
+                },
+                "xPos": 8,
+                "yPos": 24,
+                "height": 3,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Unknown\"})"
+                        }
+                    },
+                    "title": "Pods Unknown"
+                },
+                "xPos": 16,
+                "yPos": 24,
+                "height": 3,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_container_status_running{namespace=~\"$namespace\"})"
+                        }
+                    },
+                    "title": "Containers Running"
+                },
+                "xPos": 0,
+                "yPos": 28,
+                "height": 3,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_container_status_waiting{namespace=~\"$namespace\"})"
+                        }
+                    },
+                    "title": "Containers Waiting"
+                },
+                "xPos": 6,
+                "yPos": 28,
+                "height": 3,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_container_status_terminated{namespace=~\"$namespace\"})"
+                        }
+                    },
+                    "title": "Containers Terminated"
+                },
+                "xPos": 12,
+                "yPos": 28,
+                "height": 3,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(delta(kube_pod_container_status_restarts{namespace=\"kube-system\"}[30m]))"
+                        }
+                    },
+                    "title": "Containers Restarts (Last 30 Minutes)"
+                },
+                "xPos": 18,
+                "yPos": 28,
+                "height": 3,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_container_resource_requests_cpu_cores{namespace=~\"$namespace\", node=~\"$node\"})"
+                        }
+                    },
+                    "title": "CPU Cores Requested by Containers"
+                },
+                "xPos": 0,
+                "yPos": 31,
+                "height": 3,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_container_resource_requests_memory_bytes{namespace=~\"$namespace\", node=~\"$node\"})"
+                        }
+                    },
+                    "title": "Memory Requested By Containers"
+                },
+                "xPos": 12,
+                "yPos": 31,
+                "height": 3,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_job_status_succeeded{namespace=~\"$namespace\"})"
+                        }
+                    },
+                    "title": "Jobs Succeeded"
+                },
+                "xPos": 0,
+                "yPos": 35,
+                "height": 3,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_job_status_active{namespace=~\"$namespace\"})"
+                        }
+                    },
+                    "title": "Jobs Succeeded"
+                },
+                "xPos": 8,
+                "yPos": 35,
+                "height": 3,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_job_status_failed{namespace=~\"$namespace\"})"
+                        }
+                    },
+                    "title": "Jobs Failed"
+                },
+                "xPos": 16,
+                "yPos": 35,
+                "height": 3,
+                "width": 8
+            }
+        ]
+    },
+    "labels": {
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": ""
+    }
+}

@@ -1,0 +1,509 @@
+{
+    "displayName": "Kubernetes cluster monitoring (via Prometheus)",
+    "dashboardFilters": [
+        {
+            "labelKey": "node",
+            "templateVariable": "Node",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "Network I/O pressure",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{node=~\"^${Node.value}$\"}[1m]))"
+                                },
+                                "legendTemplate": "Received"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{node=~\"^${Node.value}$\"}[1m]))"
+                                },
+                                "legendTemplate": "Sent"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 7,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_memory_working_set_bytes{id=\"/\",node=~\"^${Node.value}$\"}) / sum (machine_memory_bytes{node=~\"^${Node.value}$\"}) * 100"
+                        }
+                    },
+                    "title": "Cluster memory usage"
+                },
+                "xPos": 0,
+                "yPos": 7,
+                "height": 6,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",node=~\"^${Node.value}$\"}[1m])) / sum (machine_cpu_cores{node=~\"^${Node.value}$\"}) * 100"
+                        }
+                    },
+                    "title": "Cluster CPU usage (1m avg)"
+                },
+                "xPos": 8,
+                "yPos": 7,
+                "height": 6,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",node=~\"^${Node.value}$\"}) / sum (container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",node=~\"^${Node.value}$\"}) * 100"
+                        }
+                    },
+                    "title": "Cluster filesystem usage"
+                },
+                "xPos": 16,
+                "yPos": 7,
+                "height": 6,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_memory_working_set_bytes{id=\"/\",node=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Used"
+                },
+                "xPos": 0,
+                "yPos": 16,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (machine_memory_bytes{node=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Total"
+                },
+                "xPos": 4,
+                "yPos": 16,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",node=~\"^${Node.value}$\"}[1m]))"
+                        }
+                    },
+                    "title": "Used"
+                },
+                "xPos": 8,
+                "yPos": 16,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (machine_cpu_cores{node=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Total"
+                },
+                "xPos": 12,
+                "yPos": 16,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",node=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Used"
+                },
+                "xPos": 16,
+                "yPos": 16,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",node=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Total"
+                },
+                "xPos": 20,
+                "yPos": 16,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "title": "Pods CPU usage (1m avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^${Node.value}$\"}[1m])) by (pod)"
+                                },
+                                "legendTemplate": "${labels.pod_name}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 25,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "System services CPU usage (1m avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{systemd_service_name!=\"\",node=~\"^${Node.value}$\"}[1m])) by (systemd_service_name)"
+                                },
+                                "legendTemplate": "${labels.systemd_service_name}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 34,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Containers CPU usage (1m avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",container_name!=\"POD\",node=~\"^${Node.value}$\"}[1m])) by (container_name, pod)"
+                                },
+                                "legendTemplate": "pod: ${labels.pod_name} | ${labels.container_name}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name!~\"^k8s_.*\",node=~\"^${Node.value}$\"}[1m])) by (node, name, image)"
+                                },
+                                "legendTemplate": "docker: ${labels.kubernetes_io_hostname} | ${labels.image} (${labels.name})"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{rkt_container_name!=\"\",node=~\"^${Node.value}$\"}[1m])) by (node, rkt_container_name)"
+                                },
+                                "legendTemplate": "rkt: ${labels.kubernetes_io_hostname} | ${labels.rkt_container_name}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 43,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "All processes CPU usage (1m avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{id!=\"/\",node=~\"^${Node.value}$\"}[1m])) by (id)"
+                                },
+                                "legendTemplate": "${labels.id}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 52,
+                "height": 17,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Pods memory usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",node=~\"^${Node.value}$\"}) by (pod)"
+                                },
+                                "legendTemplate": "${labels.pod_name}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 69,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "System services memory usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{systemd_service_name!=\"\",node=~\"^${Node.value}$\"}) by (systemd_service_name)"
+                                },
+                                "legendTemplate": "${labels.systemd_service_name}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 78,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Containers memory usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",container_name!=\"POD\",node=~\"^${Node.value}$\"}) by (container_name, pod)"
+                                },
+                                "legendTemplate": "pod: ${labels.pod_name} | ${labels.container_name}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{image!=\"\",name!~\"^k8s_.*\",node=~\"^${Node.value}$\"}) by (node, name, image)"
+                                },
+                                "legendTemplate": "docker: ${labels.kubernetes_io_hostname} | ${labels.image} (${labels.name})"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{rkt_container_name!=\"\",node=~\"^${Node.value}$\"}) by (node, rkt_container_name)"
+                                },
+                                "legendTemplate": "rkt: ${labels.kubernetes_io_hostname} | ${labels.rkt_container_name}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 87,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "All processes memory usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{id!=\"/\",node=~\"^${Node.value}$\"}) by (id)"
+                                },
+                                "legendTemplate": "${labels.id}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 96,
+                "height": 17,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Pods network I/O (1m avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^${Node.value}$\"}[1m])) by (pod)"
+                                },
+                                "legendTemplate": "-> ${labels.pod_name}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^${Node.value}$\"}[1m])) by (pod)"
+                                },
+                                "legendTemplate": "<- ${labels.pod_name}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 113,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Containers network I/O (1m avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^${Node.value}$\"}[1m])) by (container_name, pod)"
+                                },
+                                "legendTemplate": "-> pod: ${labels.pod_name} | ${labels.container_name}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^${Node.value}$\"}[1m])) by (container_name, pod)"
+                                },
+                                "legendTemplate": "<- pod: ${labels.pod_name} | ${labels.container_name}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{image!=\"\",name!~\"^k8s_.*\",node=~\"^${Node.value}$\"}[1m])) by (node, name, image)"
+                                },
+                                "legendTemplate": "-> docker: ${labels.kubernetes_io_hostname} | ${labels.image} (${labels.name})"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name!~\"^k8s_.*\",node=~\"^${Node.value}$\"}[1m])) by (node, name, image)"
+                                },
+                                "legendTemplate": "<- docker: ${labels.kubernetes_io_hostname} | ${labels.image} (${labels.name})"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_transmit_bytes_total{rkt_container_name!=\"\",node=~\"^${Node.value}$\"}[1m])) by (node, rkt_container_name)"
+                                },
+                                "legendTemplate": "-> rkt: ${labels.kubernetes_io_hostname} | ${labels.rkt_container_name}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{rkt_container_name!=\"\",node=~\"^${Node.value}$\"}[1m])) by (node, rkt_container_name)"
+                                },
+                                "legendTemplate": "<- rkt: ${labels.kubernetes_io_hostname} | ${labels.rkt_container_name}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 122,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "All processes network I/O (1m avg)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{id!=\"/\",node=~\"^${Node.value}$\"}[1m])) by (id)"
+                                },
+                                "legendTemplate": "-> ${labels.id}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{id!=\"/\",node=~\"^${Node.value}$\"}[1m])) by (id)"
+                                },
+                                "legendTemplate": "<- ${labels.id}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 131,
+                "height": 17,
+                "width": 24
+            }
+        ]
+    },
+    "labels": {
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": ""
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "id": "18:16:15",
+    "results": [
+        {
+            "displayName": "Kubernetes cluster monitoring (via Prometheus)",
+            "sourcePath": "./json/1621_rev1.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/2023-9-14/18:16:15/1621_rev1.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-14/18:16:15/",
+    "date": "2023-9-14"
+}

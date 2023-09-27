@@ -1,0 +1,20 @@
+{
+    "id": "22515",
+    "results": [
+        {
+            "displayName": "Cluster Monitoring for Kubernetes",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "Panel Summary is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Memory is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel CPU is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Network I/O is a smaller height than the min allowed height of 2 and so the tile was skipped"
+            ],
+            "errors": [],
+            "outputPath": "reports/8-14-2023/22515/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-14-2023/22515/",
+    "date": "8-14-2023"
+}

@@ -1,0 +1,21 @@
+{
+    "id": "17:55:13",
+    "results": [
+        {
+            "displayName": "Cluster Monitoring for Kubernetes",
+            "sourcePath": "./json/10000_rev1.json",
+            "warnings": [
+                "datasource template variable with name datasource was skipped because it's type was not supported",
+                "Panel 'Summary': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Memory': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'CPU': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Network I/O': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-14/17:55:13/10000_rev1.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-14/17:55:13/",
+    "date": "2023-9-14"
+}

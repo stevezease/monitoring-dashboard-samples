@@ -1,0 +1,20 @@
+{
+    "id": "193948",
+    "results": [
+        {
+            "displayName": "Cluster cost & utilization metrics",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "Panel CPU Metrics is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Memory Metrics is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Storage Metrics is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Network is a smaller height than the min allowed height of 2 and so the tile was skipped"
+            ],
+            "errors": [],
+            "outputPath": "reports/8-20-2023/193948/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-20-2023/193948/",
+    "date": "8-20-2023"
+}

@@ -1,0 +1,40 @@
+{
+    "id": "19:2:56",
+    "results": [
+        {
+            "displayName": "kube-state-metrics-v2",
+            "sourcePath": "./json/kube-state-metrics-v2.json",
+            "warnings": [
+                "Panel Cluster: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel Node: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel Deployments: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Deployment Replicas - Up To Date has type 'table-old' which is not supported for conversion and has been replaced with a line chart",
+                "Panel Statefuleset: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Statefulset Replicas - Up To Date has type 'table-old' which is not supported for conversion and has been replaced with a line chart",
+                "Panel Pods: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Pods restart in 30m has type 'table-old' which is not supported for conversion and has been replaced with a line chart",
+                "Panel Containers: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel HPA: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel Jobs: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Job last success time from now has type 'table-old' which is not supported for conversion and has been replaced with a line chart",
+                "Job failed has type 'table-old' which is not supported for conversion and has been replaced with a line chart",
+                "Panel PVC: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "pvc is not bound was skipped as the maximum number of tiles: 40 has been reached",
+                "pvc has type 'table-old' which is not supported for conversion and has been replaced with a line chart",
+                "pvc was skipped as the maximum number of tiles: 40 has been reached"
+            ],
+            "errors": [],
+            "outputPath": "reports/8-24-2023/19:2:56/kube-state-metrics-v2.json"
+        },
+        {
+            "displayName": "Kubernetes Nodes",
+            "sourcePath": "./json/kubernetes_nodes.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/8-24-2023/19:2:56/kubernetes_nodes.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/8-24-2023/19:2:56/",
+    "date": "8-24-2023"
+}

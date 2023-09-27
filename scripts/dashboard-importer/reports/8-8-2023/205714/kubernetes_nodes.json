@@ -1,0 +1,15 @@
+{
+    "displayName": "Kubernetes Nodes",
+    "dashboardFilters": [
+        {
+            "labelKey": "instance",
+            "templateVariable": "server",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": []
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "id": "15:49:13",
+    "results": [
+        {
+            "displayName": "New dashboard",
+            "sourcePath": "./test/test.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/2023-9-14/15:49:13/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/2023-9-14/15:49:13/",
+    "date": "2023-9-14"
+}

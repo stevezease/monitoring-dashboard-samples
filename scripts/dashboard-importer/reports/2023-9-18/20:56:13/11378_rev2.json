@@ -1,0 +1,880 @@
+{
+  "displayName": "Spring Boot 2.1 System Monitor",
+  "dashboardFilters": [
+    {
+      "labelKey": "application",
+      "templateVariable": "application",
+      "stringValue": "",
+      "filterType": "METRIC_LABEL"
+    },
+    {
+      "labelKey": "instance",
+      "templateVariable": "instance",
+      "stringValue": "",
+      "filterType": "RESOURCE_LABEL"
+    },
+    {
+      "labelKey": "pool",
+      "templateVariable": "hikaricp",
+      "stringValue": "",
+      "filterType": "METRIC_LABEL"
+    },
+    {
+      "labelKey": "id",
+      "templateVariable": "memory_pool_heap",
+      "stringValue": "",
+      "filterType": "METRIC_LABEL"
+    },
+    {
+      "labelKey": "id",
+      "templateVariable": "memory_pool_nonheap",
+      "stringValue": "",
+      "filterType": "METRIC_LABEL"
+    }
+  ],
+  "mosaicLayout": {
+    "columns": 24,
+    "tiles": [
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "process_uptime_seconds{application=~\"${application.value}\", instance=~\"${instance.value}\"}"
+            }
+          },
+          "title": "Uptime"
+        },
+        "xPos": 0,
+        "yPos": 1,
+        "height": 3,
+        "width": 5
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "gaugeView": {
+              "lowerBound": 0,
+              "upperBound": 100
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "sum(jvm_memory_used_bytes{application=~\"${application.value}\", instance=~\"${instance.value}\", area=\"heap\"})*100/sum(jvm_memory_max_bytes{application=~\"${application.value}\",instance=~\"${instance.value}\", area=\"heap\"})"
+            }
+          },
+          "title": "Heap Used"
+        },
+        "xPos": 5,
+        "yPos": 1,
+        "height": 6,
+        "width": 5
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "gaugeView": {
+              "lowerBound": 0,
+              "upperBound": 100
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "sum(jvm_memory_used_bytes{application=~\"${application.value}\", instance=~\"${instance.value}\", area=\"nonheap\"})*100/sum(jvm_memory_max_bytes{application=~\"${application.value}\",instance=~\"${instance.value}\", area=\"nonheap\"})"
+            }
+          },
+          "title": "Non-Heap Used"
+        },
+        "xPos": 10,
+        "yPos": 1,
+        "height": 6,
+        "width": 5
+      },
+      {
+        "widget": {
+          "title": "Process Open Files",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "process_files_open_files{application=~\"${application.value}\", instance=~\"${instance.value}\"}"
+                },
+                "legendTemplate": "Open Files"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "process_files_max_files{application=~\"${application.value}\", instance=~\"${instance.value}\"}"
+                },
+                "legendTemplate": "Max Files"
+              }
+            ]
+          }
+        },
+        "xPos": 15,
+        "yPos": 1,
+        "height": 6,
+        "width": 9
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "process_start_time_seconds{application=~\"${application.value}\", instance=~\"${instance.value}\"}*1000"
+            }
+          },
+          "title": "Start time"
+        },
+        "xPos": 0,
+        "yPos": 4,
+        "height": 3,
+        "width": 5
+      },
+      {
+        "widget": {
+          "title": "CPU Usage",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "system_cpu_usage{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+                },
+                "legendTemplate": "System CPU Usage"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "process_cpu_usage{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+                },
+                "legendTemplate": "Process CPU Usage"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 7,
+        "height": 7,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Load Average",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "system_load_average_1m{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+                },
+                "legendTemplate": "Load Average [1m]"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "system_cpu_count{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+                },
+                "legendTemplate": "CPU Core Size"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 7,
+        "height": 7,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "$memory_pool_heap (heap)",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_memory_used_bytes{instance=~\"${instance.value}\", application=~\"${application.value}\", id=~\"${memory_pool_heap.value}\"}"
+                },
+                "legendTemplate": "Used"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_memory_committed_bytes{instance=~\"${instance.value}\", application=~\"${application.value}\", id=~\"${memory_pool_heap.value}\"}"
+                },
+                "legendTemplate": "Commited"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_memory_max_bytes{instance=~\"${instance.value}\", application=~\"${application.value}\", id=~\"${memory_pool_heap.value}\"}"
+                },
+                "legendTemplate": "Max"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 15,
+        "height": 8,
+        "width": 8
+      },
+      {
+        "widget": {
+          "title": "$memory_pool_nonheap (non-heap)",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_memory_used_bytes{instance=~\"${instance.value}\", application=~\"${application.value}\", id=~\"${memory_pool_nonheap.value}\"}"
+                },
+                "legendTemplate": "Used"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_memory_committed_bytes{instance=~\"${instance.value}\", application=~\"${application.value}\", id=~\"${memory_pool_nonheap.value}\"}"
+                },
+                "legendTemplate": "Commited"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_memory_max_bytes{instance=~\"${instance.value}\", application=~\"${application.value}\", id=~\"${memory_pool_nonheap.value}\"}"
+                },
+                "legendTemplate": "Max"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 23,
+        "height": 8,
+        "width": 8
+      },
+      {
+        "widget": {
+          "title": "Threads",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_threads_daemon_threads{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+                },
+                "legendTemplate": "Daemon"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_threads_live_threads{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+                },
+                "legendTemplate": "Live"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_threads_peak_threads{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+                },
+                "legendTemplate": "Peak"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 32,
+        "height": 7,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Memory Allocate/Promote",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(jvm_gc_memory_allocated_bytes_total{instance=~\"${instance.value}\", application=~\"${application.value}\"}[5m])"
+                },
+                "legendTemplate": "allocated"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(jvm_gc_memory_promoted_bytes_total{instance=~\"${instance.value}\", application=~\"${application.value}\"}[5m])"
+                },
+                "legendTemplate": "promoted"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 32,
+        "height": 7,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Classes Loaded",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_classes_loaded_classes{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+                },
+                "legendTemplate": "Classes Loaded"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 39,
+        "height": 7,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Classes Unloaded",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(jvm_classes_unloaded_classes_total{instance=~\"${instance.value}\", application=~\"${application.value}\"}[5m])"
+                },
+                "legendTemplate": "Classes Unloaded"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 39,
+        "height": 7,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Direct Buffers",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_buffer_memory_used_bytes{instance=~\"${instance.value}\", application=~\"${application.value}\", id=\"direct\"}"
+                },
+                "legendTemplate": "Used Bytes"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_buffer_total_capacity_bytes{instance=~\"${instance.value}\", application=~\"${application.value}\", id=\"direct\"}"
+                },
+                "legendTemplate": "Capacity Bytes"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 46,
+        "height": 7,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Mapped Buffers",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_buffer_memory_used_bytes{instance=~\"${instance.value}\", application=~\"${application.value}\", id=\"mapped\"}"
+                },
+                "legendTemplate": "Used Bytes"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jvm_buffer_total_capacity_bytes{instance=~\"${instance.value}\", application=~\"${application.value}\", id=\"mapped\"}"
+                },
+                "legendTemplate": "Capacity Bytes"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 46,
+        "height": 7,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "GC Count",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(jvm_gc_pause_seconds_count{instance=~\"${instance.value}\", application=~\"${application.value}\"}[5m])"
+                },
+                "legendTemplate": "${labels.action} [${labels.cause}]"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 54,
+        "height": 8,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "GC Stop the World Duration",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(jvm_gc_pause_seconds_sum{instance=~\"${instance.value}\", application=~\"${application.value}\"}[5m])"
+                },
+                "legendTemplate": "${labels.action} [${labels.cause}]"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 54,
+        "height": 8,
+        "width": 12
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "hikaricp_connections{instance=~\"${instance.value}\", application=~\"${application.value}\", pool=~\"${hikaricp.value}\"}"
+            }
+          },
+          "title": "Connections Size"
+        },
+        "xPos": 0,
+        "yPos": 63,
+        "height": 4,
+        "width": 4
+      },
+      {
+        "widget": {
+          "title": "Connections",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "STACKED_AREA",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "hikaricp_connections_active{instance=~\"${instance.value}\", application=~\"${application.value}\", pool=~\"${hikaricp.value}\"}"
+                },
+                "legendTemplate": "Active"
+              },
+              {
+                "plotType": "STACKED_AREA",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "hikaricp_connections_idle{instance=~\"${instance.value}\", application=~\"${application.value}\", pool=~\"${hikaricp.value}\"}"
+                },
+                "legendTemplate": "Idle"
+              },
+              {
+                "plotType": "STACKED_AREA",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "hikaricp_connections_pending{instance=~\"${instance.value}\", application=~\"${application.value}\", pool=~\"${hikaricp.value}\"}"
+                },
+                "legendTemplate": "Pending"
+              }
+            ]
+          }
+        },
+        "xPos": 4,
+        "yPos": 63,
+        "height": 8,
+        "width": 20
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "hikaricp_connections_timeout_total{instance=~\"${instance.value}\", application=~\"${application.value}\", pool=~\"${hikaricp.value}\"}"
+            }
+          },
+          "title": "Connection Timeout Count"
+        },
+        "xPos": 0,
+        "yPos": 67,
+        "height": 4,
+        "width": 4
+      },
+      {
+        "widget": {
+          "title": "Connection Creation Time",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "hikaricp_connections_creation_seconds_sum{instance=~\"${instance.value}\", application=~\"${application.value}\", pool=~\"${hikaricp.value}\"} / hikaricp_connections_creation_seconds_count{instance=~\"${instance.value}\", application=~\"${application.value}\", pool=~\"${hikaricp.value}\"}"
+                },
+                "legendTemplate": "Creation Time"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 71,
+        "height": 6,
+        "width": 8
+      },
+      {
+        "widget": {
+          "title": "Connection Usage Time",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "hikaricp_connections_usage_seconds_sum{instance=~\"${instance.value}\", application=~\"${application.value}\", pool=~\"${hikaricp.value}\"} / hikaricp_connections_usage_seconds_count{instance=~\"${instance.value}\", application=~\"${application.value}\", pool=~\"${hikaricp.value}\"}"
+                },
+                "legendTemplate": "Usage Time"
+              }
+            ]
+          }
+        },
+        "xPos": 8,
+        "yPos": 71,
+        "height": 6,
+        "width": 8
+      },
+      {
+        "widget": {
+          "title": "Connection Acquire Time",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "hikaricp_connections_acquire_seconds_sum{instance=~\"${instance.value}\", application=~\"${application.value}\", pool=~\"${hikaricp.value}\"} / hikaricp_connections_acquire_seconds_count{instance=~\"${instance.value}\", application=~\"${application.value}\", pool=~\"${hikaricp.value}\"}"
+                },
+                "legendTemplate": "Acquire Time"
+              }
+            ]
+          }
+        },
+        "xPos": 16,
+        "yPos": 71,
+        "height": 6,
+        "width": 8
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "jetty_threads_config_min{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+            }
+          },
+          "title": "Thread Config Min"
+        },
+        "xPos": 0,
+        "yPos": 78,
+        "height": 4,
+        "width": 4
+      },
+      {
+        "widget": {
+          "title": "HTTP Codes",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "sum(rate(http_server_requests_seconds_count{application=~\"${application.value}\", instance=~\"${instance.value}\", status=~\"5..\"}[1m]))"
+                },
+                "legendTemplate": "5xx - Server Errors"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "sum(rate(http_server_requests_seconds_count{application=~\"${application.value}\", instance=~\"${instance.value}\", status=~\"4..\"}[1m]))"
+                },
+                "legendTemplate": "4xx - Client Errors"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "sum(rate(http_server_requests_seconds_count{application=~\"${application.value}\", instance=~\"${instance.value}\", status=~\"2..\"}[1m]))"
+                },
+                "legendTemplate": "2xx - Success"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "sum(rate(http_server_requests_seconds_count{application=~\"${application.value}\", instance=~\"${instance.value}\", status=~\"3..\"}[1m]))"
+                },
+                "legendTemplate": "3xx - Redirections"
+              }
+            ]
+          }
+        },
+        "xPos": 4,
+        "yPos": 78,
+        "height": 8,
+        "width": 20
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "jetty_threads_config_max{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+            }
+          },
+          "title": "Thread Config Max"
+        },
+        "xPos": 0,
+        "yPos": 82,
+        "height": 4,
+        "width": 4
+      },
+      {
+        "widget": {
+          "title": "Requests/second",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "sum(rate(http_server_requests_seconds_count{application=~\"${application.value}\", instance=~\"${instance.value}\"}[1m]))"
+                },
+                "legendTemplate": "Requests per second"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 86,
+        "height": 7,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Requests duration",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "sum(rate(http_server_requests_seconds_sum{application=~\"${application.value}\", instance=~\"${instance.value}\", status!~\"5..\"}[1m]))/sum(rate(http_server_requests_seconds_count{application=~\"${application.value}\", instance=~\"${instance.value}\", status!~\"5..\"}[1m]))"
+                },
+                "legendTemplate": "Average"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "max(http_server_requests_seconds_max{application=~\"${application.value}\", instance=~\"${instance.value}\", status!~\"5..\"})"
+                },
+                "legendTemplate": "Maximum"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 86,
+        "height": 7,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "TOP 10",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "topk(10, sum by(uri, method) (rate(http_server_requests_seconds_count{application=~\"${application.value}\", instance=~\"${instance.value}\"}[1m])))"
+                },
+                "legendTemplate": "${labels.uri}"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 93,
+        "height": 9,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Threads",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jetty_threads_current{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+                },
+                "legendTemplate": "Current thread"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jetty_threads_busy{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+                },
+                "legendTemplate": "Busy thread"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jetty_threads_idle{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+                },
+                "legendTemplate": "Idle threads"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "jetty_threads_jobs{instance=~\"${instance.value}\", application=~\"${application.value}\"}"
+                },
+                "legendTemplate": "Jobs  threads"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 93,
+        "height": 9,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "INFO logs",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(logback_events_total{instance=~\"${instance.value}\", application=~\"${application.value}\", level=\"info\"}[5m])"
+                },
+                "legendTemplate": "info"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 103,
+        "height": 7,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "ERROR logs",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(logback_events_total{instance=~\"${instance.value}\", application=~\"${application.value}\", level=\"error\"}[5m])"
+                },
+                "legendTemplate": "error"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 103,
+        "height": 7,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "WARN logs",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(logback_events_total{instance=~\"${instance.value}\", application=~\"${application.value}\", level=\"warn\"}[5m])"
+                },
+                "legendTemplate": "warn"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 110,
+        "height": 7,
+        "width": 8
+      },
+      {
+        "widget": {
+          "title": "DEBUG logs",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(logback_events_total{instance=~\"${instance.value}\", application=~\"${application.value}\", level=\"debug\"}[5m])"
+                },
+                "legendTemplate": "debug"
+              }
+            ]
+          }
+        },
+        "xPos": 8,
+        "yPos": 110,
+        "height": 7,
+        "width": 8
+      },
+      {
+        "widget": {
+          "title": "TRACE logs",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(logback_events_total{instance=~\"${instance.value}\", application=~\"${application.value}\", level=\"trace\"}[5m])"
+                },
+                "legendTemplate": "trace"
+              }
+            ]
+          }
+        },
+        "xPos": 16,
+        "yPos": 110,
+        "height": 7,
+        "width": 8
+      }
+    ]
+  },
+  "labels": {
+    "goog-imported-via-script": "",
+    "cloud-ops-grafana-importer": "",
+    "goog-imported-grafana-dashboard": "",
+    "goog-imported-grafana-revision-16": "",
+    "goog-imported-grafana-id-11378": ""
+  }
+}

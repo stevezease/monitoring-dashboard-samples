@@ -1,0 +1,15 @@
+{
+    "id": "20407",
+    "results": [
+        {
+            "displayName": "Kubernetes / System / CoreDNS",
+            "sourcePath": "./test/test.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/8-10-2023/20407/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-10-2023/20407/",
+    "date": "8-10-2023"
+}

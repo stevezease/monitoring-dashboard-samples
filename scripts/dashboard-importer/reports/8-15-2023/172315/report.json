@@ -1,0 +1,15 @@
+{
+    "id": "172315",
+    "results": [
+        {
+            "displayName": "Kubernetes / Kubelet",
+            "sourcePath": "./test/test.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/8-15-2023/172315/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-15-2023/172315/",
+    "date": "8-15-2023"
+}

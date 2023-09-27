@@ -1,0 +1,18 @@
+{
+    "id": "22165",
+    "results": [
+        {
+            "displayName": "Kubernetes Nodes",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "Panel Memory Usage: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Disk Space Usage: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]"
+            ],
+            "errors": [],
+            "outputPath": "reports/7-21-2023/22165/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/7-21-2023/22165/",
+    "date": "7-21-2023"
+}

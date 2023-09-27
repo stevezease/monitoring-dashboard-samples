@@ -1,0 +1,47 @@
+{
+    "id": "17:23:26",
+    "results": [
+        {
+            "displayName": "ElasticSearch",
+            "sourcePath": "./json/6483_rev2.json",
+            "warnings": [
+                "Panel 'Thread Pool operations completed' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Field data memory size' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Field data evictions' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Query cache size' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Query cache evictions' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Evictions from filter cache' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Count of index segments' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Current memory size of segments in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Count of documents with only primary shards' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Total size of stored index data in bytes with only primary shards on all nodes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Total size of stored index data in bytes with all shards on all nodes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Index writer with only primary shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Index writer with all shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Segments with only primary shards on all nodes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Segments with all shards on all nodes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of segments with only primary shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of segments with all shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Doc values with only primary shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Doc values with all shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of fields with only primary shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of fields with all shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of fixed bit with only primary shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of fixed bit with all shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of norms with only primary shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of norms with all shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of points with only primary shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of points with all shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of terms with only primary shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Number of terms with all shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of version map with only primary shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached",
+                "Panel 'Size of version map with all shards on all nodes in bytes' was skipped as the maximum number of tiles: 40 has been reached"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-14/17:23:26/6483_rev2.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-14/17:23:26/",
+    "date": "2023-9-14"
+}

@@ -1,0 +1,1 @@
+8171_rev1.json, https://console.cloud.google.com/monitoring/dashboards/builder/7931f587-61d8-4e46-9a87-4f7d2e969d84?project=cco-gke-playground

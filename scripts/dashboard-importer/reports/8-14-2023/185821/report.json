@@ -1,0 +1,23 @@
+{
+    "id": "185821",
+    "results": [
+        {
+            "displayName": "RabbitMQ-Overview",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "Panel NODES is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel QUEUED MESSAGES is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel INCOMING MESSAGES is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel OUTGOING MESSAGES is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel QUEUES is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel CHANNELS is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel CONNECTIONS is a smaller height than the min allowed height of 2 and so the tile was skipped"
+            ],
+            "errors": [],
+            "outputPath": "reports/8-14-2023/185821/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-14-2023/185821/",
+    "date": "8-14-2023"
+}

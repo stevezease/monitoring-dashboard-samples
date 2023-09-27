@@ -1,0 +1,497 @@
+{
+    "displayName": "K8S Control Plane",
+    "dashboardFilters": [],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "API Server RPS",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(apiserver_request_total[5m]))"
+                                },
+                                "legendTemplate": "{{verb}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 1,
+                "height": 7,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "title": "Current Inflight Requests",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(apiserver_current_inflight_requests) by (requestKind)"
+                                },
+                                "legendTemplate": "{{requestKind}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 3,
+                "yPos": 1,
+                "height": 7,
+                "width": 5
+            },
+            {
+                "widget": {
+                    "title": "Latency - p99 (ms)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.99, sum(rate(apiserver_request_duration_seconds_bucket{verb!~\"WATCH|CONNECT\"}[5m])) by (le) ) / 1e+06"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 8,
+                "yPos": 1,
+                "height": 7,
+                "width": 5
+            },
+            {
+                "widget": {
+                    "title": "API Server Response Duration (Seconds)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(apiserver_request_duration_seconds_sum{verb!~\"WATCH|CONNECT\"}[5m])) "
+                                },
+                                "legendTemplate": "seconds"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 13,
+                "yPos": 1,
+                "height": 7,
+                "width": 5
+            },
+            {
+                "widget": {
+                    "title": "API Server Errors",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(apiserver_request_total{code=~\"^(?:4..)$|^(?:5..)$\"}[5m])) by (code)>0"
+                                },
+                                "legendTemplate": "{{code}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 18,
+                "yPos": 1,
+                "height": 7,
+                "width": 5
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(leader_election_master_status{component=\"kube-controller-manager\"})"
+                        }
+                    },
+                    "title": "Has Leader?"
+                },
+                "xPos": 0,
+                "yPos": 9,
+                "height": 6,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "title": "Controller Manager Queue Depth",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(volumes_depth)\r"
+                                },
+                                "legendTemplate": "volumes"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(deployment_depth)\r"
+                                },
+                                "legendTemplate": "deployment"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(replicaset_depth)\r"
+                                },
+                                "legendTemplate": "replicaset_depth"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(service_depth)\r"
+                                },
+                                "legendTemplate": "service_depth"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(serviceaccount_depth)\r"
+                                },
+                                "legendTemplate": "serviceaccount_depth"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(endpoint_depth)\r"
+                                },
+                                "legendTemplate": "endpoint_depth"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(daemonset_depth)\r"
+                                },
+                                "legendTemplate": "daemonset_depth"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(statefulset_depth)\r"
+                                },
+                                "legendTemplate": "statefulset_depth"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(replicationmanager_depth)\r"
+                                },
+                                "legendTemplate": "replicationmanager_depth"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(horizontalpodautoscaler_depth)"
+                                },
+                                "legendTemplate": "horizontalpodautoscaler_depth"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 4,
+                "yPos": 9,
+                "height": 6,
+                "width": 9
+            },
+            {
+                "widget": {
+                    "title": "Controller Manager Adds",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(volumes_adds[5m])\r"
+                                },
+                                "legendTemplate": "volumes"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(deployment_adds[5m])\r"
+                                },
+                                "legendTemplate": "deployment"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(replicaset_adds[5m])\r"
+                                },
+                                "legendTemplate": "replicaset"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(service_adds[5m])\r"
+                                },
+                                "legendTemplate": "service"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(endpoint_adds[5m])\r"
+                                },
+                                "legendTemplate": "endpoints"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(daemonset_adds[5m])\r"
+                                },
+                                "legendTemplate": "daemonsets"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(statefulset_adds[5m])\r"
+                                },
+                                "legendTemplate": "statefulsets"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(horizontalpodautoscaler_adds[5m])"
+                                },
+                                "legendTemplate": "horizontalpodautoscaler"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 13,
+                "yPos": 9,
+                "height": 6,
+                "width": 10
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(leader_election_master_status{component=\"kube-scheduler\"})"
+                        }
+                    },
+                    "title": "Has Leader?"
+                },
+                "xPos": 0,
+                "yPos": 16,
+                "height": 6,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "title": "Scheduler Attempts",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(scheduler_schedule_attempts_total[1m])) by (result)"
+                                },
+                                "legendTemplate": "{{result}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 4,
+                "yPos": 16,
+                "height": 6,
+                "width": 9
+            },
+            {
+                "widget": {
+                    "title": "Scheduler Duration ",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(scheduler_scheduling_attempt_duration_seconds_bucket[5m]))"
+                                },
+                                "legendTemplate": "Duration"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 13,
+                "yPos": 16,
+                "height": 6,
+                "width": 10
+            },
+            {
+                "widget": {
+                    "title": "API Server Success",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(apiserver_request_total{code!~\"^(?:4..)$|^(?:5..)$\"}[5m])) by (code)>0"
+                                },
+                                "legendTemplate": "{{code}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 23,
+                "height": 7,
+                "width": 7
+            },
+            {
+                "widget": {
+                    "title": "API Server Requests (by Verb)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(apiserver_request_total[5m])) by (verb)"
+                                },
+                                "legendTemplate": "{{verb}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 7,
+                "yPos": 23,
+                "height": 7,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "API Requests (by Resource)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(apiserver_request_total[5m])) by (resource)"
+                                },
+                                "legendTemplate": "{{resource}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 15,
+                "yPos": 23,
+                "height": 7,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "API Requests by client (non-kube-*)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(apiserver_request_total{client!~\"kubelet.*|kube-scheduler.*|kube-controller.*|kube-apiserver.*|kube-proxy.*\"}[5m])) by (client)>0"
+                                },
+                                "legendTemplate": "{{client}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 30,
+                "height": 7,
+                "width": 23
+            },
+            {
+                "widget": {
+                    "title": "API Requests by client (kube-*)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(apiserver_request_total{client=~\"kubelet.*|kube-scheduler.*|kube-controller.*|kube-apiserver.*|kube-proxy.*\"}[5m])) by (client)>0"
+                                },
+                                "legendTemplate": "{{client}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 37,
+                "height": 6,
+                "width": 23
+            },
+            {
+                "widget": {
+                    "title": "API Server Requests by server",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(apiserver_request_total[5m])) by (instance)>0"
+                                },
+                                "legendTemplate": "{{instance}} "
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 43,
+                "height": 8,
+                "width": 7
+            },
+            {
+                "widget": {
+                    "title": "Latency",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.90, sum(rate(apiserver_request_duration_seconds_bucket{verb!~\"WATCH|CONNECT\"}[5m])) by (le, resource) ) / 1e+06"
+                                },
+                                "legendTemplate": "{{resource}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 7,
+                "yPos": 43,
+                "height": 8,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "API Server Response Duration - CONNECT",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(apiserver_request_duration_seconds_sum{verb=~\"CONNECT\"}[5m])) by (resource)/sum(rate(apiserver_request_duration_seconds_count{verb=~\"CONNECT\"}[5m])) by (resource)>0"
+                                },
+                                "legendTemplate": "{{resource}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 15,
+                "yPos": 43,
+                "height": 8,
+                "width": 8
+            }
+        ]
+    }
+}

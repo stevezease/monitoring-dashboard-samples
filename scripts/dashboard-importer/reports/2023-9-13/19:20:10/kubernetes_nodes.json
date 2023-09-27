@@ -1,0 +1,227 @@
+{
+    "displayName": "Kubernetes Nodes",
+    "dashboardFilters": [
+        {
+            "labelKey": "instance",
+            "templateVariable": "server",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "Idle CPU",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "100 - (avg by (cpu) (irate(node_cpu_seconds_total{mode=\"idle\", instance=\"${server.value}\"}[5m])) * 100)"
+                                },
+                                "legendTemplate": "${labels.cpu}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "System Load",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_load1{instance=\"${server.value}\"}"
+                                },
+                                "legendTemplate": "load 1m"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_load5{instance=\"${server.value}\"}"
+                                },
+                                "legendTemplate": "load 5m"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_load15{instance=\"${server.value}\"}"
+                                },
+                                "legendTemplate": "load 15m"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 0,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_MemTotal_bytes{instance=\"${server.value}\"} - node_memory_MemFree_bytes{instance=\"${server.value}\"} - node_memory_Buffers_bytes{instance=\"${server.value}\"} - node_memory_Cached_bytes{instance=\"${server.value}\"}"
+                                },
+                                "legendTemplate": "memory used"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Buffers_bytes{instance=\"${server.value}\"}"
+                                },
+                                "legendTemplate": "memory buffers"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Cached_bytes{instance=\"${server.value}\"}"
+                                },
+                                "legendTemplate": "memory cached"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_MemFree_bytes{instance=\"${server.value}\"}"
+                                },
+                                "legendTemplate": "memory free"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 7,
+                "height": 7,
+                "width": 18
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "((node_memory_MemTotal_bytes{instance=\"${server.value}\"} - node_memory_MemFree_bytes{instance=\"${server.value}\"}  - node_memory_Buffers_bytes{instance=\"${server.value}\"} - node_memory_Cached_bytes{instance=\"${server.value}\"}) / node_memory_MemTotal_bytes{instance=\"${server.value}\"}) * 100"
+                        }
+                    },
+                    "title": "Memory Usage"
+                },
+                "xPos": 18,
+                "yPos": 7,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Disk I/O",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by (instance) (rate(node_nfsd_disk_bytes_read_total{instance=\"${server.value}\"}[2m]))"
+                                },
+                                "legendTemplate": "read"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by (instance) (rate(node_nfsd_disk_bytes_written_total{instance=\"${server.value}\"}[2m]))"
+                                },
+                                "legendTemplate": "written"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by (instance) (rate(node_disk_io_time_seconds_total{instance=\"${server.value}\"}[2m]))"
+                                },
+                                "legendTemplate": "io time"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 14,
+                "height": 7,
+                "width": 18
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 1
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(sum(node_filesystem_size_bytes{device!=\"rootfs\",instance=\"${server.value}\"}) - sum(node_filesystem_free_bytes{device!=\"rootfs\",instance=\"${server.value}\"})) / sum(node_filesystem_size_bytes{device!=\"rootfs\",instance=\"${server.value}\"})"
+                        }
+                    },
+                    "title": "Disk Space Usage"
+                },
+                "xPos": 18,
+                "yPos": 14,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Network Received",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(node_network_receive_bytes_total{instance=\"${server.value}\",device!~\"lo\"}[5m])"
+                                },
+                                "legendTemplate": "${labels.device}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 21,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Network Transmitted",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(node_network_transmit_bytes_total{instance=\"${server.value}\",device!~\"lo\"}[5m])"
+                                },
+                                "legendTemplate": "${labels.device}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 21,
+                "height": 7,
+                "width": 12
+            }
+        ]
+    },
+    "labels": {
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": ""
+    }
+}

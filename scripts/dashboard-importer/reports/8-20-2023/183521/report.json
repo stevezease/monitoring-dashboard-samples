@@ -1,0 +1,15 @@
+{
+    "id": "183521",
+    "results": [
+        {
+            "displayName": "Kubernetes Pod Metrics",
+            "sourcePath": "./test/test.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/8-20-2023/183521/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-20-2023/183521/",
+    "date": "8-20-2023"
+}

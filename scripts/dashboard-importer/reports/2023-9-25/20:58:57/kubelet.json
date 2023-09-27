@@ -1,0 +1,533 @@
+{
+    "displayName": "Kubernetes / Kubelet",
+    "dashboardFilters": [
+        {
+            "labelKey": "cluster",
+            "templateVariable": "cluster",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        },
+        {
+            "labelKey": "instance",
+            "templateVariable": "instance",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kubelet_node_name{cluster=~\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\"})"
+                        }
+                    },
+                    "title": "Running Kubelets"
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 7,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kubelet_running_pods{cluster=~\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\"}) OR sum(kubelet_running_pod_count{cluster=~\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\"})"
+                        }
+                    },
+                    "title": "Running Pods"
+                },
+                "xPos": 4,
+                "yPos": 0,
+                "height": 7,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kubelet_running_containers{cluster=~\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\"}) OR sum(kubelet_running_container_count{cluster=~\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\"})"
+                        }
+                    },
+                    "title": "Running Containers"
+                },
+                "xPos": 8,
+                "yPos": 0,
+                "height": 7,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(volume_manager_total_volumes{cluster=~\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\", state=\"actual_state_of_world\"})"
+                        }
+                    },
+                    "title": "Actual Volume Count"
+                },
+                "xPos": 12,
+                "yPos": 0,
+                "height": 7,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(volume_manager_total_volumes{cluster=~\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\",state=\"desired_state_of_world\"})"
+                        }
+                    },
+                    "title": "Desired Volume Count"
+                },
+                "xPos": 16,
+                "yPos": 0,
+                "height": 7,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(rate(kubelet_node_config_error{cluster=~\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\"}[${__interval}]))"
+                        }
+                    },
+                    "title": "Config Error Count"
+                },
+                "xPos": 20,
+                "yPos": 0,
+                "height": 7,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "title": "Operation Rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(kubelet_runtime_operations_total{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}[${__interval}])) by (operation_type, instance)"
+                                },
+                                "legendTemplate": "${labels.instance} ${labels.operation_type}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 7,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Operation Error Rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(kubelet_runtime_operations_errors_total{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}[${__interval}])) by (instance, operation_type)"
+                                },
+                                "legendTemplate": "${labels.instance} ${labels.operation_type}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 7,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Operation duration 99th quantile",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.99, sum(rate(kubelet_runtime_operations_duration_seconds_bucket{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}[${__interval}])) by (instance, operation_type, le))"
+                                },
+                                "legendTemplate": "${labels.instance} ${labels.operation_type}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 14,
+                "height": 7,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Pod Start Rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(kubelet_pod_start_duration_seconds_count{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}[${__interval}])) by (instance)"
+                                },
+                                "legendTemplate": "${labels.instance} pod"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(kubelet_pod_worker_duration_seconds_count{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}[${__interval}])) by (instance)"
+                                },
+                                "legendTemplate": "${labels.instance} worker"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 21,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Pod Start Duration",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.99, sum(rate(kubelet_pod_start_duration_seconds_bucket{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}[${__interval}])) by (instance, le))"
+                                },
+                                "legendTemplate": "${labels.instance} pod"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.99, sum(rate(kubelet_pod_worker_duration_seconds_bucket{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}[${__interval}])) by (instance, le))"
+                                },
+                                "legendTemplate": "${labels.instance} worker"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 21,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Storage Operation Rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(storage_operation_duration_seconds_count{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}[${__interval}])) by (instance, operation_name, volume_plugin)"
+                                },
+                                "legendTemplate": "${labels.instance} ${labels.operation_name} ${labels.volume_plugin}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 28,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Storage Operation Error Rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(storage_operation_errors_total{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}[${__interval}])) by (instance, operation_name, volume_plugin)"
+                                },
+                                "legendTemplate": "${labels.instance} ${labels.operation_name} ${labels.volume_plugin}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 28,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Storage Operation Duration 99th quantile",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.99, sum(rate(storage_operation_duration_seconds_bucket{cluster=~\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\"}[${__interval}])) by (instance, operation_name, volume_plugin, le))"
+                                },
+                                "legendTemplate": "${labels.instance} ${labels.operation_name} ${labels.volume_plugin}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 35,
+                "height": 7,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Cgroup manager operation rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(kubelet_cgroup_manager_duration_seconds_count{cluster=~\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\"}[${__interval}])) by (instance, operation_type)"
+                                },
+                                "legendTemplate": "${labels.operation_type}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 42,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Cgroup manager 99th quantile",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.99, sum(rate(kubelet_cgroup_manager_duration_seconds_bucket{cluster=~\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\"}[${__interval}])) by (instance, operation_type, le))"
+                                },
+                                "legendTemplate": "${labels.instance} ${labels.operation_type}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 42,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "PLEG relist rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(kubelet_pleg_relist_duration_seconds_count{cluster=~\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\"}[${__interval}])) by (instance)"
+                                },
+                                "legendTemplate": "${labels.instance}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 49,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "PLEG relist interval",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.99, sum(rate(kubelet_pleg_relist_interval_seconds_bucket{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}[${__interval}])) by (instance, le))"
+                                },
+                                "legendTemplate": "${labels.instance}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 49,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "PLEG relist duration",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.99, sum(rate(kubelet_pleg_relist_duration_seconds_bucket{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}[${__interval}])) by (instance, le))"
+                                },
+                                "legendTemplate": "${labels.instance}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 56,
+                "height": 7,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "RPC Rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(rest_client_requests_total{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\",code=~\"2..\"}[${__interval}]))"
+                                },
+                                "legendTemplate": "2xx"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(rest_client_requests_total{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\",code=~\"3..\"}[${__interval}]))"
+                                },
+                                "legendTemplate": "3xx"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(rest_client_requests_total{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\",code=~\"4..\"}[${__interval}]))"
+                                },
+                                "legendTemplate": "4xx"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(rest_client_requests_total{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\",code=~\"5..\"}[${__interval}]))"
+                                },
+                                "legendTemplate": "5xx"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 63,
+                "height": 7,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Request duration 99th quantile",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.99, sum(rate(rest_client_request_duration_seconds_bucket{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\", instance=~\"${instance.value}\"}[${__interval}])) by (instance, verb, url, le))"
+                                },
+                                "legendTemplate": "${labels.instance} ${labels.verb} ${labels.url}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 70,
+                "height": 7,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Memory",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "process_resident_memory_bytes{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}"
+                                },
+                                "legendTemplate": "${labels.instance}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 77,
+                "height": 7,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "CPU usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(process_cpu_seconds_total{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}[${__interval}])"
+                                },
+                                "legendTemplate": "${labels.instance}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 8,
+                "yPos": 77,
+                "height": 7,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "Goroutines",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "go_goroutines{cluster=~\"${cluster.value}\",job=\"kubelet\", metrics_path=\"/metrics\",instance=~\"${instance.value}\"}"
+                                },
+                                "legendTemplate": "${labels.instance}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 16,
+                "yPos": 77,
+                "height": 7,
+                "width": 8
+            }
+        ]
+    },
+    "labels": {
+        "kube-prometheus-mixin": "",
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": "",
+        "goog-imported-grafana-dashboard": "",
+        "goog-imported-grafana-revision-1": "",
+        "goog-imported-grafana-file-name-kubelet": ""
+    }
+}

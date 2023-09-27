@@ -1,0 +1,15 @@
+{
+    "id": "18190",
+    "results": [
+        {
+            "displayName": "Redis Dashboard for Prometheus Redis Exporter (helm stable/redis-ha)",
+            "sourcePath": "./test/test.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/8-15-2023/18190/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-15-2023/18190/",
+    "date": "8-15-2023"
+}

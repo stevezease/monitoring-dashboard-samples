@@ -1,0 +1,23 @@
+{
+    "id": "204035",
+    "results": [
+        {
+            "displayName": "K8s Cluster Summary",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "Query datasource is currently a template variable format that is unsupported and so was skipped",
+                "Panel Cluster Health: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel Deployments: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel Node: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel Pods: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel Containers: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel Jobs: Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/8-21-2023/204035/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-21-2023/204035/",
+    "date": "8-21-2023"
+}

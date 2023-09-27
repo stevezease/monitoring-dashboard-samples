@@ -1,0 +1,2 @@
+kubernetes_nodes.json, https://console.cloud.google.com/monitoring/dashboards/builder/4210a582-8cd4-4694-9d8d-bc4c18d10e54?project=cco-gke-playground
+kube-state-metrics-v2.json, https://console.cloud.google.com/monitoring/dashboards/builder/e97ebfd4-52d7-4c14-ae82-6560d66fa5e1?project=cco-gke-playground

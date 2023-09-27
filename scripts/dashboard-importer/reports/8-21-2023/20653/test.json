@@ -1,0 +1,714 @@
+{
+    "displayName": "Cluster cost & utilization metrics",
+    "dashboardFilters": [],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "",
+                    "text": {
+                        "content": "This dashboard shows monthly cost estimates for the cluster, based on **current** CPU, RAM and storage provisioned.",
+                        "format": "MARKDOWN",
+                        "style": {
+                            "backgroundColor": "#FFFFFF",
+                            "fontSize": "FS_LARGE",
+                            "horizontalAlignment": "H_LEFT",
+                            "padding": "P_EXTRA_SMALL",
+                            "textColor": "#212121",
+                            "verticalAlignment": "V_TOP"
+                        }
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 2,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(\n (\n (\n sum(kube_node_status_capacity_cpu_cores) by (node)\n * on (node) group_left (label_cloud_google_com_gke_preemptible)\n kube_node_labels{label_cloud_google_com_gke_preemptible=\"true\"}\n ) * $costpcpu\n )\n or\n (\n (\n sum(kube_node_status_capacity_cpu_cores) by (node)\n * on (node) group_left (label_cloud_google_com_gke_preemptible)\n kube_node_labels{label_cloud_google_com_gke_preemptible!=\"true\"}\n ) * ($costcpu - ($costcpu / 100 * $costDiscount))\n )\n) "
+                        }
+                    },
+                    "title": "CPU Cost"
+                },
+                "xPos": 0,
+                "yPos": 2,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(\n (\n (\n sum(kube_node_status_capacity_memory_bytes) by (node)\n * on (node) group_left (label_cloud_google_com_gke_preemptible)\n kube_node_labels{label_cloud_google_com_gke_preemptible=\"true\"}\n ) /1024/1024/1024 * $costpram\n )\n or\n (\n (\n sum(kube_node_status_capacity_memory_bytes) by (node)\n * on (node) group_left (label_cloud_google_com_gke_preemptible)\n kube_node_labels{label_cloud_google_com_gke_preemptible!=\"true\"}\n ) /1024/1024/1024 * ($costram - ($costram / 100 * $costDiscount))\n)\n) "
+                        }
+                    },
+                    "title": "RAM Cost"
+                },
+                "xPos": 6,
+                "yPos": 2,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (\n sum(kube_persistentvolumeclaim_info{storageclass=~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes) by (persistentvolumeclaim, namespace) or up * 0\n) / 1024 / 1024 /1024 * $costStorageSSD\n\n+\n\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes) by (persistentvolumeclaim, namespace) or up * 0\n) / 1024 / 1024 /1024 * $costStorageStandard\n\n+ \n\nsum(container_fs_limit_bytes{id=\"/\"}) / 1024 / 1024 / 1024 * 1.03 * $costStorageStandard"
+                        }
+                    },
+                    "title": "Storage Cost (Cluster and PVC)"
+                },
+                "xPos": 12,
+                "yPos": 2,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "SUM(rate(node_network_transmit_bytes_total{device=\"eth0\"}[60m]) / 1024 / 1024 / 1024 ) * (60 * 60 * 24 * 30) * $costEgress"
+                        }
+                    },
+                    "title": "Network Egress Cost"
+                },
+                "xPos": 18,
+                "yPos": 2,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(\n sum(\n count(irate(container_cpu_usage_seconds_total{id=\"/\"}[10m])) by (instance)\n * on (instance) \n sum(irate(container_cpu_usage_seconds_total{id=\"/\"}[10m])) by (instance)\n ) \n / \n (sum (kube_node_status_allocatable_cpu_cores))\n) * 100"
+                        }
+                    },
+                    "title": "CPU Utilization"
+                },
+                "xPos": 0,
+                "yPos": 6,
+                "height": 4,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "SUM(kube_pod_container_resource_requests_cpu_cores) / SUM(kube_node_status_allocatable_cpu_cores) * 100"
+                        }
+                    },
+                    "title": "CPU Requests"
+                },
+                "xPos": 3,
+                "yPos": 6,
+                "height": 4,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "SUM(container_memory_usage_bytes{namespace!=\"\"}) / SUM(kube_node_status_allocatable_memory_bytes) * 100"
+                        }
+                    },
+                    "title": "RAM Utilization"
+                },
+                "xPos": 6,
+                "yPos": 6,
+                "height": 4,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(\n sum(kube_pod_container_resource_requests_memory_bytes{namespace!=\"\"})\n /\n sum(kube_node_status_allocatable_memory_bytes)\n) * 100"
+                        }
+                    },
+                    "title": "RAM Requests"
+                },
+                "xPos": 9,
+                "yPos": 6,
+                "height": 4,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (\n sum(kube_persistentvolumeclaim_info{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kubelet_volume_stats_used_bytes) by (persistentvolumeclaim, namespace) or up * 0\n + sum(container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\"})\n) /\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes) by (persistentvolumeclaim, namespace) or up * 0\n + sum(container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\"})\n) * 100"
+                        }
+                    },
+                    "title": "Storage Utilization"
+                },
+                "xPos": 12,
+                "yPos": 6,
+                "height": 4,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (\n sum(kube_persistentvolumeclaim_info{storageclass=~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kubelet_volume_stats_used_bytes) by (persistentvolumeclaim, namespace)\n) /\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass=~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes) by (persistentvolumeclaim, namespace)\n) * 100"
+                        }
+                    },
+                    "title": "SSD Utilization"
+                },
+                "xPos": 15,
+                "yPos": 6,
+                "height": 4,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "# CPU\nsum(\n (\n (\n sum(kube_node_status_capacity_cpu_cores) by (node)\n * on (node) group_left (label_cloud_google_com_gke_preemptible)\n kube_node_labels{label_cloud_google_com_gke_preemptible=\"true\"}\n ) * $costpcpu\n )\n or\n (\n (\n sum(kube_node_status_capacity_cpu_cores) by (node)\n * on (node) group_left (label_cloud_google_com_gke_preemptible)\n kube_node_labels{label_cloud_google_com_gke_preemptible!=\"true\"}\n ) * ($costcpu - ($costcpu / 100 * $costDiscount))\n )\n) \n\n+ \n\n# Storage\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass=~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes) by (persistentvolumeclaim, namespace) or up * 0\n) / 1024 / 1024 /1024 * $costStorageSSD\n\n+\n\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes) by (persistentvolumeclaim, namespace) or up * 0\n) / 1024 / 1024 /1024 * $costStorageStandard\n\n+ \n\nsum(container_fs_limit_bytes{id=\"/\"}) / 1024 / 1024 / 1024 * 1.03 * $costStorageStandard \n\n+\n\n# END STORAGE\n# RAM \nsum(\n (\n (\n sum(kube_node_status_capacity_memory_bytes) by (node)\n * on (node) group_left (label_cloud_google_com_gke_preemptible)\n kube_node_labels{label_cloud_google_com_gke_preemptible=\"true\"}\n ) /1024/1024/1024 * $costpram\n )\n or\n (\n (\n sum(kube_node_status_capacity_memory_bytes) by (node)\n * on (node) group_left (label_cloud_google_com_gke_preemptible)\n kube_node_labels{label_cloud_google_com_gke_preemptible!=\"true\"}\n ) /1024/1024/1024 * ($costram - ($costram / 100 * $costDiscount))\n)\n)\n\n+\n\n#Network \nSUM(rate(node_network_transmit_bytes_total{device=\"eth0\"}[60m]) / 1024 / 1024 / 1024 ) * (60 * 60 * 24 * 30) * $costEgress"
+                        }
+                    },
+                    "title": "Total Monthly Cost"
+                },
+                "xPos": 18,
+                "yPos": 6,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Total monthly cost",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "# CPU\nsum(\n (\n (\n sum(kube_node_status_capacity_cpu_cores) by (node)\n * on (node) group_left (label_cloud_google_com_gke_preemptible)\n kube_node_labels{label_cloud_google_com_gke_preemptible=\"true\"}\n ) * $costpcpu\n )\n or\n (\n (\n sum(kube_node_status_capacity_cpu_cores) by (node)\n * on (node) group_left (label_cloud_google_com_gke_preemptible)\n kube_node_labels{label_cloud_google_com_gke_preemptible!=\"true\"}\n ) * ($costcpu - ($costcpu / 100 * $costDiscount))\n )\n) \n\n+ \n\n# Storage\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass=~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes) by (persistentvolumeclaim, namespace) or up * 0\n) / 1024 / 1024 /1024 * $costStorageSSD\n\n+\n\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes) by (persistentvolumeclaim, namespace) or up * 0\n) / 1024 / 1024 /1024 * $costStorageStandard\n\n+ \n\nsum(container_fs_limit_bytes{id=\"/\"}) / 1024 / 1024 / 1024 * 1.03 * $costStorageStandard \n\n+\n\n# END STORAGE\n# RAM \nsum(\n (\n (\n sum(kube_node_status_capacity_memory_bytes) by (node)\n * on (node) group_left (label_cloud_google_com_gke_preemptible)\n kube_node_labels{label_cloud_google_com_gke_preemptible=\"true\"}\n ) /1024/1024/1024 * $costpram\n )\n or\n (\n (\n sum(kube_node_status_capacity_memory_bytes) by (node)\n * on (node) group_left (label_cloud_google_com_gke_preemptible)\n kube_node_labels{label_cloud_google_com_gke_preemptible!=\"true\"}\n ) /1024/1024/1024 * ($costram - ($costram / 100 * $costDiscount))\n)\n) \n\n+\n\n#Network \nSUM(rate(node_network_transmit_bytes_total{device=\"eth0\"}[60m]) / 1024 / 1024 / 1024 ) * (60 * 60 * 24 * 30) * $costEgress"
+                                },
+                                "legendTemplate": "cluster cost"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 10,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(\n sum(kube_pod_container_resource_requests_cpu_cores{namespace!=\"\",namespace!=\"kube-system\",cloud_google_com_gke_preemptible!=\"true\"}*($costcpu - ($costcpu / 100 * $costDiscount))) by(namespace)\n or\n count(\n count(container_spec_cpu_shares{namespace!=\"\",namespace!=\"kube-system\"}) by(namespace)\n ) by(namespace) -1\n)\n\n+\n\n(\n sum(kube_pod_container_resource_requests_cpu_cores{namespace!=\"\",namespace!=\"kube-system\",cloud_google_com_gke_preemptible=\"true\"}*$costpcpu) by(namespace)\n or\n count(\n count(container_spec_cpu_shares{namespace!=\"\",namespace!=\"kube-system\"}) by(namespace)\n ) by(namespace) -1\n)"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(\n sum(kube_pod_container_resource_requests_memory_bytes{namespace!=\"\",namespace!=\"kube-system\",cloud_google_com_gke_preemptible!=\"true\"} / 1024 / 1024 / 1024*($costram- ($costram / 100 * $costDiscount))) by (namespace) \n or\n count(\n count(container_spec_memory_limit_bytes{namespace!=\"\",namespace!=\"kube-system\"}) by(namespace)\n ) by(namespace) -1\n)\n\n+\n\n(\n sum(kube_pod_container_resource_requests_memory_bytes{namespace!=\"\",namespace!=\"kube-system\",cloud_google_com_gke_preemptible=\"true\"} / 1024 / 1024 / 1024 * $costpram ) by (namespace) \n or\n count(\n count(container_spec_memory_limit_bytes{namespace!=\"\",namespace!=\"kube-system\"}) by(namespace)\n ) by(namespace) -1\n)"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (\n sum(kube_persistentvolumeclaim_info{storageclass=~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes) by (persistentvolumeclaim, namespace) \n) by (namespace) / 1024 / 1024 /1024 * $costStorageSSD \n\nor\n\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes) by (persistentvolumeclaim, namespace) \n) by (namespace) / 1024 / 1024 /1024 * $costStorageStandard"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "# CPU \n(\n sum(kube_pod_container_resource_requests_cpu_cores{namespace!=\"\",namespace!=\"kube-system\",cloud_google_com_gke_preemptible!=\"true\"}*($costcpu - ($costcpu / 100 * $costDiscount))) by(namespace)\n or\n count(\n count(container_spec_cpu_shares{namespace!=\"\",namespace!=\"kube-system\"}) by(namespace)\n ) by(namespace) -1\n)\n\n+\n\n(\n sum(kube_pod_container_resource_requests_cpu_cores{namespace!=\"\",namespace!=\"kube-system\",cloud_google_com_gke_preemptible=\"true\"}*$costpcpu) by(namespace)\n or\n count(\n count(container_spec_cpu_shares{namespace!=\"\",namespace!=\"kube-system\"}) by(namespace)\n ) by(namespace) -1\n)\n\n+\n\n#END CPU \n# Memory \n\n(\n sum(kube_pod_container_resource_requests_memory_bytes{namespace!=\"\",namespace!=\"kube-system\",cloud_google_com_gke_preemptible!=\"true\"} / 1024 / 1024 / 1024*($costram- ($costram / 100 * $costDiscount))) by (namespace) \n or\n count(\n count(container_spec_memory_limit_bytes{namespace!=\"\",namespace!=\"kube-system\"}) by(namespace)\n ) by(namespace) -1\n)\n\n+\n\n(\n sum(kube_pod_container_resource_requests_memory_bytes{namespace!=\"\",namespace!=\"kube-system\",cloud_google_com_gke_preemptible=\"true\"} / 1024 / 1024 / 1024 * $costpram ) by (namespace) \n or\n count(\n count(container_spec_memory_limit_bytes{namespace!=\"\",namespace!=\"kube-system\"}) by(namespace)\n ) by(namespace) -1\n)\n\n+\n\n# PV storage\n\n(\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass=~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes) by (persistentvolumeclaim, namespace) \n) by (namespace) / 1024 / 1024 /1024 * $costStorageSSD \n\nor\n\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n + on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes) by (persistentvolumeclaim, namespace) \n) by (namespace) / 1024 / 1024 /1024 * $costStorageStandard \n)"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 12,
+                "yPos": 10,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Cluster CPUs",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(kube_node_status_capacity_cpu_cores)"
+                                },
+                                "legendTemplate": "capacity"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(kube_pod_container_resource_requests_cpu_cores)"
+                                },
+                                "legendTemplate": "requests"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(irate(container_cpu_usage_seconds_total{id=\"/\"}[5m]))"
+                                },
+                                "legendTemplate": "usage"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(kube_pod_container_resource_limits_cpu_cores) "
+                                },
+                                "legendTemplate": "limits"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 19,
+                "height": 8,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "CPU Mode",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "avg(irate(node_cpu_seconds_total{mode!=\"idle\"}[5m])) by (mode) * 100"
+                                },
+                                "legendTemplate": "{{mode}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 27,
+                "height": 8,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_pod_container_resource_requests_cpu_cores{namespace!=\"\"}) by (namespace) "
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",namespace!=\"\"}[24h])) by (namespace)"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 0,
+                "yPos": 35,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(\nSUM(rate(container_cpu_usage_seconds_total[24h])) by (pod_name)\n* on (pod_name) group_left (node) \nlabel_replace(\n kube_pod_info{},\n \"pod_name\", \n \"$1\", \n \"pod\", \n \"(.+)\"\n)\n) by (node) \n/ \nsum(kube_node_status_capacity_cpu_cores) by (node)"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_pod_container_resource_requests_cpu_cores) by (node) / sum(kube_node_status_capacity_cpu_cores) by (node)"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 12,
+                "yPos": 35,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Cluster memory (GB)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(kube_node_status_capacity_memory_bytes / 1024 / 1024 / 1024)"
+                                },
+                                "legendTemplate": "capacity"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(kube_pod_container_resource_requests_memory_bytes{namespace!=\"\"} / 1024 / 1024 / 1024)"
+                                },
+                                "legendTemplate": "requests"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(container_memory_usage_bytes{image!=\"\"} / 1024 / 1024 / 1024)"
+                                },
+                                "legendTemplate": "usage"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(kube_pod_container_resource_limits_memory_bytes {namespace!=\"\"} / 1024 / 1024 / 1024)"
+                                },
+                                "legendTemplate": "limits"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 46,
+                "height": 8,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Cluster Memory Utilization",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "1 - sum(node_memory_MemAvailable_bytes) by (node) / sum(node_memory_MemTotal_bytes) by (node)"
+                                },
+                                "legendTemplate": "usage"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 54,
+                "height": 8,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_pod_container_resource_requests_memory_bytes{namespace!=\"\"} / 1024 / 1024 / 1024) by (namespace) "
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(container_memory_usage_bytes{image!=\"\",namespace!=\"\"} / 1024 / 1024 / 1024) by (namespace)"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 0,
+                "yPos": 62,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(label_replace(container_memory_usage_bytes{namespace!=\"\"}, \"node\", \"$1\", \"instance\",\"(.+)\")) by (node) * 100\n/\nSUM(kube_node_status_capacity_memory_bytes) by (node)"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_pod_container_resource_requests_memory_bytes{namespace!=\"\"}) by (node) / SUM(kube_node_status_capacity_memory_bytes) by (node)"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 12,
+                "yPos": 62,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(container_fs_limit_bytes{id=\"/\"}) by (instance) / 1024 / 1024 / 1024 * 1.03"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(container_fs_limit_bytes{id=\"/\"}) by (instance) / 1024 / 1024 / 1024 * 1.03 * $costStorageStandard\n"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\"} / container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\"}) by (instance) \n"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 0,
+                "yPos": 73,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Local storage utilization",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(container_fs_usage_bytes{id=\"/\"}) / SUM(container_fs_limit_bytes{id=\"/\"})"
+                                },
+                                "legendTemplate": "reads"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 73,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (\n sum(kube_persistentvolumeclaim_info{storageclass=~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n * on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{storageclass=~\".*ssd.*\"}) by (persistentvolumeclaim, namespace)\n) by (namespace,persistentvolumeclaim,storageclass) / 1024 / 1024 /1024\n\nor\n\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n * on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace)\n) by (namespace,persistentvolumeclaim,storageclass) / 1024 / 1024 /1024\n\n\n"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (\n sum(kube_persistentvolumeclaim_info{storageclass=~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n * on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{storageclass=~\".*ssd.*\"}) by (persistentvolumeclaim, namespace)\n) by (namespace,persistentvolumeclaim,storageclass) / 1024 / 1024 /1024 * $costStorageSSD\n\nor\n\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n * on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace)\n) by (namespace,persistentvolumeclaim,storageclass) / 1024 / 1024 /1024 * $costStorageStandard\n"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kubelet_volume_stats_used_bytes) by (persistentvolumeclaim, namespace) \n/\nsum (\n sum(kube_persistentvolumeclaim_info{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace, storageclass)\n * on (persistentvolumeclaim, namespace) group_right(storageclass)\n sum(kube_persistentvolumeclaim_resource_requests_storage_bytes{storageclass!~\".*ssd.*\"}) by (persistentvolumeclaim, namespace)\n) by (namespace,persistentvolumeclaim)"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 0,
+                "yPos": 82,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Disk IOPS",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(rate(node_disk_reads_completed_total[10m])) or SUM(rate(node_disk_reads_completed[10m]))\n"
+                                },
+                                "legendTemplate": "reads"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM(rate(node_disk_writes_completed_total[10m])) or SUM(rate(node_disk_writes_completed[10m]))"
+                                },
+                                "legendTemplate": "writes"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 82,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Inode usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM( kubelet_volume_stats_inodes_used / kubelet_volume_stats_inodes) by (persistentvolumeclaim) * 100"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 92,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Node network transmit",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (node_network_transmit_bytes_total{}[60m]))\n"
+                                },
+                                "legendTemplate": "node_out"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "SUM ( rate(node_network_transmit_bytes_total{device=\"eth0\"}[60m]))"
+                                },
+                                "legendTemplate": "eth0 out"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 102,
+                "height": 9,
+                "width": 24
+            }
+        ]
+    },
+    "labels": {
+        "goog-imported-via-script": ""
+    }
+}

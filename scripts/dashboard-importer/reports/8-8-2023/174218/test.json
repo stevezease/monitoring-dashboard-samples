@@ -1,0 +1,40 @@
+{
+    "displayName": "Kubernetes Nodes",
+    "dashboardFilters": [
+        {
+            "labelKey": "instance",
+            "templateVariable": "server",
+            "filterType": "RESOURCE_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "Idle CPU",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": {
+                                        "result": "100 - (avg by (cpu) (irate(node_cpu_seconds_total{mode=\"idle\", instance=\"${server.value}\"}[5m])) * 100)",
+                                        "warnings": [],
+                                        "errors": [],
+                                        "isSuccess": false
+                                    }
+                                },
+                                "legendTemplate": "{{cpu}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 7,
+                "width": 12
+            }
+        ]
+    }
+}

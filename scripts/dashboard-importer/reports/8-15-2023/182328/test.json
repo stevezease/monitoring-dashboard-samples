@@ -1,0 +1,298 @@
+{
+    "displayName": "Redis Dashboard for Prometheus Redis Exporter (helm stable/redis-ha)",
+    "dashboardFilters": [
+        {
+            "labelKey": "namespace",
+            "templateVariable": "namespace",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        },
+        {
+            "labelKey": "pod",
+            "templateVariable": "pod_name",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        },
+        {
+            "labelKey": "instance",
+            "templateVariable": "instance",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "max(max_over_time(redis_uptime_in_seconds{instance=~\"${instance.value}\"}[$__interval]))"
+                        }
+                    },
+                    "title": "Uptime"
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 7,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "redis_connected_clients{instance=~\"${instance.value}\"}"
+                        }
+                    },
+                    "title": "Clients"
+                },
+                "xPos": 2,
+                "yPos": 0,
+                "height": 7,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "100 * (redis_memory_used_bytes{instance=~\"${instance.value}\"}  / redis_memory_max_bytes{instance=~\"${instance.value}\"} )"
+                        }
+                    },
+                    "title": "Memory Usage"
+                },
+                "xPos": 4,
+                "yPos": 0,
+                "height": 7,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "title": "Commands Executed / sec",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(redis_commands_processed_total{instance=~\"${instance.value}\"}[1m])"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 8,
+                "yPos": 0,
+                "height": 7,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "Hits / Misses per Sec",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(redis_keyspace_hits_total{instance=~\"${instance.value}\"}[5m])"
+                                },
+                                "legendTemplate": "hits"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(redis_keyspace_misses_total{instance=~\"${instance.value}\"}[5m])"
+                                },
+                                "legendTemplate": "misses"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 16,
+                "yPos": 0,
+                "height": 7,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "Total Memory Usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "redis_memory_used_bytes{instance=~\"${instance.value}\"} "
+                                },
+                                "legendTemplate": "used"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "redis_memory_max_bytes{instance=~\"${instance.value}\"} "
+                                },
+                                "legendTemplate": "max"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 7,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Network I/O",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(redis_net_input_bytes_total{instance=~\"${instance.value}\"}[5m])"
+                                },
+                                "legendTemplate": "{{ input }}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(redis_net_output_bytes_total{instance=~\"${instance.value}\"}[5m])"
+                                },
+                                "legendTemplate": "{{ output }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 7,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Total Items per DB",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (redis_db_keys{instance=~\"${instance.value}\"}) by (db)"
+                                },
+                                "legendTemplate": "{{ db }} "
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 14,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Expiring vs Not-Expiring Keys",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (redis_db_keys{instance=~\"${instance.value}\"}) - sum (redis_db_keys_expiring{instance=~\"${instance.value}\"}) "
+                                },
+                                "legendTemplate": "not expiring"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (redis_db_keys_expiring{instance=~\"${instance.value}\"}) "
+                                },
+                                "legendTemplate": "expiring"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 14,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Expired / Evicted",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(redis_expired_keys_total{instance=~\"${instance.value}\"}[5m])) by (instance)"
+                                },
+                                "legendTemplate": "expired"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(redis_evicted_keys_total{instance=~\"${instance.value}\"}[5m])) by (instance)"
+                                },
+                                "legendTemplate": "evicted"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 21,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Command Calls / sec",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "topk(5, irate(redis_commands_total{instance=~\"${instance.value}\"} [1m]))"
+                                },
+                                "legendTemplate": "{{ cmd }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 21,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Redis connected clients",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "redis_connected_clients{instance=\"${instance.value}\"}"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 28,
+                "height": 7,
+                "width": 12
+            }
+        ]
+    }
+}

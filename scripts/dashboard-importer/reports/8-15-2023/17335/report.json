@@ -1,0 +1,15 @@
+{
+    "id": "17335",
+    "results": [
+        {
+            "displayName": "RabbitMQ-Stream",
+            "sourcePath": "./test/test.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/8-15-2023/17335/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-15-2023/17335/",
+    "date": "8-15-2023"
+}

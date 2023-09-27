@@ -1,0 +1,15 @@
+{
+    "id": "22:49:35",
+    "results": [
+        {
+            "displayName": "Kubernetes Cluster Autoscaler (via Prometheus)",
+            "sourcePath": "./json/3831_rev1.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/2023-9-13/22:49:35/3831_rev1.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-13/22:49:35/",
+    "date": "2023-9-13"
+}

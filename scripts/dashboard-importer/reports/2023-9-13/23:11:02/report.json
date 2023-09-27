@@ -1,0 +1,17 @@
+{
+    "id": "23:11:02",
+    "results": [
+        {
+            "displayName": "Kubernetes / Persistent Volumes",
+            "sourcePath": "./json/12660_rev1.json",
+            "warnings": [
+                "datasource template variable with name datasource was skipped because it's type was not supported"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-13/23:11:02/12660_rev1.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-13/23:11:02/",
+    "date": "2023-9-13"
+}

@@ -1,0 +1,465 @@
+{
+    "displayName": "K8s / Storage / Volumes / Cluster",
+    "dashboardFilters": [],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(\n  count (\n    (kubelet_volume_stats_available_bytes {namespace=~\"(openshift-.*|kube-.*|default|logging)\"})\n    and\n    (predict_linear(kubelet_volume_stats_available_bytes {namespace=~\"(openshift-.*|kube-.*|default|logging)\"}[1d], 7 * 24 * 60 * 60) < 0)\n  )\n)\nor\nvector(0)"
+                        }
+                    },
+                    "title": "Infrastructure Namespace Volumes Full in Week Based on Daily Use Rate"
+                },
+                "xPos": 0,
+                "yPos": 1,
+                "height": 3,
+                "width": 7
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(\n  count (\n    (\n      (kubelet_volume_stats_available_bytes {namespace!~\"(openshift-.*|kube-.*|default|logging)\"})\n    )\n    and\n    (predict_linear(kubelet_volume_stats_available_bytes[1d], 7 * 24 * 60 * 60) < 0)\n  )\n)\nor\nvector(0)"
+                        }
+                    },
+                    "title": "User Namespace Volumes Full in Week Based on Daily Use Rate"
+                },
+                "xPos": 7,
+                "yPos": 1,
+                "height": 3,
+                "width": 7
+            },
+            {
+                "widget": {
+                    "title": "Dashboard Alerts",
+                    "xyChart": {
+                        "dataSets": []
+                    }
+                },
+                "xPos": 14,
+                "yPos": 1,
+                "height": 6,
+                "width": 10
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "count (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes ) and (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes )) / (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes )) >= ($pvc_percent_used_warning_threshold / 100)) or vector (0)"
+                        }
+                    },
+                    "title": "Running PVCs Above % Used Warning Threshold"
+                },
+                "xPos": 0,
+                "yPos": 4,
+                "height": 3,
+                "width": 7
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(max (sum by (exported_namespace) (pv_collector_unbound_pvc_count))) or (vector(0))"
+                        }
+                    },
+                    "title": "Unbound PVCs"
+                },
+                "xPos": 7,
+                "yPos": 4,
+                "height": 3,
+                "width": 7
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(\n  (\n    (kubelet_volume_stats_available_bytes {namespace=~\"(openshift-.*|kube-.*|default|logging)\"} ) \n    and\n    (predict_linear(kubelet_volume_stats_available_bytes {namespace=~\"(openshift-.*|kube-.*|default|logging)\"}[1w], 7 * 24 * 60 * 60) < 0)\n  )\n)"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 0,
+                "yPos": 7,
+                "height": 14,
+                "width": 7
+            },
+            {
+                "widget": {
+                    "title": "Infrastructure Namespace Volumes Full in Week Based on Daily Use Rate - Alert History",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(\n  (\n    ((kubelet_volume_stats_used_bytes {namespace=~\"(openshift-.*|kube-.*|default|logging)\"} ) * 0) + 1\n    and\n    (predict_linear(kubelet_volume_stats_available_bytes {namespace=~\"(openshift-.*|kube-.*|default|logging)\"}[1d], 7 * 24 * 60 * 60) < 0)\n  )\n)"
+                                },
+                                "legendTemplate": "{{namespace}} ({{persistentvolumeclaim}})"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 7,
+                "yPos": 7,
+                "height": 7,
+                "width": 17
+            },
+            {
+                "widget": {
+                    "title": "Infrastructure Namespace Volumes Full in Week Based on Daily Use Rate - Predicted Available Space History",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(\n  (predict_linear(kubelet_volume_stats_available_bytes {namespace=~\"(openshift-.*|kube-.*|default|logging)\"}[1d], 7 * 24 * 60 * 60) < 0)\n)"
+                                },
+                                "legendTemplate": "{{namespace}} ({{persistentvolumeclaim}})"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 7,
+                "yPos": 14,
+                "height": 7,
+                "width": 17
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(\n  (\n    (\n      (kubelet_volume_stats_used_bytes {namespace!~\"(openshift-.*|kube-.*|default|logging)\"})\n    )\n    and\n    (predict_linear(kubelet_volume_stats_available_bytes[1d], 7 * 24 * 60 * 60) < 0)\n  )\n)"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 0,
+                "yPos": 21,
+                "height": 13,
+                "width": 7
+            },
+            {
+                "widget": {
+                    "title": "User Namespace Volumes Full in Week Based on Daily Use Rate - Alert History",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(\n  (\n    (\n      (\n        (kubelet_volume_stats_used_bytes {namespace!~\"(openshift-.*|kube-.*|default|logging)\"})\n      )\n      * 0 + 1\n    )\n    and\n    (predict_linear(kubelet_volume_stats_available_bytes[1d], 7 * 24 * 60 * 60) < 0)\n  )\n)"
+                                },
+                                "legendTemplate": "{{namespace}} ({{persistentvolumeclaim}})"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 7,
+                "yPos": 21,
+                "height": 6,
+                "width": 17
+            },
+            {
+                "widget": {
+                    "title": "User Namespace Volumes Full in Week Based on Daily Use Rate - Predicted Available Space History",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(\n  (predict_linear(kubelet_volume_stats_available_bytes {namespace!~\"(openshift-.*|kube-.*|default|logging)\"}[1d], 7 * 24 * 60 * 60) < 0)\n)"
+                                },
+                                "legendTemplate": "{{namespace}} ({{persistentvolumeclaim}})"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 7,
+                "yPos": 27,
+                "height": 7,
+                "width": 17
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(kube_persistentvolumeclaim_info) and ((max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes )) / (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes )) >= ($pvc_percent_used_warning_threshold / 100))"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes)) and ((max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes )) / (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes )) >= ($pvc_percent_used_warning_threshold / 100))"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes )) and ((max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes )) / (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes )) >= ($pvc_percent_used_warning_threshold / 100))"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_available_bytes )) and ((max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes )) / (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes )) >= ($pvc_percent_used_warning_threshold / 100))"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes )) / (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes )) >= ($pvc_percent_used_warning_threshold / 100)"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 0,
+                "yPos": 34,
+                "height": 6,
+                "width": 7
+            },
+            {
+                "widget": {
+                    "title": "Running PVCs Above % Used Warning Threshold - History",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(\n  ((max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes )) * 0 +1)\n  and\n  (\n    (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes )) / (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes ))\n  ) >= ($pvc_percent_used_warning_threshold / 100)\n)"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 7,
+                "yPos": 34,
+                "height": 6,
+                "width": 17
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(sum (pv_collector_bound_pvc_count)) or vector(0)"
+                        }
+                    },
+                    "title": "Bound PVCs"
+                },
+                "xPos": 0,
+                "yPos": 40,
+                "height": 4,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "kube_persistentvolumeclaim_info"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(1-max by (persistentvolumeclaim, namespace) (kube_persistentvolumeclaim_info ) ) unless (max by (namespace, persistentvolumeclaim) (kubelet_volume_stats_used_bytes )) or ((max by (persistentvolumeclaim, namespace) (kube_persistentvolumeclaim_info ) ) and (max by (namespace, persistentvolumeclaim) (kubelet_volume_stats_used_bytes )))"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes)"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes )"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_available_bytes )"
+                                },
+                                "outputFullDuration": true
+                            },
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes )) / (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes ))"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 0,
+                "yPos": 44,
+                "height": 25,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "All Running PVCs Used Bytes",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes ))"
+                                },
+                                "legendTemplate": "{{namespace}} ({{persistentvolumeclaim}})"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 69,
+                "height": 8,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Running PVCs % Used",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_used_bytes )) / (max by (persistentvolumeclaim,namespace) (kubelet_volume_stats_capacity_bytes )) * 100"
+                                },
+                                "legendTemplate": "{{namespace}} ({{persistentvolumeclaim}})"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 77,
+                "height": 8,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Hourly Volume Use Rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(kubelet_volume_stats_used_bytes [1h])"
+                                },
+                                "legendTemplate": "{{namespace}} ({{persistentvolumeclaim}})"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 85,
+                "height": 6,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Daily Volume Use Rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(kubelet_volume_stats_used_bytes [1d])"
+                                },
+                                "legendTemplate": "{{namespace}} ({{persistentvolumeclaim}})"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 91,
+                "height": 6,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Weekly Volume Use Rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(kubelet_volume_stats_used_bytes [1w])"
+                                },
+                                "legendTemplate": "{{namespace}} ({{persistentvolumeclaim}})"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 97,
+                "height": 6,
+                "width": 24
+            }
+        ]
+    }
+}

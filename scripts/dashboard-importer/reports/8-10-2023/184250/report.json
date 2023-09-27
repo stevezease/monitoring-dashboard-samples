@@ -1,0 +1,29 @@
+{
+    "id": "184250",
+    "results": [
+        {
+            "displayName": "kube-state-metrics-v2",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "Panel Cluster is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Cluster Pod Requested: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Cluster CPU Requested: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Cluster Memory  Requested: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Node: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Number Of Nodes: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Nodes Unavailable: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Node NotReady: the follow notable properties are unsupported: [\"cacheTimeout\"]",
+                "Panel Node Pressure: the follow notable properties are unsupported: [\"cacheTimeout\"]",
+                "Panel Deployments: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Deployment Replicas: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Deployment Replicas - Updated: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Deployment Replicas - Unavailable: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]"
+            ],
+            "errors": [],
+            "outputPath": "reports/8-10-2023/184250/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-10-2023/184250/",
+    "date": "8-10-2023"
+}

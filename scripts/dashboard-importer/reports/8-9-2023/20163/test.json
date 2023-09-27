@@ -1,0 +1,759 @@
+{
+    "displayName": "Docker and system monitoring",
+    "dashboardFilters": [
+        {
+            "labelKey": "instance",
+            "templateVariable": "server",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "scorecard": {
+                    "sparkChartView": {
+                        "sparkChartType": "SPARK_LINE"
+                    },
+                    "thresholds": [],
+                    "timeSeriesQuery": {
+                        "prometheusQuery": {
+                            "result": "time() - node_boot_time{instance=~\"${server.value}:.*\"}",
+                            "warnings": [],
+                            "errors": [],
+                            "isSuccess": false
+                        }
+                    }
+                },
+                "title": "Uptime"
+            },
+            {
+                "scorecard": {
+                    "sparkChartView": {
+                        "sparkChartType": "SPARK_LINE"
+                    },
+                    "thresholds": [],
+                    "timeSeriesQuery": {
+                        "prometheusQuery": {
+                            "result": "count(rate(container_last_seen{name=~\".+\"}[${__interval}]))",
+                            "warnings": [],
+                            "errors": [],
+                            "isSuccess": false
+                        }
+                    }
+                },
+                "title": "Containers"
+            },
+            {
+                "scorecard": {
+                    "gaugeView": {
+                        "lowerBound": 0,
+                        "upperBound": 1
+                    },
+                    "thresholds": [],
+                    "timeSeriesQuery": {
+                        "prometheusQuery": {
+                            "result": "min((node_filesystem_size{fstype=~\"xfs|ext4\",instance=~\"${server.value}:.*\"} - node_filesystem_free{fstype=~\"xfs|ext4\",instance=~\"${server.value}:.*\"} )/ node_filesystem_size{fstype=~\"xfs|ext4\",instance=~\"${server.value}:.*\"})",
+                            "warnings": [],
+                            "errors": [],
+                            "isSuccess": false
+                        }
+                    }
+                },
+                "title": "Disk space"
+            },
+            {
+                "scorecard": {
+                    "gaugeView": {
+                        "lowerBound": 0,
+                        "upperBound": 100
+                    },
+                    "thresholds": [],
+                    "timeSeriesQuery": {
+                        "prometheusQuery": {
+                            "result": "((node_memory_MemTotal{instance=~\"${server.value}:.*\"} - node_memory_MemAvailable{instance=~\"${server.value}:.*\"}) / node_memory_MemTotal{instance=~\"${server.value}:.*\"}) * 100",
+                            "warnings": [],
+                            "errors": [],
+                            "isSuccess": false
+                        }
+                    }
+                },
+                "title": "Memory"
+            },
+            {
+                "scorecard": {
+                    "gaugeView": {
+                        "lowerBound": 0,
+                        "upperBound": 500000000
+                    },
+                    "thresholds": [],
+                    "timeSeriesQuery": {
+                        "prometheusQuery": {
+                            "result": "(node_memory_SwapTotal{instance=~'${server.value}:.*'} - node_memory_SwapFree{instance=~'${server.value}:.*'})",
+                            "warnings": [],
+                            "errors": [],
+                            "isSuccess": false
+                        }
+                    }
+                },
+                "title": "Swap"
+            },
+            {
+                "scorecard": {
+                    "sparkChartView": {
+                        "sparkChartType": "SPARK_LINE"
+                    },
+                    "thresholds": [],
+                    "timeSeriesQuery": {
+                        "prometheusQuery": {
+                            "result": "node_load1{instance=~\"${server.value}:.*\"} / count by(job, instance)(count by(job, instance, cpu)(node_cpu{instance=~\"${server.value}:.*\"}))",
+                            "warnings": [],
+                            "errors": [],
+                            "isSuccess": false
+                        }
+                    }
+                },
+                "title": "Load"
+            },
+            {
+                "title": "Network Traffic",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(rate(container_network_receive_bytes_total{id=\"/\"}[${__interval}])) by (id)",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "RECEIVED"
+                        },
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "- sum(rate(container_network_transmit_bytes_total{id=\"/\"}[${__interval}])) by (id)",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "SENT"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "CPU Usage",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(rate(container_cpu_system_seconds_total[1m]))",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "a"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(rate(container_cpu_system_seconds_total{name=~\".+\"}[1m]))",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "nur container"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(rate(container_cpu_system_seconds_total{id=\"/\"}[1m]))",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "nur docker host"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(rate(process_cpu_seconds_total[${__interval}])) * 100",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "host"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(rate(container_cpu_system_seconds_total{name=~\".+\"}[1m])) + sum(rate(container_cpu_system_seconds_total{id=\"/\"}[1m])) + sum(rate(process_cpu_seconds_total[1m]))",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": ""
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Load",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "node_load1{instance=~\"${server.value}:.*\"} / count by(job, instance)(count by(job, instance, cpu)(node_cpu{instance=~\"${server.value}:.*\"}))",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": ""
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Used Disk Space",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "node_filesystem_size{fstype=\"aufs\"} - node_filesystem_free{fstype=\"aufs\"}",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "Used Disk Space"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Available Memory",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "container_memory_rss{name=~\".+\"}",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{__name__}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(container_memory_rss{name=~\".+\"})",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{__name__}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "container_memory_usage_bytes{name=~\".+\"}",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "container_memory_rss{id=\"/\"}",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{__name__}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(container_memory_rss)",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{__name__}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "node_memory_Buffers",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "node_memory_Dirty"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "node_memory_MemFree",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{__name__}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "node_memory_MemAvailable",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "Available Memory"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "node_memory_MemTotal - node_memory_MemAvailable",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "Unavailable Memory"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "node_memory_Inactive",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{__name__}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "node_memory_KernelStack",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{__name__}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "node_memory_Active",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{__name__}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "node_memory_MemTotal - (node_memory_Active + node_memory_MemFree + node_memory_Inactive)",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "Unknown"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "node_memory_MemFree + node_memory_Inactive ",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{__name__}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "container_memory_rss{name=~\".+\"}",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{__name__}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "node_memory_Inactive + node_memory_MemFree + node_memory_MemAvailable",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": ""
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Disk I/O",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "-sum(rate(node_disk_bytes_read[${__interval}])) by (device)",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "OUT on /{{device}}"
+                        },
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(rate(node_disk_bytes_written[${__interval}])) by (device)",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "IN on /{{device}}"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Received Network Traffic per Container",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(rate(container_network_receive_bytes_total{name=~\".+\"}[${__interval}])) by (name)",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        },
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "- rate(container_network_transmit_bytes_total{name=~\".+\"}[${__interval}])",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Sent Network Traffic per Container",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(rate(container_network_transmit_bytes_total{name=~\".+\"}[${__interval}])) by (name)",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        },
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "rate(container_network_transmit_bytes_total{id=\"/\"}[${__interval}])",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": ""
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "CPU Usage per Container",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(rate(container_cpu_usage_seconds_total{name=~\".+\"}[${__interval}])) by (name) * 100",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Memory Usage per Container",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(container_memory_rss{name=~\".+\"}) by (name)",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "container_memory_usage_bytes{name=~\".+\"}",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Memory Swap per Container",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(container_memory_swap{name=~\".+\"}) by (name)",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        },
+                        {
+                            "plotType": "STACKED_AREA",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "container_memory_usage_bytes{name=~\".+\"}",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Usage memory",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(container_spec_memory_limit_bytes{name=~\".+\"} - container_memory_usage_bytes{name=~\".+\"}) by (name) ",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        },
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(container_spec_memory_limit_bytes{name=~\".+\"}) by (name) ",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        },
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "container_memory_usage_bytes{name=~\".+\"}",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Remaining memory",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(100 - ((container_spec_memory_limit_bytes{name=~\".+\"} - container_memory_usage_bytes{name=~\".+\"})  * 100 / container_spec_memory_limit_bytes{name=~\".+\"}) ) by (name) ",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        },
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(container_spec_memory_limit_bytes{name=~\".+\"}) by (name) ",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        },
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "container_memory_usage_bytes{name=~\".+\"}",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Limit memory",
+                "xyChart": {
+                    "dataSets": [
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(container_spec_memory_limit_bytes{name=~\".+\"} - container_memory_usage_bytes{name=~\".+\"}) by (name) ",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        },
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "sum(container_spec_memory_limit_bytes{name=~\".+\"}) by (name) ",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        },
+                        {
+                            "plotType": "LINE",
+                            "timeSeriesQuery": {
+                                "prometheusQuery": {
+                                    "result": "container_memory_usage_bytes{name=~\".+\"}",
+                                    "warnings": [],
+                                    "errors": [],
+                                    "isSuccess": false
+                                }
+                            },
+                            "legendTemplate": "{{name}}"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

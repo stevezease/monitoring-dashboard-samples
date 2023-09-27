@@ -1,0 +1,289 @@
+{
+    "displayName": "Kubernetes / Networking / Cluster",
+    "dashboardFilters": [
+        {
+            "labelKey": "cluster",
+            "templateVariable": "cluster",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "Current Rate of Bytes Received",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(sum(irate(container_network_receive_bytes_total{cluster=~\"${cluster.value}\",namespace=~\".+\"}[${__interval}])) by (namespace))"
+                                },
+                                "legendTemplate": "${labels.namespace}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 1,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Current Rate of Bytes Transmitted",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(sum(irate(container_network_transmit_bytes_total{cluster=~\"${cluster.value}\",namespace=~\".+\"}[${__interval}])) by (namespace))"
+                                },
+                                "legendTemplate": "${labels.namespace}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 1,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Current Status",
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(sum(irate(container_network_receive_bytes_total{cluster=~\"${cluster.value}\",namespace=~\".+\"}[${__interval}])) by (namespace))"
+                                }
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 0,
+                "yPos": 10,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Average Rate of Bytes Received",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(avg(irate(container_network_receive_bytes_total{cluster=~\"${cluster.value}\",namespace=~\".+\"}[${__interval}])) by (namespace))"
+                                },
+                                "legendTemplate": "${labels.namespace}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 19,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Average Rate of Bytes Transmitted",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(avg(irate(container_network_transmit_bytes_total{cluster=~\"${cluster.value}\",namespace=~\".+\"}[${__interval}])) by (namespace))"
+                                },
+                                "legendTemplate": "${labels.namespace}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 19,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Receive Bandwidth",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(sum(irate(container_network_receive_bytes_total{cluster=~\"${cluster.value}\",namespace=~\".+\"}[${__interval}])) by (namespace))"
+                                },
+                                "legendTemplate": "${labels.namespace}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 29,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Transmit Bandwidth",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(sum(irate(container_network_transmit_bytes_total{cluster=~\"${cluster.value}\",namespace=~\".+\"}[${__interval}])) by (namespace))"
+                                },
+                                "legendTemplate": "${labels.namespace}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 38,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Rate of Received Packets",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(sum(irate(container_network_receive_packets_total{cluster=~\"${cluster.value}\",namespace=~\".+\"}[${__interval}])) by (namespace))"
+                                },
+                                "legendTemplate": "${labels.namespace}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 47,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Rate of Transmitted Packets",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(sum(irate(container_network_transmit_packets_total{cluster=~\"${cluster.value}\",namespace=~\".+\"}[${__interval}])) by (namespace))"
+                                },
+                                "legendTemplate": "${labels.namespace}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 56,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Rate of Received Packets Dropped",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(sum(irate(container_network_receive_packets_dropped_total{cluster=~\"${cluster.value}\",namespace=~\".+\"}[${__interval}])) by (namespace))"
+                                },
+                                "legendTemplate": "${labels.namespace}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 66,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Rate of Transmitted Packets Dropped",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(sum(irate(container_network_transmit_packets_dropped_total{cluster=~\"${cluster.value}\",namespace=~\".+\"}[${__interval}])) by (namespace))"
+                                },
+                                "legendTemplate": "${labels.namespace}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 75,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Rate of TCP Retransmits out of all sent segments",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(sum(rate(node_netstat_Tcp_RetransSegs{cluster=~\"${cluster.value}\"}[${__interval}]) / rate(node_netstat_Tcp_OutSegs{cluster=~\"${cluster.value}\"}[${__interval}])) by (instance))"
+                                },
+                                "legendTemplate": "${labels.instance}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 84,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Rate of TCP SYN Retransmits out of all retransmits",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sort_desc(sum(rate(node_netstat_TcpExt_TCPSynRetrans{cluster=~\"${cluster.value}\"}[${__interval}]) / rate(node_netstat_Tcp_RetransSegs{cluster=~\"${cluster.value}\"}[${__interval}])) by (instance))"
+                                },
+                                "legendTemplate": "${labels.instance}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 93,
+                "height": 9,
+                "width": 24
+            }
+        ]
+    },
+    "labels": {
+        "kube-prometheus-mixin": "",
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": "",
+        "goog-imported-grafana-dashboard": "",
+        "goog-imported-grafana-revision-1": "",
+        "goog-imported-grafana-file-name-networking_cluster": ""
+    }
+}

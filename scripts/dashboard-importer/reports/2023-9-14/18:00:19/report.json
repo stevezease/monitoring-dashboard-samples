@@ -1,0 +1,15 @@
+{
+    "id": "18:00:19",
+    "results": [
+        {
+            "displayName": "Prometheus Stats",
+            "sourcePath": "./json/2_rev2.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/2023-9-14/18:00:19/2_rev2.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-14/18:00:19/",
+    "date": "2023-9-14"
+}

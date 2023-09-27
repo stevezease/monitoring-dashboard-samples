@@ -1,0 +1,34 @@
+{
+    "id": "154312",
+    "results": [
+        {
+            "displayName": "kube-state-metrics-v2",
+            "sourcePath": "./json/kube-state-metrics-v2.json",
+            "warnings": [
+                "Panel Cluster is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Node: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Deployments: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Statefuleset: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Pods: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Containers: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel HPA: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Jobs: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel PVC: Collapsible groups currently are not yet supported. Charts will displayed as is"
+            ],
+            "errors": [],
+            "url": "https://console.cloud.google.com/monitoring/dashboards/builder/77e86bc4-960f-4569-b914-e08aab15d631?project=cco-gke-playground",
+            "outputPath": "reports/8-18-2023/154312/kube-state-metrics-v2.json"
+        },
+        {
+            "displayName": "Kubernetes Nodes",
+            "sourcePath": "./json/kubernetes_nodes.json",
+            "warnings": [],
+            "errors": [],
+            "url": "https://console.cloud.google.com/monitoring/dashboards/builder/0a099497-2efc-4702-ab7d-b8b6aea4df01?project=cco-gke-playground",
+            "outputPath": "reports/8-18-2023/154312/kubernetes_nodes.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/8-18-2023/154312/",
+    "date": "8-18-2023"
+}

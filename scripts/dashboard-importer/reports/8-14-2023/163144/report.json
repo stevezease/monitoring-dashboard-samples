@@ -1,0 +1,21 @@
+{
+    "id": "163144",
+    "results": [
+        {
+            "displayName": "Istio Control Plane Dashboard",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "Panel Deployed Versions is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Resource Usage is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Pilot Push Information is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Envoy Information is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Webhooks is a smaller height than the min allowed height of 2 and so the tile was skipped"
+            ],
+            "errors": [],
+            "outputPath": "reports/8-14-2023/163144/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-14-2023/163144/",
+    "date": "8-14-2023"
+}

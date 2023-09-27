@@ -1,0 +1,15 @@
+{
+    "id": "201935",
+    "results": [
+        {
+            "displayName": "Kubernetes Resource Requests",
+            "sourcePath": "./test/test.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/8-21-2023/201935/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-21-2023/201935/",
+    "date": "8-21-2023"
+}

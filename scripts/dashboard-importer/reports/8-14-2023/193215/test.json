@@ -1,0 +1,231 @@
+{
+    "displayName": "Kubernetes Cluster Autoscaler (via Prometheus)",
+    "dashboardFilters": [],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(cluster_autoscaler_nodes_count)\n"
+                        }
+                    },
+                    "title": "Total nodes"
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 5,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(cluster_autoscaler_nodes_count{state=\"ready\"})/sum(cluster_autoscaler_nodes_count)*100"
+                        }
+                    },
+                    "title": "Nodes available"
+                },
+                "xPos": 4,
+                "yPos": 0,
+                "height": 5,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(cluster_autoscaler_cluster_safe_to_autoscale)"
+                        }
+                    },
+                    "title": "Is cluster safe to scale?"
+                },
+                "xPos": 8,
+                "yPos": 0,
+                "height": 5,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(cluster_autoscaler_unschedulable_pods_count)"
+                        }
+                    },
+                    "title": "Number of unscheduled pods"
+                },
+                "xPos": 12,
+                "yPos": 0,
+                "height": 5,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(time()-cluster_autoscaler_last_activity{activity=\"scaleDown\"})"
+                        }
+                    },
+                    "title": "Last scaleDown activity"
+                },
+                "xPos": 16,
+                "yPos": 0,
+                "height": 5,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(time()-cluster_autoscaler_last_activity{activity=\"autoscaling\"})"
+                        }
+                    },
+                    "title": "Last autoscale activity"
+                },
+                "xPos": 20,
+                "yPos": 0,
+                "height": 5,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "title": "Pod activity",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(cluster_autoscaler_evicted_pods_total)"
+                                },
+                                "legendTemplate": "evicted pods"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(cluster_autoscaler_unschedulable_pods_count)"
+                                },
+                                "legendTemplate": "unscheduled pods"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 5,
+                "height": 4,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Node activity",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(cluster_autoscaler_nodes_count{state=\"ready\"})"
+                                },
+                                "legendTemplate": "ready"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(cluster_autoscaler_nodes_count{state=\"unready\"})"
+                                },
+                                "legendTemplate": "unready"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(cluster_autoscaler_nodes_count{state=\"notStarted\"})\n"
+                                },
+                                "legendTemplate": "not started"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 5,
+                "height": 4,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Autoscaling activity",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(cluster_autoscaler_scaled_up_nodes_total)"
+                                },
+                                "legendTemplate": "scaled up total"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(cluster_autoscaler_unneeded_nodes_count)"
+                                },
+                                "legendTemplate": "unneeded nodes"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(cluster_autoscaler_nodes_count)\n"
+                                },
+                                "legendTemplate": "total nodes"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 9,
+                "height": 4,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(cluster_autoscaler_scaled_up_nodes_total)-sum(cluster_autoscaler_scaled_down_nodes_total)"
+                        }
+                    },
+                    "title": "Cluster direction?"
+                },
+                "xPos": 12,
+                "yPos": 9,
+                "height": 4,
+                "width": 12
+            }
+        ]
+    }
+}

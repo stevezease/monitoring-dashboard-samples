@@ -1,0 +1,673 @@
+{
+  "displayName": "ElasticSearch",
+  "dashboardFilters": [
+    {
+      "labelKey": "cluster",
+      "templateVariable": "cluster",
+      "stringValue": "",
+      "filterType": "RESOURCE_LABEL"
+    },
+    {
+      "labelKey": "name",
+      "templateVariable": "name",
+      "stringValue": "",
+      "filterType": "METRIC_LABEL"
+    },
+    {
+      "labelKey": "instance",
+      "templateVariable": "instance",
+      "stringValue": "",
+      "filterType": "RESOURCE_LABEL"
+    }
+  ],
+  "mosaicLayout": {
+    "columns": 24,
+    "tiles": [
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "elasticsearch_cluster_health_status{instance=\"${instance.value}\",cluster=\"${cluster.value}\",color=\"red\"}==1 or (elasticsearch_cluster_health_status{instance=\"${instance.value}\",cluster=\"${cluster.value}\",color=\"green\"}==1)+4 or (elasticsearch_cluster_health_status{instance=\"${instance.value}\",cluster=\"${cluster.value}\",color=\"yellow\"}==1)+22"
+            }
+          },
+          "title": "Cluster health"
+        },
+        "xPos": 0,
+        "yPos": 0,
+        "height": 3,
+        "width": 4
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "count(elasticsearch_breakers_tripped{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}>0)"
+            }
+          },
+          "title": "Tripped for breakers"
+        },
+        "xPos": 4,
+        "yPos": 0,
+        "height": 3,
+        "width": 2
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "sum (elasticsearch_process_cpu_percent{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"} ) / count (elasticsearch_process_cpu_percent{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"} )"
+            }
+          },
+          "title": "CPU usage Avg."
+        },
+        "xPos": 6,
+        "yPos": 0,
+        "height": 3,
+        "width": 4
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "sum (elasticsearch_jvm_memory_used_bytes{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}) / sum (elasticsearch_jvm_memory_max_bytes{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}) * 100"
+            }
+          },
+          "title": "JVM memory used Avg."
+        },
+        "xPos": 10,
+        "yPos": 0,
+        "height": 3,
+        "width": 4
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "elasticsearch_cluster_health_number_of_nodes{instance=\"${instance.value}\",cluster=\"${cluster.value}\"}"
+            }
+          },
+          "title": "Nodes"
+        },
+        "xPos": 14,
+        "yPos": 0,
+        "height": 3,
+        "width": 2
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "elasticsearch_cluster_health_number_of_data_nodes{instance=\"${instance.value}\",cluster=\"${cluster.value}\"}"
+            }
+          },
+          "title": "Data nodes"
+        },
+        "xPos": 16,
+        "yPos": 0,
+        "height": 3,
+        "width": 2
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "elasticsearch_cluster_health_number_of_pending_tasks{instance=\"${instance.value}\",cluster=\"${cluster.value}\"}"
+            }
+          },
+          "title": "Pending tasks"
+        },
+        "xPos": 18,
+        "yPos": 0,
+        "height": 3,
+        "width": 2
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "sum (elasticsearch_process_open_files_count{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"})"
+            }
+          },
+          "title": "Open file descriptors per cluster"
+        },
+        "xPos": 20,
+        "yPos": 0,
+        "height": 3,
+        "width": 4
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "elasticsearch_cluster_health_active_primary_shards{instance=\"${instance.value}\",cluster=\"${cluster.value}\"}"
+            }
+          },
+          "title": "Active primary shards"
+        },
+        "xPos": 0,
+        "yPos": 6,
+        "height": 3,
+        "width": 4
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "elasticsearch_cluster_health_active_shards{instance=\"${instance.value}\",cluster=\"${cluster.value}\"}"
+            }
+          },
+          "title": "Active shards"
+        },
+        "xPos": 4,
+        "yPos": 6,
+        "height": 3,
+        "width": 4
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "elasticsearch_cluster_health_initializing_shards{instance=\"${instance.value}\",cluster=\"${cluster.value}\"}"
+            }
+          },
+          "title": "Initializing shards"
+        },
+        "xPos": 8,
+        "yPos": 6,
+        "height": 3,
+        "width": 4
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "elasticsearch_cluster_health_relocating_shards{instance=\"${instance.value}\",cluster=\"${cluster.value}\"}"
+            }
+          },
+          "title": "Relocating shards"
+        },
+        "xPos": 12,
+        "yPos": 6,
+        "height": 3,
+        "width": 4
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "elasticsearch_cluster_health_delayed_unassigned_shards{instance=\"${instance.value}\",cluster=\"${cluster.value}\"} "
+            }
+          },
+          "title": "Delayed shards"
+        },
+        "xPos": 16,
+        "yPos": 6,
+        "height": 3,
+        "width": 4
+      },
+      {
+        "widget": {
+          "scorecard": {
+            "sparkChartView": {
+              "sparkChartType": "SPARK_LINE"
+            },
+            "thresholds": [],
+            "timeSeriesQuery": {
+              "prometheusQuery": "elasticsearch_cluster_health_unassigned_shards{instance=\"${instance.value}\",cluster=\"${cluster.value}\"} "
+            }
+          },
+          "title": "Unassigned shards"
+        },
+        "xPos": 20,
+        "yPos": 6,
+        "height": 3,
+        "width": 4
+      },
+      {
+        "widget": {
+          "title": "GC count",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(elasticsearch_jvm_gc_collection_seconds_count{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}[${__interval}])"
+                },
+                "legendTemplate": "${labels.name} - ${labels.gc}"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 12,
+        "height": 14,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "GC time",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(elasticsearch_jvm_gc_collection_seconds_sum{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}[${__interval}])"
+                },
+                "legendTemplate": "${labels.name} - ${labels.gc}"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 12,
+        "height": 14,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Total translog operations",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(elasticsearch_indices_translog_operations{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}[${__interval}])"
+                },
+                "legendTemplate": "${labels.name}"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 26,
+        "height": 9,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Total translog size in bytes",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(elasticsearch_indices_translog_size_in_bytes{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}[${__interval}])"
+                },
+                "legendTemplate": "${labels.name}"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 26,
+        "height": 9,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Tripped for breakers",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_breakers_tripped{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "${labels.name}: ${labels.breaker}"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 35,
+        "height": 9,
+        "width": 24
+      },
+      {
+        "widget": {
+          "title": "Estimated size in bytes of breaker",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_breakers_estimated_size_bytes{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "${labels.name}: ${labels.breaker}"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_breakers_limit_size_bytes{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "${labels.name}: limit for ${labels.breaker}"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 44,
+        "height": 9,
+        "width": 24
+      },
+      {
+        "widget": {
+          "title": "Load average",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_os_load1{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "load1: ${labels.name}"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_os_load5{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "load5: ${labels.name}"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_os_load15{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "load15: ${labels.name}"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 53,
+        "height": 14,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "CPU usage",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_process_cpu_percent{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "${labels.name}"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 53,
+        "height": 14,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "JVM memory usage",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_jvm_memory_used_bytes{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "${labels.name} used: ${labels.area}"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_jvm_memory_max_bytes{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "${labels.name} max: ${labels.area}"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_jvm_memory_pool_peak_used_bytes{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "${labels.name} peak used pool: ${labels.pool}"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 67,
+        "height": 14,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "JVM memory committed",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_jvm_memory_committed_bytes{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "${labels.name} committed: ${labels.area}"
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_jvm_memory_max_bytes{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "${labels.name} max: ${labels.area}"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 67,
+        "height": 14,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Disk usage",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "1-(elasticsearch_filesystem_data_available_bytes{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}/elasticsearch_filesystem_data_size_bytes{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"})"
+                },
+                "legendTemplate": "${labels.name}: ${labels.path}"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 81,
+        "height": 14,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Network usage",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(elasticsearch_transport_tx_size_bytes_total{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}[${__interval}])"
+                },
+                "legendTemplate": "${labels.name}: sent "
+              },
+              {
+                "plotType": "LINE",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "-irate(elasticsearch_transport_rx_size_bytes_total{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}[${__interval}])"
+                },
+                "legendTemplate": "${labels.name}: received"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 81,
+        "height": 14,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Documents count on node",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "STACKED_AREA",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "elasticsearch_indices_docs{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}"
+                },
+                "legendTemplate": "${labels.name}"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": 95,
+        "height": 14,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Documents indexed rate",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "STACKED_AREA",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(elasticsearch_indices_indexing_index_total{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}[${__interval}])"
+                },
+                "legendTemplate": "${labels.name}"
+              }
+            ]
+          }
+        },
+        "xPos": 12,
+        "yPos": 95,
+        "height": 14,
+        "width": 12
+      },
+      {
+        "widget": {
+          "title": "Documents deleted rate",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "STACKED_AREA",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(elasticsearch_indices_docs_deleted{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}[${__interval}])"
+                },
+                "legendTemplate": "${labels.name}"
+              }
+            ]
+          }
+        },
+        "xPos": 0,
+        "yPos": null,
+        "height": 14,
+        "width": 8
+      },
+      {
+        "widget": {
+          "title": "Documents merged rate",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "STACKED_AREA",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "rate(elasticsearch_indices_merges_docs_total{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}[${__interval}])"
+                },
+                "legendTemplate": "${labels.name}"
+              }
+            ]
+          }
+        },
+        "xPos": 8,
+        "yPos": null,
+        "height": 14,
+        "width": 8
+      },
+      {
+        "widget": {
+          "title": "Documents merged bytes",
+          "xyChart": {
+            "dataSets": [
+              {
+                "plotType": "STACKED_AREA",
+                "timeSeriesQuery": {
+                  "prometheusQuery": "irate(elasticsearch_indices_merges_total_size_bytes_total{instance=\"${instance.value}\",cluster=\"${cluster.value}\",name=~\"${name.value}\"}[${__interval}])"
+                },
+                "legendTemplate": "${labels.name}"
+              }
+            ]
+          }
+        },
+        "xPos": 16,
+        "yPos": null,
+        "height": 14,
+        "width": 8
+      }
+    ]
+  },
+  "labels": {
+    "goog-imported-via-script": "",
+    "cloud-ops-grafana-importer": ""
+  }
+}

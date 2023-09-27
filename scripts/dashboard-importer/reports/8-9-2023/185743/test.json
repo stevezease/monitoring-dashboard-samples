@@ -1,0 +1,127 @@
+{
+    "displayName": "Docker and system monitoring",
+    "dashboardFilters": [
+        {
+            "labelKey": "instance",
+            "templateVariable": "server",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "time() - node_boot_time{instance=~\"${server.value}:.*\"}"
+                        }
+                    },
+                    "title": "Uptime"
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 5,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "count(rate(container_last_seen{name=~\".+\"}[${__interval}]))"
+                        }
+                    },
+                    "title": "Containers"
+                },
+                "xPos": 4,
+                "yPos": 0,
+                "height": 5,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 1
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "min((node_filesystem_size{fstype=~\"xfs|ext4\",instance=~\"${server.value}:.*\"} - node_filesystem_free{fstype=~\"xfs|ext4\",instance=~\"${server.value}:.*\"} )/ node_filesystem_size{fstype=~\"xfs|ext4\",instance=~\"${server.value}:.*\"})"
+                        }
+                    },
+                    "title": "Disk space"
+                },
+                "xPos": 8,
+                "yPos": 0,
+                "height": 5,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "((node_memory_MemTotal{instance=~\"${server.value}:.*\"} - node_memory_MemAvailable{instance=~\"${server.value}:.*\"}) / node_memory_MemTotal{instance=~\"${server.value}:.*\"}) * 100"
+                        }
+                    },
+                    "title": "Memory"
+                },
+                "xPos": 12,
+                "yPos": 0,
+                "height": 5,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 500000000
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(node_memory_SwapTotal{instance=~'${server.value}:.*'} - node_memory_SwapFree{instance=~'${server.value}:.*'})"
+                        }
+                    },
+                    "title": "Swap"
+                },
+                "xPos": 16,
+                "yPos": 0,
+                "height": 5,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "node_load1{instance=~\"${server.value}:.*\"} / count by(job, instance)(count by(job, instance, cpu)(node_cpu{instance=~\"${server.value}:.*\"}))"
+                        }
+                    },
+                    "title": "Load"
+                },
+                "xPos": 20,
+                "yPos": 0,
+                "height": 5,
+                "width": 4
+            }
+        ]
+    }
+}

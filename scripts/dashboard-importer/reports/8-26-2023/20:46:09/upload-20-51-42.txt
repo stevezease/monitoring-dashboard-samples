@@ -1,0 +1,2 @@
+kubernetes_nodes.json, https://console.cloud.google.com/monitoring/dashboards/builder/ae569d15-fddf-4f7d-94df-3232b88f2e27?project=lesser-weevil
+kube-state-metrics-v2.json, https://console.cloud.google.com/monitoring/dashboards/builder/83b7aad7-f808-4541-9b04-dc21e79e9e98?project=lesser-weevil

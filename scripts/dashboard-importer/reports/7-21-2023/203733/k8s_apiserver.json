@@ -1,0 +1,185 @@
+{
+    "displayName": "Kubernetes apiserver",
+    "dashboardFilters": [],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "apiserver request rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(apiserver_request_total[5m])) by (verb)"
+                                },
+                                "legendTemplate": "{{verb}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "workqueue service time",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.95, sum(rate(workqueue_queue_duration_seconds_bucket[5m])) by (le))"
+                                },
+                                "legendTemplate": "p95"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.90, sum(rate(workqueue_queue_duration_seconds_bucket[5m])) by (le))"
+                                },
+                                "legendTemplate": "p90"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.5, sum(rate(workqueue_queue_duration_seconds_bucket[5m])) by (le))"
+                                },
+                                "legendTemplate": "p50"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 0,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "apiserver request latency",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.95, sum(rate(apiserver_request_duration_seconds_bucket{verb!~\"CONNECT|WATCH\"}[5m])) by (le))"
+                                },
+                                "legendTemplate": "p95"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.90, sum(rate(apiserver_request_duration_seconds_bucket{verb!~\"CONNECT|WATCH\"}[5m])) by (le))"
+                                },
+                                "legendTemplate": "p90"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.5, sum(rate(apiserver_request_duration_seconds_bucket{verb!~\"CONNECT|WATCH\"}[5m])) by (le))"
+                                },
+                                "legendTemplate": "p50 "
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 8,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "workqueue processing time",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.95, sum(rate(workqueue_work_duration_seconds_bucket[5m])) by (le))"
+                                },
+                                "legendTemplate": "p95"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.9, sum(rate(workqueue_work_duration_seconds_bucket[5m])) by (le))"
+                                },
+                                "legendTemplate": "p90"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.5, sum(rate(workqueue_work_duration_seconds_bucket[5m])) by (le))"
+                                },
+                                "legendTemplate": "p50"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 8,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "etcd helper cache hit ratio",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(etcd_helper_cache_hit_total[5m]))/sum((rate(etcd_helper_cache_hit_total[5m])+rate(etcd_helper_cache_miss_total[5m])))"
+                                },
+                                "legendTemplate": "ratio"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 16,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "etcd request latency",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.95, sum(rate(etcd_request_duration_seconds_bucket[5m])) by (le))"
+                                },
+                                "legendTemplate": "p95"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.90, sum(rate(etcd_request_duration_seconds_bucket[5m])) by (le))"
+                                },
+                                "legendTemplate": "p90"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.5, sum(rate(etcd_request_duration_seconds_bucket[5m])) by (le))"
+                                },
+                                "legendTemplate": "p50"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 17,
+                "height": 8,
+                "width": 12
+            }
+        ]
+    }
+}

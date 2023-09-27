@@ -1,0 +1,1 @@
+k8s_cluster_example.json, https://console.cloud.google.com/monitoring/dashboards/builder/7c6119fb-401d-43c0-827c-fbbbc7601ead?project=lesser-weevil

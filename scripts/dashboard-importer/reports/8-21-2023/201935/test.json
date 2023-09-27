@@ -1,0 +1,118 @@
+{
+    "displayName": "Kubernetes Resource Requests",
+    "dashboardFilters": [],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "CPU Cores",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "min(sum(kube_node_status_allocatable_cpu_cores) by (instance))"
+                                },
+                                "legendTemplate": "Allocatable CPU Cores"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "max(sum(kube_pod_container_resource_requests_cpu_cores) by (instance))"
+                                },
+                                "legendTemplate": "Requested CPU Cores"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "max(sum(kube_pod_container_resource_limits_cpu_cores) by (instance))"
+                                },
+                                "legendTemplate": "Limits CPU Cores"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 8,
+                "width": 18
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "max(sum(kube_pod_container_resource_requests_cpu_cores) by (instance)) / min(sum(kube_node_status_allocatable_cpu_cores) by (instance)) * 100"
+                        }
+                    },
+                    "title": "CPU Cores"
+                },
+                "xPos": 18,
+                "yPos": 0,
+                "height": 8,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Memory",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "min(sum(kube_node_status_allocatable_memory_bytes) by (instance))"
+                                },
+                                "legendTemplate": "Allocatable Memory"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "max(sum(kube_pod_container_resource_requests_memory_bytes) by (instance))"
+                                },
+                                "legendTemplate": "Requested Memory"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "max(sum(kube_pod_container_resource_limits_memory_bytes) by (instance))"
+                                },
+                                "legendTemplate": "Limits Memory"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 8,
+                "height": 8,
+                "width": 18
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "max(sum(kube_pod_container_resource_requests_memory_bytes) by (instance)) / min(sum(kube_node_status_allocatable_memory_bytes) by (instance)) * 100"
+                        }
+                    },
+                    "title": "Memory"
+                },
+                "xPos": 18,
+                "yPos": 8,
+                "height": 8,
+                "width": 6
+            }
+        ]
+    },
+    "labels": {
+        "goog-imported-via-script": ""
+    }
+}

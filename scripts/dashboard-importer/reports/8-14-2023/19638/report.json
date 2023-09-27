@@ -1,0 +1,15 @@
+{
+    "id": "19638",
+    "results": [
+        {
+            "displayName": "NGINX Ingress controller",
+            "sourcePath": "./test/test.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/8-14-2023/19638/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-14-2023/19638/",
+    "date": "8-14-2023"
+}

@@ -1,0 +1,25 @@
+{
+    "id": "20:38:31",
+    "results": [
+        {
+            "displayName": "Kubernetes Cluster (Prometheus)",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "datasource template variable with name datasource was skipped because it's type was not supported",
+                "constant template variable with name node was skipped because it's type was not supported",
+                "constant template variable with name namespace was skipped because it's type was not supported",
+                "Panel 'Cluster Health': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Deployments': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Node': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Pods': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Containers': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Jobs': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-7/20:38:31/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/2023-9-7/20:38:31/",
+    "date": "2023-9-7"
+}

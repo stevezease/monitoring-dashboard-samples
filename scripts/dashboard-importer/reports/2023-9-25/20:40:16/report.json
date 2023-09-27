@@ -1,0 +1,18 @@
+{
+    "id": "20:40:16",
+    "results": [
+        {
+            "displayName": "Kubernetes / API server",
+            "sourcePath": "./json/kubernetes_api.json",
+            "warnings": [
+                "Template variable 'datasource' was skipped because its type 'datasource' is not supported",
+                "panel Notice target at index 0 does not have an expression"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-25/20:40:16/kubernetes_api.json"
+        }
+    ],
+    "sourcePath": "./json/kubernetes_api.json",
+    "outputPath": "reports/2023-9-25/20:40:16/",
+    "date": "2023-9-25"
+}

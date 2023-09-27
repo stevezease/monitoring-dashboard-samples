@@ -1,0 +1,168 @@
+{
+    "displayName": "New dashboard",
+    "dashboardFilters": [],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "Test Time Series",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(node_cpu_seconds_total{mode=\"idle\"}[5m])"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Test Stacked Area Chart",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(node_cpu_seconds_total{mode=\"idle\"}[5m])"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 0,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Test Graph Old",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(node_cpu_seconds_total{mode=\"idle\"}[5m])"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 9,
+                "height": 8,
+                "width": 9
+            },
+            {
+                "widget": {
+                    "title": "Test Bar Chart",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_BAR",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(node_cpu_seconds_total{mode=\"idle\"}[5m])"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 9,
+                "yPos": 9,
+                "height": 8,
+                "width": 7
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(node_cpu_seconds_total{mode=\"idle\"}[5m])"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 16,
+                "yPos": 9,
+                "height": 8,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(sum(node_memory_MemFree_bytes{}) / sum(node_memory_MemTotal_bytes{})) * 100"
+                        }
+                    },
+                    "title": "Test Gauge Chart"
+                },
+                "xPos": 0,
+                "yPos": 17,
+                "height": 8,
+                "width": 7
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(sum(node_memory_MemFree_bytes{}) / sum(node_memory_MemTotal_bytes{})) * 100"
+                        }
+                    },
+                    "title": "Test Stat"
+                },
+                "xPos": 7,
+                "yPos": 17,
+                "height": 8,
+                "width": 9
+            },
+            {
+                "widget": {
+                    "title": "Test Text",
+                    "text": {
+                        "content": "",
+                        "format": "MARKDOWN"
+                    }
+                },
+                "xPos": 16,
+                "yPos": 17,
+                "height": 8,
+                "width": 8
+            }
+        ]
+    },
+    "labels": {
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": ""
+    }
+}

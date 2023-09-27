@@ -1,0 +1,1180 @@
+{
+    "displayName": "Node Exporter Full",
+    "dashboardFilters": [
+        {
+            "labelKey": "job",
+            "templateVariable": "job",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        },
+        {
+            "labelKey": "instance",
+            "templateVariable": "node",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode!=\"idle\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))) * 100"
+                        }
+                    },
+                    "title": "CPU Busy"
+                },
+                "xPos": 0,
+                "yPos": 1,
+                "height": 4,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "avg(node_load5{instance=\"${node.value}\",job=\"${job.value}\"}) /  count(count(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}) by (cpu)) * 100"
+                        }
+                    },
+                    "title": "Sys Load (5m avg)"
+                },
+                "xPos": 3,
+                "yPos": 1,
+                "height": 4,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "avg(node_load15{instance=\"${node.value}\",job=\"${job.value}\"}) /  count(count(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}) by (cpu)) * 100"
+                        }
+                    },
+                    "title": "Sys Load (15m avg)"
+                },
+                "xPos": 6,
+                "yPos": 1,
+                "height": 4,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "((node_memory_MemTotal_bytes{instance=\"${node.value}\",job=\"${job.value}\"} - node_memory_MemFree_bytes{instance=\"${node.value}\",job=\"${job.value}\"}) / (node_memory_MemTotal_bytes{instance=\"${node.value}\",job=\"${job.value}\"} )) * 100"
+                        }
+                    },
+                    "title": "RAM Used"
+                },
+                "xPos": 9,
+                "yPos": 1,
+                "height": 4,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "((node_memory_SwapTotal_bytes{instance=\"${node.value}\",job=\"${job.value}\"} - node_memory_SwapFree_bytes{instance=\"${node.value}\",job=\"${job.value}\"}) / (node_memory_SwapTotal_bytes{instance=\"${node.value}\",job=\"${job.value}\"} )) * 100"
+                        }
+                    },
+                    "title": "SWAP Used"
+                },
+                "xPos": 12,
+                "yPos": 1,
+                "height": 4,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "100 - ((node_filesystem_avail_bytes{instance=\"${node.value}\",job=\"${job.value}\",mountpoint=\"/\",fstype!=\"rootfs\"} * 100) / node_filesystem_size_bytes{instance=\"${node.value}\",job=\"${job.value}\",mountpoint=\"/\",fstype!=\"rootfs\"})"
+                        }
+                    },
+                    "title": "Root FS Used"
+                },
+                "xPos": 15,
+                "yPos": 1,
+                "height": 4,
+                "width": 3
+            },
+            {
+                "widget": {
+                    "title": "CPU Cores",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "count(count(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}) by (cpu))"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 18,
+                "yPos": 1,
+                "height": 2,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "title": "Uptime",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_time_seconds{instance=\"${node.value}\",job=\"${job.value}\"} - node_boot_time_seconds{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 20,
+                "yPos": 1,
+                "height": 2,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "title": "RootFS Total",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_filesystem_size_bytes{instance=\"${node.value}\",job=\"${job.value}\",mountpoint=\"/\",fstype!=\"rootfs\"}"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 18,
+                "yPos": 3,
+                "height": 2,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "title": "RAM Total",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_MemTotal_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 20,
+                "yPos": 3,
+                "height": 2,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "title": "SWAP Total",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_SwapTotal_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 22,
+                "yPos": 3,
+                "height": 2,
+                "width": 2
+            },
+            {
+                "widget": {
+                    "title": "CPU Basic",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"system\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "Busy System"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"user\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "Busy User"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"iowait\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "Busy Iowait"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=~\".*irq\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "Busy IRQs"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode!='idle',mode!='user',mode!='system',mode!='iowait',mode!='irq',mode!='softirq'}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "Busy Other"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"idle\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "Idle"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 6,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Basic",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_MemTotal_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "RAM Total"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_MemTotal_bytes{instance=\"${node.value}\",job=\"${job.value}\"} - node_memory_MemFree_bytes{instance=\"${node.value}\",job=\"${job.value}\"} - (node_memory_Cached_bytes{instance=\"${node.value}\",job=\"${job.value}\"} + node_memory_Buffers_bytes{instance=\"${node.value}\",job=\"${job.value}\"} + node_memory_SReclaimable_bytes{instance=\"${node.value}\",job=\"${job.value}\"})"
+                                },
+                                "legendTemplate": "RAM Used"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Cached_bytes{instance=\"${node.value}\",job=\"${job.value}\"} + node_memory_Buffers_bytes{instance=\"${node.value}\",job=\"${job.value}\"} + node_memory_SReclaimable_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "RAM Cache + Buffer"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_MemFree_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "RAM Free"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(node_memory_SwapTotal_bytes{instance=\"${node.value}\",job=\"${job.value}\"} - node_memory_SwapFree_bytes{instance=\"${node.value}\",job=\"${job.value}\"})"
+                                },
+                                "legendTemplate": "SWAP Used"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 6,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Network Traffic Basic",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_network_receive_bytes_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])*8"
+                                },
+                                "legendTemplate": "recv {{device}}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_network_transmit_bytes_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])*8"
+                                },
+                                "legendTemplate": "trans {{device}} "
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 13,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Disk Space Used Basic",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "100 - ((node_filesystem_avail_bytes{instance=\"${node.value}\",job=\"${job.value}\",device!~'rootfs'} * 100) / node_filesystem_size_bytes{instance=\"${node.value}\",job=\"${job.value}\",device!~'rootfs'})"
+                                },
+                                "legendTemplate": "{{mountpoint}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 13,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CPU",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"system\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "System - Processes executing in kernel mode"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"user\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "User - Normal processes executing in user mode"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"nice\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "Nice - Niced processes executing in user mode"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"iowait\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "Iowait - Waiting for I/O to complete"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"irq\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "Irq - Servicing interrupts"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"softirq\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "Softirq - Servicing softirqs"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"steal\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "Steal - Time spent in other operating systems when running in a virtualized environment"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"idle\"}[${__interval}])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])))"
+                                },
+                                "legendTemplate": "Idle - Waiting for something to happen"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 20,
+                "height": 12,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Stack",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_MemTotal_bytes{instance=\"${node.value}\",job=\"${job.value}\"} - node_memory_MemFree_bytes{instance=\"${node.value}\",job=\"${job.value}\"} - node_memory_Buffers_bytes{instance=\"${node.value}\",job=\"${job.value}\"} - node_memory_Cached_bytes{instance=\"${node.value}\",job=\"${job.value}\"} - node_memory_Slab_bytes{instance=\"${node.value}\",job=\"${job.value}\"} - node_memory_PageTables_bytes{instance=\"${node.value}\",job=\"${job.value}\"} - node_memory_SwapCached_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Apps - Memory used by user-space applications"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_PageTables_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "PageTables - Memory used to map between virtual and physical memory addresses"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_SwapCached_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "SwapCache - Memory that keeps track of pages that have been fetched from swap but not yet been modified"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Slab_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Slab - Memory used by the kernel to cache data structures for its own use (caches like inode, dentry, etc)"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Cached_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Cache - Parked file data (file content) cache"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Buffers_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Buffers - Block device (e.g. harddisk) cache"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_MemFree_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Unused - Free memory unassigned"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(node_memory_SwapTotal_bytes{instance=\"${node.value}\",job=\"${job.value}\"} - node_memory_SwapFree_bytes{instance=\"${node.value}\",job=\"${job.value}\"})"
+                                },
+                                "legendTemplate": "Swap - Swap space used"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_HardwareCorrupted_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Hardware Corrupted - Amount of RAM that the kernel identified as corrupted / not working"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 20,
+                "height": 12,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Network Traffic",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_network_receive_bytes_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])*8"
+                                },
+                                "legendTemplate": "{{device}} - Receive"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_network_transmit_bytes_total{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])*8"
+                                },
+                                "legendTemplate": "{{device}} - Transmit"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 32,
+                "height": 12,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Disk Space Used",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_filesystem_size_bytes{instance=\"${node.value}\",job=\"${job.value}\",device!~'rootfs'} - node_filesystem_avail_bytes{instance=\"${node.value}\",job=\"${job.value}\",device!~'rootfs'}"
+                                },
+                                "legendTemplate": "{{mountpoint}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 32,
+                "height": 12,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Disk IOps",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_disk_reads_completed_total{instance=\"${node.value}\",job=\"${job.value}\",device=~\"$diskdevices\"}[${__interval}])"
+                                },
+                                "legendTemplate": "{{device}} - Reads completed"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_disk_writes_completed_total{instance=\"${node.value}\",job=\"${job.value}\",device=~\"$diskdevices\"}[${__interval}])"
+                                },
+                                "legendTemplate": "{{device}} - Writes completed"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 44,
+                "height": 12,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "I/O Usage Read / Write",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_disk_read_bytes_total{instance=\"${node.value}\",job=\"${job.value}\",device=~\"$diskdevices\"}[${__interval}])"
+                                },
+                                "legendTemplate": "{{device}} - Successfully read bytes"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_disk_written_bytes_total{instance=\"${node.value}\",job=\"${job.value}\",device=~\"$diskdevices\"}[${__interval}])"
+                                },
+                                "legendTemplate": "{{device}} - Successfully written bytes"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 44,
+                "height": 12,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "I/O Utilization",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_disk_io_time_seconds_total{instance=\"${node.value}\",job=\"${job.value}\",device=~\"$diskdevices\"} [${__interval}])"
+                                },
+                                "legendTemplate": "{{device}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 56,
+                "height": 12,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CPU spent seconds in guests (VMs)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_guest_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"user\"}[1m])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[1m])))"
+                                },
+                                "legendTemplate": "Guest - Time spent running a virtual CPU for a guest operating system"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by(instance) (irate(node_cpu_guest_seconds_total{instance=\"${node.value}\",job=\"${job.value}\", mode=\"nice\"}[1m])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"${node.value}\",job=\"${job.value}\"}[1m])))"
+                                },
+                                "legendTemplate": "GuestNice - Time spent running a niced guest  (virtual CPU for guest operating system)"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 56,
+                "height": 12,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Active / Inactive",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Inactive_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Inactive - Memory which has been less recently used.  It is more eligible to be reclaimed for other purposes"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Active_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Active - Memory that has been used more recently and usually not reclaimed unless absolutely necessary"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 68,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Committed",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Committed_AS_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Committed_AS - Amount of memory presently allocated on the system"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_CommitLimit_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "CommitLimit - Amount of  memory currently available to be allocated on the system"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 68,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Active / Inactive Detail",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Inactive_file_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Inactive_file - File-backed memory on inactive LRU list"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Inactive_anon_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Inactive_anon - Anonymous and swap cache on inactive LRU list, including tmpfs (shmem)"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Active_file_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Active_file - File-backed memory on active LRU list"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Active_anon_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Active_anon - Anonymous and swap cache on active least-recently-used (LRU) list, including tmpfs"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 78,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Writeback and Dirty",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Writeback_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Writeback - Memory which is actively being written back to disk"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_WritebackTmp_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "WritebackTmp - Memory used by FUSE for temporary writeback buffers"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Dirty_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Dirty - Memory which is waiting to get written back to the disk"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 78,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Shared and Mapped",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Mapped_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Mapped - Used memory in mapped pages files which have been mapped, such as libraries"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Shmem_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Shmem - Used shared memory (shared between several processes, thus including RAM disks)"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_ShmemHugePages_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "ShmemHugePages - Memory used by shared memory (shmem) and tmpfs allocated  with huge pages"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_ShmemPmdMapped_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "ShmemPmdMapped - Amount of shared (shmem/tmpfs) memory backed by huge pages"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 88,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Slab",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_SUnreclaim_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "SUnreclaim - Part of Slab, that cannot be reclaimed on memory pressure"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_SReclaimable_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "SReclaimable - Part of Slab, that might be reclaimed, such as caches"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 88,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Vmalloc",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_VmallocChunk_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "VmallocChunk - Largest contiguous block of vmalloc area which is free"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_VmallocTotal_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "VmallocTotal - Total size of vmalloc memory area"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_VmallocUsed_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "VmallocUsed - Amount of vmalloc area which is used"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 98,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Bounce",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Bounce_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Bounce - Memory used for block device bounce buffers"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 98,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Anonymous",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_AnonHugePages_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "AnonHugePages - Memory in anonymous huge pages"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_AnonPages_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "AnonPages - Memory in user pages not backed by files"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 108,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Kernel / CPU",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_KernelStack_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "KernelStack - Kernel memory stack. This is not reclaimable"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Percpu_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "PerCPU - Per CPU memory allocated dynamically by loadable modules"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 108,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory HugePages Counter",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_HugePages_Free{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "HugePages_Free - Huge pages in the pool that are not yet allocated"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_HugePages_Rsvd{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "HugePages_Rsvd - Huge pages for which a commitment to allocate from the pool has been made, but no allocation has yet been made"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_HugePages_Surp{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "HugePages_Surp - Huge pages in the pool above the value in /proc/sys/vm/nr_hugepages"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 118,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory HugePages Size",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_HugePages_Total{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "HugePages - Total size of the pool of huge pages"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Hugepagesize_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Hugepagesize - Huge Page size"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 118,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory DirectMap",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_DirectMap1G_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "DirectMap1G - Amount of pages mapped as this size"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_DirectMap2M_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "DirectMap2M - Amount of pages mapped as this size"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_DirectMap4k_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "DirectMap4K - Amount of pages mapped as this size"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 128,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Unevictable and MLocked",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Unevictable_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "Unevictable - Amount of unevictable memory that can't be swapped out for a variety of reasons"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_Mlocked_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "MLocked - Size of pages locked to memory using the mlock() system call"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 128,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory NFS",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "node_memory_NFS_Unstable_bytes{instance=\"${node.value}\",job=\"${job.value}\"}"
+                                },
+                                "legendTemplate": "NFS Unstable - Memory in NFS pages sent to the server, but not yet committed to the storage"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 138,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Pages In / Out",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_vmstat_pgpgin{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])"
+                                },
+                                "legendTemplate": "Pagesin - Page in operations"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_vmstat_pgpgout{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])"
+                                },
+                                "legendTemplate": "Pagesout - Page out operations"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 148,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Memory Pages Swap In / Out",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_vmstat_pswpin{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])"
+                                },
+                                "legendTemplate": "Pswpin - Pages swapped in"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(node_vmstat_pswpout{instance=\"${node.value}\",job=\"${job.value}\"}[${__interval}])"
+                                },
+                                "legendTemplate": "Pswpout - Pages swapped out"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 148,
+                "height": 10,
+                "width": 12
+            }
+        ]
+    }
+}

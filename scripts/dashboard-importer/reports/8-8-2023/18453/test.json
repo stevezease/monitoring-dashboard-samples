@@ -1,0 +1,375 @@
+{
+    "displayName": "kube-state-metrics-v2",
+    "dashboardFilters": [
+        {
+            "labelKey": "cluster",
+            "templateVariable": "cluster",
+            "filterType": "RESOURCE_LABEL"
+        },
+        {
+            "labelKey": "node",
+            "templateVariable": "node",
+            "filterType": "METRIC_LABEL"
+        },
+        {
+            "labelKey": "namespace",
+            "templateVariable": "namespace",
+            "filterType": "RESOURCE_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_info{cluster=~\"${cluster.value}\",node=~\"${node.value}\"}) / sum(kube_node_status_allocatable{cluster=~\"${cluster.value}\",resource=\"pods\",node=~\"${node.value}\"})"
+                        }
+                    },
+                    "title": "Cluster Pod Requested"
+                },
+                "xPos": 0,
+                "yPos": 1,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_container_resource_requests{cluster=~\"${cluster.value}\",resource=\"cpu\",node=~\"${node.value}\"})/ sum(kube_node_status_allocatable{node=~\"${node.value}\",cluster=~\"${cluster.value}\",resource=\"cpu\"})"
+                        }
+                    },
+                    "title": "Cluster CPU Requested"
+                },
+                "xPos": 6,
+                "yPos": 1,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_pod_container_resource_requests{cluster=~\"${cluster.value}\",resource=\"memory\",node=~\"${node.value}\"}) / sum(kube_node_status_allocatable{node=~\"${node.value}\",cluster=~\"${cluster.value}\",resource=\"memory\"})"
+                        }
+                    },
+                    "title": "Cluster Memory  Requested"
+                },
+                "xPos": 12,
+                "yPos": 1,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Cluster Pod Capacity",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_node_status_allocatable{cluster=~\"${cluster.value}\",resource=\"pods\",node=~\"${node.value}\"})"
+                                },
+                                "legendTemplate": "allocatable"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_pod_info{node=~\"${node.value}\",cluster=~\"${cluster.value}\"})"
+                                },
+                                "legendTemplate": "requested"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 5,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Cluster CPU Capacity",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_node_status_capacity{node=~\"${node.value}\",cluster=~\"${cluster.value}\",resource=\"cpu\"})"
+                                },
+                                "legendTemplate": "allocatable"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_node_status_allocatable{node=~\"${node.value}\",cluster=~\"${cluster.value}\",resource=\"cpu\"})"
+                                },
+                                "legendTemplate": "capacity"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_pod_container_resource_requests{cluster=~\"${cluster.value}\",resource=\"cpu\",node=~\"${node.value}\"})"
+                                },
+                                "legendTemplate": "requested"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_pod_container_resource_limits{cluster=~\"${cluster.value}\",resource=\"cpu\",node=~\"${node.value}\"})"
+                                },
+                                "legendTemplate": "limited"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 6,
+                "yPos": 5,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Cluster Mem Capacity",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_node_status_allocatable{node=~\"${node.value}\",cluster=~\"${cluster.value}\",resource=\"memory\"})"
+                                },
+                                "legendTemplate": "allocatable"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_node_status_capacity{node=~\"${node.value}\",cluster=~\"${cluster.value}\",resource=\"memory\"})"
+                                },
+                                "legendTemplate": "capacity"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_pod_container_resource_requests{cluster=~\"${cluster.value}\",resource=\"memory\",node=~\"${node.value}\"})"
+                                },
+                                "legendTemplate": "requested"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_pod_container_resource_limits{cluster=~\"${cluster.value}\",resource=\"memory\",node=~\"${node.value}\"})"
+                                },
+                                "legendTemplate": "limited"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 5,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_node_info{cluster=~\"${cluster.value}\"})"
+                        }
+                    },
+                    "title": "Number Of Nodes"
+                },
+                "xPos": 0,
+                "yPos": 11,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_node_spec_unschedulable{cluster=~\"${cluster.value}\"})"
+                        }
+                    },
+                    "title": "Nodes Unavailable"
+                },
+                "xPos": 4,
+                "yPos": 11,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "title": "Node NotReady",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "kube_node_status_condition{cluster=~\"${cluster.value}\",condition=\"Ready\",status=\"false\"}==1"
+                                },
+                                "legendTemplate": "{{node}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 8,
+                "yPos": 11,
+                "height": 3,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "Node Pressure",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "kube_node_status_condition{condition=\"DiskPressure\",cluster=~\"${cluster.value}\",status=\"true\"}==1"
+                                },
+                                "legendTemplate": "{{node}} {{condition}}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "kube_node_status_condition{condition=\"MemoryPressure\",node=~\"${node.value}\",cluster=~\"${cluster.value}\",status=\"true\"}==1"
+                                },
+                                "legendTemplate": "{{node}} {{condition}}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "kube_node_status_condition{condition=~\"PIDPressure\",node=~\"${node.value}\",cluster=~\"${cluster.value}\",status=\"true\"}==1"
+                                },
+                                "legendTemplate": "{{node}} {{condition}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 16,
+                "yPos": 11,
+                "height": 3,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "node number",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(kube_node_info{cluster=~\"${cluster.value}\"})"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 14,
+                "height": 7,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Deployment Replicas - Up To Date",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "kube_deployment_status_replicas{namespace=~\"${namespace.value}\",cluster=~\"${cluster.value}\"}"
+                                },
+                                "legendTemplate": "{{ deployment }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 17,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_deployment_status_replicas{namespace=~\"${namespace.value}\",cluster=~\"${cluster.value}\"})"
+                        }
+                    },
+                    "title": "Deployment Replicas"
+                },
+                "xPos": 6,
+                "yPos": 17,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_deployment_status_replicas_updated{namespace=~\"${namespace.value}\",cluster=~\"${cluster.value}\"})"
+                        }
+                    },
+                    "title": "Deployment Replicas - Updated"
+                },
+                "xPos": 12,
+                "yPos": 17,
+                "height": 5,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(kube_deployment_status_replicas_unavailable{namespace=~\"${namespace.value}\",cluster=~\"${cluster.value}\"})"
+                        }
+                    },
+                    "title": "Deployment Replicas - Unavailable"
+                },
+                "xPos": 18,
+                "yPos": 17,
+                "height": 5,
+                "width": 6
+            }
+        ]
+    }
+}

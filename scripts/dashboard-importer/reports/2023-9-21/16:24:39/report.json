@@ -1,0 +1,17 @@
+{
+    "id": "16:24:39",
+    "results": [
+        {
+            "displayName": "Istio Mesh Dashboard",
+            "sourcePath": "./json/7639_rev180.json",
+            "warnings": [
+                "Template variable 'datasource' was skipped because its type 'datasource' is not supported"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-21/16:24:39/7639_rev180.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-21/16:24:39/",
+    "date": "2023-9-21"
+}

@@ -1,0 +1,15 @@
+{
+    "id": "233559",
+    "results": [
+        {
+            "displayName": "kube-state-metrics-v2",
+            "sourcePath": "./test/test.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/7-19-2023/233559/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/7-19-2023/233559/",
+    "date": "7-19-2023"
+}

@@ -1,0 +1,60 @@
+{
+    "id": "142829",
+    "results": [
+        {
+            "displayName": "Cluster Monitoring for Kubernetes",
+            "sourcePath": "./json/cloud_monitoring_k8s.json",
+            "warnings": [
+                "Panel Summary is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Cluster memory usage: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Cluster CPU usage (${__interval} avg): the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Cluster filesystem usage: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Used: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Total: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Used: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Total: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Used: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Total: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Memory is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel CPU is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Network I/O is a smaller height than the min allowed height of 2 and so the tile was skipped"
+            ],
+            "errors": [],
+            "url": "https://console.cloud.google.com/monitoring/dashboards/builder/84498508-a5dd-4cb1-92c6-c79216ff0a0b?project=lesser-weevil",
+            "outputPath": "reports/7-25-2023/142829/cloud_monitoring_k8s.json"
+        },
+        {
+            "displayName": "Kubernetes apiserver",
+            "sourcePath": "./json/k8s_apiserver.json",
+            "warnings": [],
+            "errors": [],
+            "url": "https://console.cloud.google.com/monitoring/dashboards/builder/1f765faa-55ae-485a-abdd-b2f6feab4070?project=lesser-weevil",
+            "outputPath": "reports/7-25-2023/142829/k8s_apiserver.json"
+        },
+        {
+            "displayName": "K8S Control Plane",
+            "sourcePath": "./json/k8s_control_plane.json",
+            "warnings": [
+                "Panel API Server Summary is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel API Server RPS: the follow notable properties are unsupported: [\"cacheTimeout\"]",
+                "Panel API Server Response Duration (Seconds): the follow notable properties are unsupported: [\"cacheTimeout\"]",
+                "Panel API Server Errors: the follow notable properties are unsupported: [\"cacheTimeout\"]",
+                "Panel Kube Controller Summary is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Has Leader?: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel Kube Scheduler Summary is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Has Leader?: the follow notable properties are unsupported: [\"cacheTimeout\",\"colorBackground\",\"colorValue\",\"colors\",\"postfix\",\"postfixFontSize\"]",
+                "Panel API Server Details: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel API Server Success: the follow notable properties are unsupported: [\"cacheTimeout\"]",
+                "Panel API Server Requests (by Verb): the follow notable properties are unsupported: [\"cacheTimeout\"]",
+                "Panel API Server Requests by server: the follow notable properties are unsupported: [\"cacheTimeout\"]",
+                "Panel API Server Response Duration - CONNECT: the follow notable properties are unsupported: [\"cacheTimeout\"]"
+            ],
+            "errors": [],
+            "url": "https://console.cloud.google.com/monitoring/dashboards/builder/85372caa-239b-4fc6-9f75-e083415b57bf?project=lesser-weevil",
+            "outputPath": "reports/7-25-2023/142829/k8s_control_plane.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/7-25-2023/142829/",
+    "date": "7-25-2023"
+}

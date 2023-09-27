@@ -1,0 +1,57 @@
+{
+    "displayName": "New dashboard",
+    "dashboardFilters": [],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "Panel Title",
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "kube_deployment_status_condition{}"
+                                }
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Panel Title",
+                    "pieChart": {
+                        "chartType": "PIE",
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "kube_pod_container_info{}"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 8,
+                "height": 9,
+                "width": 12
+            }
+        ]
+    },
+    "labels": {
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": ""
+    }
+}

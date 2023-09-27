@@ -1,0 +1,22 @@
+{
+    "id": "15:51:05",
+    "results": [
+        {
+            "displayName": "Istio Control Plane Dashboard",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "datasource template variable with name datasource was skipped because it's type was not supported",
+                "Panel Deployed Versions: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel Resource Usage: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel Pilot Push Information: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel Envoy Information: Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel Webhooks: Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-7/15:51:05/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/2023-9-7/15:51:05/",
+    "date": "2023-9-7"
+}

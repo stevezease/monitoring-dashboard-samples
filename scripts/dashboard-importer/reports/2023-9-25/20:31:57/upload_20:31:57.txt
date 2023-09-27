@@ -1,0 +1,5 @@
+kubelet.json, https://console.cloud.google.com/monitoring/dashboards/builder/946cfa0b-1edb-4416-ab2d-16b65bb8bd14?project=lesser-weevil
+networking_cluster.json, https://console.cloud.google.com/monitoring/dashboards/builder/4345c42b-5814-4547-94e1-91543ddd61ba?project=lesser-weevil
+networking_namespace_pods.json, https://console.cloud.google.com/monitoring/dashboards/builder/b89a919f-89cd-40d8-b736-0cd402467711?project=lesser-weevil
+networking_pod.json, https://console.cloud.google.com/monitoring/dashboards/builder/4261d526-183b-4f0a-aa51-b755f542b2e2?project=lesser-weevil
+persistent_volumes.json, https://console.cloud.google.com/monitoring/dashboards/builder/cd65ba27-0077-4929-9e59-0774a958e238?project=lesser-weevil

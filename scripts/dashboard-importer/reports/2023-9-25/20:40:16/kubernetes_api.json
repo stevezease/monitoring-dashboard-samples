@@ -1,0 +1,357 @@
+{
+    "displayName": "Kubernetes / API server",
+    "dashboardFilters": [
+        {
+            "labelKey": "cluster",
+            "templateVariable": "cluster",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        },
+        {
+            "labelKey": "instance",
+            "templateVariable": "instance",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "Notice",
+                    "text": {
+                        "content": "The SLO (service level objective) and other metrics displayed on this dashboard are for informational purposes only.",
+                        "format": "MARKDOWN"
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 2,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "apiserver_request:availability30d{verb=\"all\", cluster=~\"${cluster.value}\"}"
+                        }
+                    },
+                    "title": "Availability (30d) > 99.000%"
+                },
+                "xPos": 0,
+                "yPos": 2,
+                "height": 7,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "ErrorBudget (30d) > 99.000%",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "100 * (apiserver_request:availability30d{verb=\"all\", cluster=~\"${cluster.value}\"} - 0.990000)"
+                                },
+                                "legendTemplate": "errorbudget"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 8,
+                "yPos": 2,
+                "height": 7,
+                "width": 16
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "apiserver_request:availability30d{verb=\"read\", cluster=~\"${cluster.value}\"}"
+                        }
+                    },
+                    "title": "Read Availability (30d)"
+                },
+                "xPos": 0,
+                "yPos": 9,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Read SLI - Requests",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by (code) (code_resource:apiserver_request_total:rate5m{verb=\"read\", cluster=~\"${cluster.value}\"})"
+                                },
+                                "legendTemplate": "${labels.code}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 6,
+                "yPos": 9,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Read SLI - Errors",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"read\",code=~\"5..\", cluster=~\"${cluster.value}\"}) / sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"read\", cluster=~\"${cluster.value}\"})"
+                                },
+                                "legendTemplate": "${labels.resource}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 9,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Read SLI - Duration",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "cluster_quantile:apiserver_request_slo_duration_seconds:histogram_quantile{verb=\"read\", cluster=~\"${cluster.value}\"}"
+                                },
+                                "legendTemplate": "${labels.resource}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 18,
+                "yPos": 9,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "apiserver_request:availability30d{verb=\"write\", cluster=~\"${cluster.value}\"}"
+                        }
+                    },
+                    "title": "Write Availability (30d)"
+                },
+                "xPos": 0,
+                "yPos": 16,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Write SLI - Requests",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by (code) (code_resource:apiserver_request_total:rate5m{verb=\"write\", cluster=~\"${cluster.value}\"})"
+                                },
+                                "legendTemplate": "${labels.code}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 6,
+                "yPos": 16,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Write SLI - Errors",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"write\",code=~\"5..\", cluster=~\"${cluster.value}\"}) / sum by (resource) (code_resource:apiserver_request_total:rate5m{verb=\"write\", cluster=~\"${cluster.value}\"})"
+                                },
+                                "legendTemplate": "${labels.resource}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 16,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Write SLI - Duration",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "cluster_quantile:apiserver_request_slo_duration_seconds:histogram_quantile{verb=\"write\", cluster=~\"${cluster.value}\"}"
+                                },
+                                "legendTemplate": "${labels.resource}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 18,
+                "yPos": 16,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Work Queue Add Rate",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(workqueue_adds_total{job=\"apiserver\", instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[${__interval}])) by (instance, name)"
+                                },
+                                "legendTemplate": "${labels.instance} ${labels.name}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 23,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Work Queue Depth",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(workqueue_depth{job=\"apiserver\", instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[${__interval}])) by (instance, name)"
+                                },
+                                "legendTemplate": "${labels.instance} ${labels.name}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 23,
+                "height": 7,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Work Queue Latency",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.99, sum(rate(workqueue_queue_duration_seconds_bucket{job=\"apiserver\", instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[${__interval}])) by (instance, name, le))"
+                                },
+                                "legendTemplate": "${labels.instance} ${labels.name}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 30,
+                "height": 7,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Memory",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "process_resident_memory_bytes{job=\"apiserver\",instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}"
+                                },
+                                "legendTemplate": "${labels.instance}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 37,
+                "height": 7,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "CPU usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(process_cpu_seconds_total{job=\"apiserver\",instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}[${__interval}])"
+                                },
+                                "legendTemplate": "${labels.instance}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 8,
+                "yPos": 37,
+                "height": 7,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "Goroutines",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "go_goroutines{job=\"apiserver\",instance=~\"${instance.value}\", cluster=~\"${cluster.value}\"}"
+                                },
+                                "legendTemplate": "${labels.instance}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 16,
+                "yPos": 37,
+                "height": 7,
+                "width": 8
+            }
+        ]
+    },
+    "labels": {
+        "kube-prometheus-mixin": "",
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": "",
+        "goog-imported-grafana-dashboard": "",
+        "goog-imported-grafana-revision-1": "",
+        "goog-imported-grafana-file-name-kubernetes_api": ""
+    }
+}

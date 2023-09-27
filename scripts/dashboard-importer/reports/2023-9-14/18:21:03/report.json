@@ -1,0 +1,20 @@
+{
+    "id": "18:21:03",
+    "results": [
+        {
+            "displayName": "Node Exporter Dashboard EN 20201010-StarsL.cn",
+            "sourcePath": "./json/11074_rev9.json",
+            "warnings": [
+                "Query query_result(topk(1,sort_desc (max(node_filesystem_size_bytes{origin_prometheus=~\"$origin_prometheus\",instance=~'$node',fstype=~\"ext.?|xfs\",mountpoint!~\".*pods.*\"}) by (mountpoint)))) was skipped because its template variable format was unsupported",
+                "Query query_result(count(node_uname_info{origin_prometheus=~\"$origin_prometheus\",job=~\"$job\"})) was skipped because its template variable format was unsupported",
+                "Panel 'Resource Overview (associated JOB)，Host：$show_hostname，Instance：$node': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Resource Details：【$show_hostname】': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-14/18:21:03/11074_rev9.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-14/18:21:03/",
+    "date": "2023-9-14"
+}

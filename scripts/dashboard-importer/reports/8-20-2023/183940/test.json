@@ -1,0 +1,413 @@
+{
+    "displayName": "Kubernetes Pod Metrics",
+    "dashboardFilters": [
+        {
+            "labelKey": "node",
+            "templateVariable": "Node",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        },
+        {
+            "labelKey": "pod",
+            "templateVariable": "Pod",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        },
+        {
+            "labelKey": "pod_ip",
+            "templateVariable": "Pod_ip",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        },
+        {
+            "labelKey": "phase",
+            "templateVariable": "phase",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        },
+        {
+            "labelKey": "container",
+            "templateVariable": "container",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "Pod IP Address",
+                    "text": {
+                        "content": "# $Pod_ip",
+                        "format": "MARKDOWN",
+                        "style": {
+                            "backgroundColor": "#FFFFFF",
+                            "fontSize": "FS_LARGE",
+                            "horizontalAlignment": "H_LEFT",
+                            "padding": "P_EXTRA_SMALL",
+                            "textColor": "#212121",
+                            "verticalAlignment": "V_TOP"
+                        }
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 3,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Pod Status",
+                    "text": {
+                        "content": "# $phase",
+                        "format": "MARKDOWN",
+                        "style": {
+                            "backgroundColor": "#FFFFFF",
+                            "fontSize": "FS_LARGE",
+                            "horizontalAlignment": "H_LEFT",
+                            "padding": "P_EXTRA_SMALL",
+                            "textColor": "#212121",
+                            "verticalAlignment": "V_TOP"
+                        }
+                    }
+                },
+                "xPos": 6,
+                "yPos": 0,
+                "height": 3,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Pod Container",
+                    "text": {
+                        "content": "# $container",
+                        "format": "MARKDOWN",
+                        "style": {
+                            "backgroundColor": "#FFFFFF",
+                            "fontSize": "FS_LARGE",
+                            "horizontalAlignment": "H_LEFT",
+                            "padding": "P_EXTRA_SMALL",
+                            "textColor": "#212121",
+                            "verticalAlignment": "V_TOP"
+                        }
+                    }
+                },
+                "xPos": 12,
+                "yPos": 0,
+                "height": 3,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "kube_pod_container_status_restarts{pod=~\"${Pod.value}.*$\"}"
+                        }
+                    },
+                    "title": "Container restarts"
+                },
+                "xPos": 18,
+                "yPos": 0,
+                "height": 3,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Network I/O pressure",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{pod_name=~\"^${Pod.value}$\"}[1m]))"
+                                },
+                                "legendTemplate": "Received"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{pod_name=~\"^${Pod.value}$\"}[1m]))"
+                                },
+                                "legendTemplate": "Sent"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 3,
+                "height": 7,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_memory_working_set_bytes{pod_name=~\"^${Pod.value}$\"}) / sum (machine_memory_bytes{node=~\"^${Node.value}$\"}) * 100"
+                        }
+                    },
+                    "title": "Pod memory usage"
+                },
+                "xPos": 0,
+                "yPos": 10,
+                "height": 6,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{pod_name=~\"^${Pod.value}$\"}[1m])) / sum (machine_cpu_cores{node=~\"^${Node.value}$\"}) * 100"
+                        }
+                    },
+                    "title": "Pod CPU usage"
+                },
+                "xPos": 12,
+                "yPos": 10,
+                "height": 6,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_memory_working_set_bytes{pod_name=~\"^${Pod.value}$\"})"
+                        }
+                    },
+                    "title": "Used"
+                },
+                "xPos": 24,
+                "yPos": 10,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (machine_memory_bytes{node=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Total"
+                },
+                "xPos": 6,
+                "yPos": 19,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{pod_name=~\"^${Pod.value}$\"}[1m]))"
+                        }
+                    },
+                    "title": "Used"
+                },
+                "xPos": 12,
+                "yPos": 19,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{node=~\"^${Node.value}$\"}[1m]))"
+                        }
+                    },
+                    "title": "Total"
+                },
+                "xPos": 18,
+                "yPos": 19,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_memory_working_set_bytes{pod_name=~\"^${Pod.value}$\"})"
+                        }
+                    },
+                    "title": "Pod memory working bytes"
+                },
+                "xPos": 24,
+                "yPos": 19,
+                "height": 3,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Pods CPU usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",pod_name=~\"^${Pod.value}$\"}[1m])) by (io_kubernetes_pod_name)"
+                                },
+                                "legendTemplate": "{{ io_kubernetes_pod_name }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 37,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "All processes CPU usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{id!=\"/\",pod_name=~\"^${Pod.value}$\"}[1m])) by (id)"
+                                },
+                                "legendTemplate": "{{ id }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 46,
+                "height": 17,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Pods memory usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",pod_name=~\"^${Pod.value}$\"}) by (io_kubernetes_pod_name)"
+                                },
+                                "legendTemplate": "{{ io_kubernetes_pod_name }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 63,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "All processes memory usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{id!=\"/\",pod_name=~\"^${Pod.value}$\"}) by (id)"
+                                },
+                                "legendTemplate": "{{ id }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 72,
+                "height": 17,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Pods network I/O",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",pod_name=~\"^${Pod.value}$\"}[1m])) by (io_kubernetes_pod_name)"
+                                },
+                                "legendTemplate": "-> {{ io_kubernetes_pod_name }}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",pod_name=~\"^${Pod.value}$\"}[1m])) by (io_kubernetes_pod_name)"
+                                },
+                                "legendTemplate": "<- {{ io_kubernetes_pod_name }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 89,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "All processes network I/O",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{id!=\"/\",pod_name=~\"^${Pod.value}$\"}[1m])) by (id)"
+                                },
+                                "legendTemplate": "-> {{ id }}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum (rate (container_network_transmit_bytes_total{id!=\"/\",pod_name=~\"^${Pod.value}$\"}[1m])) by (id)"
+                                },
+                                "legendTemplate": "<- {{ id }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 98,
+                "height": 17,
+                "width": 24
+            }
+        ]
+    },
+    "labels": {
+        "goog-imported-via-script": ""
+    }
+}

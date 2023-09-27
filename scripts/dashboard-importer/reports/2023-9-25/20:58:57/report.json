@@ -1,0 +1,130 @@
+{
+    "id": "20:58:57",
+    "results": [
+        {
+            "displayName": "Kubernetes / Kubelet",
+            "sourcePath": "./json/kubelet.json",
+            "warnings": [
+                "Template variable 'datasource' was skipped because its type 'datasource' is not supported"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-25/20:58:57/kubelet.json"
+        },
+        {
+            "displayName": "Kubernetes / API server",
+            "sourcePath": "./json/kubernetes_api.json",
+            "warnings": [
+                "Template variable 'datasource' was skipped because its type 'datasource' is not supported",
+                "panel Notice target at index 0 does not have an expression"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-25/20:58:57/kubernetes_api.json"
+        },
+        {
+            "displayName": "Kubernetes / Networking / Cluster",
+            "sourcePath": "./json/networking_cluster.json",
+            "warnings": [
+                "Template variable 'datasource' was skipped because its type 'datasource' is not supported",
+                "Panel 'Current Bandwidth': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Average Bandwidth': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Bandwidth History': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Packets': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Errors': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-25/20:58:57/networking_cluster.json"
+        },
+        {
+            "displayName": "Kubernetes / Networking / Namespace (Pods)",
+            "sourcePath": "./json/networking_namespace_pods.json",
+            "warnings": [
+                "Template variable 'datasource' was skipped because its type 'datasource' is not supported",
+                "Panel 'Current Bandwidth': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Bandwidth': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Packets': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Errors': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-25/20:58:57/networking_namespace_pods.json"
+        },
+        {
+            "displayName": "Kubernetes / Networking / Pod",
+            "sourcePath": "./json/networking_pod.json",
+            "warnings": [
+                "Template variable 'datasource' was skipped because its type 'datasource' is not supported",
+                "Panel 'Current Bandwidth': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Bandwidth': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Packets': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Errors': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-25/20:58:57/networking_pod.json"
+        },
+        {
+            "displayName": "Node Exporter / MacOS",
+            "sourcePath": "./json/node_exporter_macos.json",
+            "warnings": [
+                "Template variable 'datasource' was skipped because its type 'datasource' is not supported",
+                "Panel 'CPU': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Memory': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Disk': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Network': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-25/20:58:57/node_exporter_macos.json"
+        },
+        {
+            "displayName": "Node Exporter / Nodes",
+            "sourcePath": "./json/node_exporter_nodes.json",
+            "warnings": [
+                "Template variable 'datasource' was skipped because its type 'datasource' is not supported",
+                "Panel 'CPU': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Memory': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Disk': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Network': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-25/20:58:57/node_exporter_nodes.json"
+        },
+        {
+            "displayName": "Node Exporter / USE Method / Cluster",
+            "sourcePath": "./json/node_exporter_use_cluster.json",
+            "warnings": [
+                "Template variable 'datasource' was skipped because its type 'datasource' is not supported",
+                "Panel 'CPU': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Memory': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Network': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Disk IO': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Disk Space': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-25/20:58:57/node_exporter_use_cluster.json"
+        },
+        {
+            "displayName": "Node Exporter / USE Method / Node",
+            "sourcePath": "./json/node_exporter_use_node.json",
+            "warnings": [
+                "Template variable 'datasource' was skipped because its type 'datasource' is not supported",
+                "Panel 'CPU': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Memory': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Network': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Disk IO': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Disk Space': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-25/20:58:57/node_exporter_use_node.json"
+        },
+        {
+            "displayName": "Kubernetes / Persistent Volumes",
+            "sourcePath": "./json/persistent_volumes.json",
+            "warnings": [
+                "Template variable 'datasource' was skipped because its type 'datasource' is not supported"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-25/20:58:57/persistent_volumes.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-25/20:58:57/",
+    "date": "2023-9-25"
+}

@@ -1,0 +1,29 @@
+{
+    "id": "192911",
+    "results": [
+        {
+            "displayName": "Cluster cost & utilization metrics",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "Total monthly cost has type 'graph' which is not supported for conversion and has been replaced with a line chart",
+                "Panel CPU Metrics is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Cluster CPUs has type 'graph' which is not supported for conversion and has been replaced with a line chart",
+                "CPU Mode has type 'graph' which is not supported for conversion and has been replaced with a line chart",
+                "Panel Memory Metrics is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Cluster memory (GB) has type 'graph' which is not supported for conversion and has been replaced with a line chart",
+                "Cluster Memory Utilization has type 'graph' which is not supported for conversion and has been replaced with a line chart",
+                "Panel Storage Metrics is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Local storage utilization has type 'graph' which is not supported for conversion and has been replaced with a line chart",
+                "Disk IOPS has type 'graph' which is not supported for conversion and has been replaced with a line chart",
+                "Inode usage has type 'graph' which is not supported for conversion and has been replaced with a line chart",
+                "Panel Network is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Node network transmit has type 'graph' which is not supported for conversion and has been replaced with a line chart"
+            ],
+            "errors": [],
+            "outputPath": "reports/8-20-2023/192911/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-20-2023/192911/",
+    "date": "8-20-2023"
+}

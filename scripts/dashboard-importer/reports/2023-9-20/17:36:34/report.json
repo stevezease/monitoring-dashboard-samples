@@ -1,0 +1,23 @@
+{
+    "id": "17:36:34",
+    "results": [
+        {
+            "displayName": "Spring Boot 2.1 System Monitor",
+            "sourcePath": "./json/11378_rev2.json",
+            "warnings": [
+                "Panel 'Basic Statistics': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'JVM Statistics - Heaps': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'JVM Statistics Threads/Buffers': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'JVM Statistics - GC': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'HikariCP Statistics': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Jetty Statistics': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Logback Statistics': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-20/17:36:34/11378_rev2.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-20/17:36:34/",
+    "date": "2023-9-20"
+}

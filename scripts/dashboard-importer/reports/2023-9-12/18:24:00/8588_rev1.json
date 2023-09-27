@@ -1,0 +1,318 @@
+{
+    "displayName": "1. Kubernetes Deployment Statefulset Daemonset metrics",
+    "dashboardFilters": [
+        {
+            "labelKey": "deployment",
+            "templateVariable": "Deployment",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        },
+        {
+            "labelKey": "statefulset",
+            "templateVariable": "Statefulset",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        },
+        {
+            "labelKey": "daemonset",
+            "templateVariable": "Daemonset",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        },
+        {
+            "labelKey": "node",
+            "templateVariable": "Node",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_memory_working_set_bytes{pod_name=~\"^${Deployment.value}${Statefulset.value}${Daemonset.value}.*$\", node=~\"^${Node.value}$\", pod_name!=\"\"}) / sum (kube_node_status_allocatable_memory_bytes{node=~\"^${Node.value}.*$\"}) * 100"
+                        }
+                    },
+                    "title": "Deployment memory usage"
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 5,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{pod_name=~\"^${Deployment.value}${Statefulset.value}${Daemonset.value}.*$\", node=~\"^${Node.value}$\"}[2m])) / sum (machine_cpu_cores{node=~\"^${Node.value}$\"}) * 100"
+                        }
+                    },
+                    "title": "Deployment CPU usage"
+                },
+                "xPos": 8,
+                "yPos": 0,
+                "height": 5,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(((sum(kube_deployment_status_replicas{deployment=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0)) + (sum(kube_statefulset_replicas{statefulset=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0)) + (sum(kube_daemonset_status_desired_number_scheduled{daemonset=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0))) - ((sum(kube_deployment_status_replicas_available{deployment=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0)) + (sum(kube_statefulset_status_replicas{statefulset=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0)) + (sum(kube_daemonset_status_number_ready{daemonset=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0)))) / ((sum(kube_deployment_status_replicas{deployment=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0)) + (sum(kube_statefulset_replicas{statefulset=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0)) + (sum(kube_daemonset_status_desired_number_scheduled{daemonset=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0))) * 100"
+                        }
+                    },
+                    "title": "Unavailable Replicas"
+                },
+                "xPos": 16,
+                "yPos": 0,
+                "height": 5,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_memory_working_set_bytes{pod_name=~\"^${Deployment.value}${Statefulset.value}${Daemonset.value}.*$\", node=~\"^${Node.value}$\", pod_name!=\"\"})"
+                        }
+                    },
+                    "title": "Used"
+                },
+                "xPos": 0,
+                "yPos": 5,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (kube_node_status_allocatable_memory_bytes{node=~\"^${Node.value}.*$\"})"
+                        }
+                    },
+                    "title": "Total"
+                },
+                "xPos": 4,
+                "yPos": 5,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{pod_name=~\"^${Deployment.value}${Statefulset.value}${Daemonset.value}.*$\", node=~\"^${Node.value}$\"}[1m]))"
+                        }
+                    },
+                    "title": "Used"
+                },
+                "xPos": 8,
+                "yPos": 5,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (machine_cpu_cores{node=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Total"
+                },
+                "xPos": 12,
+                "yPos": 5,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(sum(kube_deployment_status_replicas_available{deployment=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0)) + (sum(kube_statefulset_status_replicas{statefulset=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0)) + (sum(kube_daemonset_status_number_ready{daemonset=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0))"
+                        }
+                    },
+                    "title": "Available (cluster)"
+                },
+                "xPos": 16,
+                "yPos": 5,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(sum(kube_deployment_status_replicas{deployment=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0)) + (sum(kube_statefulset_replicas{statefulset=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0)) + (sum(kube_daemonset_status_desired_number_scheduled{daemonset=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}\"}) or vector(0))"
+                        }
+                    },
+                    "title": "Total (cluster)"
+                },
+                "xPos": 20,
+                "yPos": 5,
+                "height": 3,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "title": "CPU usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",io_kubernetes_container_name!=\"POD\",pod_name=~\"^${Deployment.value}${Statefulset.value}${Daemonset.value}.*$\",node=~\"^${Node.value}$\"}[1m])) by (pod_name,kubernetes_io_hostname)"
+                                },
+                                "legendTemplate": "real: ${labels.kubernetes_io_hostname} | ${labels.pod_name} "
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (kube_pod_container_resource_requests_cpu_cores{pod=~\"^${Deployment.value}${Statefulset.value}${Daemonset.value}.*$\",node=~\"^${Node.value}$\"}) by (pod,node)"
+                                },
+                                "legendTemplate": "rqst: ${labels.node} | ${labels.pod}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum ((kube_node_status_allocatable_cpu_cores{node=~\"^${Node.value}$\"})) by (node)"
+                                },
+                                "legendTemplate": "avlbl: ${labels.node}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 8,
+                "height": 11,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Memory usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{id!=\"/\",pod_name=~\"^${Deployment.value}${Statefulset.value}${Daemonset.value}.*$\",node=~\"^${Node.value}$\"}) by (pod_name,kubernetes_io_hostname)"
+                                },
+                                "legendTemplate": "real: ${labels.kubernetes_io_hostname} | ${labels.pod_name}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum ((kube_pod_container_resource_requests_memory_bytes{pod=~\"^${Deployment.value}${Statefulset.value}${Daemonset.value}.*$\",node=~\"^${Node.value}$\"})) by (pod,node)"
+                                },
+                                "legendTemplate": "rqst: ${labels.node} | ${labels.pod}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum ((kube_node_status_allocatable_memory_bytes{node=~\"^${Node.value}$\"})) by (node)"
+                                },
+                                "legendTemplate": "avlbl: ${labels.node}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 19,
+                "height": 13,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Disk Usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "100 * (kubelet_volume_stats_used_bytes{node=~\"^${Node.value}$\", persistentvolumeclaim=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}.*$\"} / kubelet_volume_stats_capacity_bytes{node=~\"^${Node.value}$\", persistentvolumeclaim=~\".*${Deployment.value}${Statefulset.value}${Daemonset.value}.*$\"})"
+                                },
+                                "legendTemplate": "${labels.persistentvolumeclaim} | ${labels.kubernetes_io_hostname}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 32,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "All processes network I/O",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_network_receive_bytes_total{id!=\"/\",pod_name=~\"^${Deployment.value}${Statefulset.value}${Daemonset.value}.*$\",node=~\"^${Node.value}$\"}[1m])) by (pod_name, kubernetes_io_hostname)"
+                                },
+                                "legendTemplate": "-> ${labels.kubernetes_io_hostname} | ${labels.pod_name}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "- sum( rate (container_network_transmit_bytes_total{id!=\"/\",pod_name=~\"^${Deployment.value}${Statefulset.value}${Daemonset.value}.*$\",node=~\"^${Node.value}$\"}[1m])) by (pod_name, kubernetes_io_hostname)"
+                                },
+                                "legendTemplate": "<- ${labels.kubernetes_io_hostname} | ${labels.pod_name}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 41,
+                "height": 13,
+                "width": 24
+            }
+        ]
+    },
+    "labels": {
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": ""
+    }
+}

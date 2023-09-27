@@ -1,0 +1,329 @@
+{
+    "displayName": "Kubernetes / System / CoreDNS",
+    "dashboardFilters": [
+        {
+            "labelKey": "instance",
+            "templateVariable": "instance",
+            "stringValue": "$__all",
+            "filterType": "RESOURCE_LABEL"
+        },
+        {
+            "labelKey": "proto",
+            "templateVariable": "protocol",
+            "stringValue": "udp",
+            "filterType": "METRIC_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "CoreDNS - Health Status",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "up{job=\"coredns\", instance=~\"${instance.value}\"}"
+                                },
+                                "legendTemplate": "{{ instance }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 3,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - CPU Usage by instance",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(process_cpu_seconds_total{job=\"coredns\", instance=~\"${instance.value}\"}[$__rate_interval])"
+                                },
+                                "legendTemplate": "{{ instance }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 3,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - Memory Usage by instance",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "process_resident_memory_bytes{job=\"coredns\", instance=~\"${instance.value}\"}"
+                                },
+                                "legendTemplate": "{{ instance }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 3,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - Total DNS Requests ($protocol)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(coredns_dns_requests_total{instance=~\"${instance.value}\",proto=\"${protocol.value}\"}[$__rate_interval]))"
+                                },
+                                "legendTemplate": "total $protocol requests"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 11,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - Average Packet Size  ($protocol)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(coredns_dns_request_size_bytes_sum{instance=~\"${instance.value}\",proto=\"${protocol.value}\"}[$__rate_interval])) by (proto) / sum(rate(coredns_dns_request_size_bytes_count{instance=~\"${instance.value}\",proto=\"${protocol.value}\"}[$__rate_interval])) by (proto)"
+                                },
+                                "legendTemplate": "average $protocol packet size"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 11,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - Requests by type",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(coredns_dns_requests_total{instance=~\"${instance.value}\"}[$__rate_interval])) by (type)"
+                                },
+                                "legendTemplate": "{{ type }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 19,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - Requests by return code",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(coredns_dns_responses_total{instance=~\"${instance.value}\"}[$__rate_interval])) by (rcode)"
+                                },
+                                "legendTemplate": "{{ rcode }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 19,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - Total Forward Requests",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(coredns_forward_requests_total[$__rate_interval]))"
+                                },
+                                "legendTemplate": "total forward requests"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 27,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - DNS Errors",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(coredns_forward_responses_total{rcode=~\"SERVFAIL|REFUSED\"}[$__rate_interval])) by (rcode)"
+                                },
+                                "legendTemplate": "{{ rcode }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 27,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - Cache Hits / Misses",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(coredns_cache_hits_total{instance=~\"${instance.value}\"}[$__rate_interval])) by (type)"
+                                },
+                                "legendTemplate": "{{ type }}"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(coredns_cache_misses_total{instance=~\"${instance.value}\"}[$__rate_interval])) by (type)"
+                                },
+                                "legendTemplate": "misses"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 35,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - Cache Size",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(coredns_cache_entries) by (type)"
+                                },
+                                "legendTemplate": "{{ type }}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 35,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - DNS request duration",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(coredns_dns_request_duration_seconds_bucket{instance=~\"${instance.value}\"}[$__rate_interval])) by (le)"
+                                },
+                                "legendTemplate": "{{le}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 43,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - Forward request duration",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(coredns_forward_request_duration_seconds_bucket{instance=~\"${instance.value}\"}[$__rate_interval])) by (le)"
+                                },
+                                "legendTemplate": "{{le}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 43,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - DNS request size",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(coredns_dns_request_size_bytes_bucket{instance=~\"${instance.value}\", le!=\"0\"}[$__rate_interval])) by (le)"
+                                },
+                                "legendTemplate": "{{le}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 53,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "CoreDNS - DNS response size",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(coredns_dns_response_size_bytes_bucket{instance=~\"${instance.value}\", le!=\"0\"}[$__rate_interval])) by (le)"
+                                },
+                                "legendTemplate": "{{le}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 53,
+                "height": 10,
+                "width": 12
+            }
+        ]
+    }
+}

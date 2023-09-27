@@ -1,0 +1,52 @@
+{
+    "id": "17:36:49",
+    "results": [
+        {
+            "displayName": "kube-state-metrics-v2",
+            "sourcePath": "./json/kube-state-metrics-v2.json",
+            "warnings": [
+                "constant template variable with name datasource was skipped because it's type was not supported",
+                "Panel 'Cluster': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Node': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Deployments': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Statefuleset': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Pods': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Containers': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'HPA': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Jobs': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'PVC': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-8/17:36:49/kube-state-metrics-v2.json"
+        },
+        {
+            "displayName": "Node Exporter Full",
+            "sourcePath": "./json/kubernetes_nodes.json",
+            "warnings": [
+                "datasource template variable with name DS_PROMETHEUS was skipped because it's type was not supported",
+                "custom template variable with name diskdevices was skipped because it's type was not supported",
+                "Panel 'Quick CPU / Mem / Disk': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Basic CPU / Mem / Net / Disk': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'CPU / Memory / Net / Disk': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Memory Meminfo': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Memory Vmstat': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'System Timesync': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'System Processes': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'System Misc': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Hardware Misc': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Systemd': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Storage Disk': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Storage Filesystem': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Network Traffic': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Network Sockstat': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Network Netstat': Collapsible groups currently are not yet fully supported. Charts will be unnested",
+                "Panel 'Node Exporter': Collapsible groups currently are not yet fully supported. Charts will be unnested"
+            ],
+            "errors": [],
+            "outputPath": "reports/2023-9-8/17:36:49/kubernetes_nodes.json"
+        }
+    ],
+    "sourcePath": "./json/",
+    "outputPath": "reports/2023-9-8/17:36:49/",
+    "date": "2023-9-8"
+}

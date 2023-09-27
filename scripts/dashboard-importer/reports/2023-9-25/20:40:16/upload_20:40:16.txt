@@ -1,0 +1,1 @@
+kubernetes_api.json, https://console.cloud.google.com/monitoring/dashboards/builder/9b09f69d-a73c-4ead-805b-fc75fa116123?project=lesser-weevil

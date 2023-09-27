@@ -1,0 +1,10 @@
+kubelet.json, https://console.cloud.google.com/monitoring/dashboards/builder/35ebb6ec-b9a6-4c99-bc3c-f72417ddb785?project=cco-gke-playground
+kubernetes_api.json, https://console.cloud.google.com/monitoring/dashboards/builder/22a719df-2a08-4d42-ba40-73e9d16bd576?project=cco-gke-playground
+networking_cluster.json, https://console.cloud.google.com/monitoring/dashboards/builder/57a6e9fe-00b7-4997-8f0d-2988a23cf2c4?project=cco-gke-playground
+networking_namespace_pods.json, https://console.cloud.google.com/monitoring/dashboards/builder/4d8c1194-cd6e-4dc6-955f-8ecca119877b?project=cco-gke-playground
+networking_pod.json, https://console.cloud.google.com/monitoring/dashboards/builder/fa5fe19b-c6e1-4064-89c4-c40ab80f2c40?project=cco-gke-playground
+node_exporter_macos.json, https://console.cloud.google.com/monitoring/dashboards/builder/52e9bbb1-724e-4efa-8bc1-8fe2084946b2?project=cco-gke-playground
+node_exporter_nodes.json, https://console.cloud.google.com/monitoring/dashboards/builder/f0faba10-9068-44b5-93d6-95c7f1ad7838?project=cco-gke-playground
+node_exporter_use_cluster.json, https://console.cloud.google.com/monitoring/dashboards/builder/bbc8df45-0f27-431d-b7e4-bc7729ed7cf6?project=cco-gke-playground
+node_exporter_use_node.json, https://console.cloud.google.com/monitoring/dashboards/builder/aba9a42a-7471-4e8a-8b32-6b28f200e075?project=cco-gke-playground
+persistent_volumes.json, https://console.cloud.google.com/monitoring/dashboards/builder/5c04cb5b-6fc2-4d1e-a6a1-9a9e976c0ce8?project=cco-gke-playground

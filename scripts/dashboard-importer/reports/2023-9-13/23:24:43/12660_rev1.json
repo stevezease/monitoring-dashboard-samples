@@ -1,0 +1,124 @@
+{
+    "displayName": "Kubernetes / Persistent Volumes",
+    "dashboardFilters": [
+        {
+            "labelKey": "cluster",
+            "templateVariable": "cluster",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        },
+        {
+            "labelKey": "namespace",
+            "templateVariable": "namespace",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        },
+        {
+            "labelKey": "persistentvolumeclaim",
+            "templateVariable": "volume",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "Volume Space Usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(\n  sum without(instance, node) (kubelet_volume_stats_capacity_bytes{cluster=\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"${namespace.value}\", persistentvolumeclaim=\"${volume.value}\"})\n  -\n  sum without(instance, node) (kubelet_volume_stats_available_bytes{cluster=\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"${namespace.value}\", persistentvolumeclaim=\"${volume.value}\"})\n)\n"
+                                },
+                                "legendTemplate": "Used Space"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum without(instance, node) (kubelet_volume_stats_available_bytes{cluster=\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"${namespace.value}\", persistentvolumeclaim=\"${volume.value}\"})\n"
+                                },
+                                "legendTemplate": "Free Space"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": null,
+                "width": 18
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "(\n  kubelet_volume_stats_capacity_bytes{cluster=\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"${namespace.value}\", persistentvolumeclaim=\"${volume.value}\"}\n  -\n  kubelet_volume_stats_available_bytes{cluster=\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"${namespace.value}\", persistentvolumeclaim=\"${volume.value}\"}\n)\n/\nkubelet_volume_stats_capacity_bytes{cluster=\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"${namespace.value}\", persistentvolumeclaim=\"${volume.value}\"}\n* 100\n"
+                        }
+                    },
+                    "title": "Volume Space Usage"
+                },
+                "xPos": 18,
+                "yPos": 0,
+                "height": null,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Volume inodes Usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum without(instance, node) (kubelet_volume_stats_inodes_used{cluster=\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"${namespace.value}\", persistentvolumeclaim=\"${volume.value}\"})\n"
+                                },
+                                "legendTemplate": "Used inodes"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(\n  sum without(instance, node) (kubelet_volume_stats_inodes{cluster=\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"${namespace.value}\", persistentvolumeclaim=\"${volume.value}\"})\n  -\n  sum without(instance, node) (kubelet_volume_stats_inodes_used{cluster=\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"${namespace.value}\", persistentvolumeclaim=\"${volume.value}\"})\n)\n"
+                                },
+                                "legendTemplate": " Free inodes"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": null,
+                "height": null,
+                "width": 18
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "kubelet_volume_stats_inodes_used{cluster=\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"${namespace.value}\", persistentvolumeclaim=\"${volume.value}\"}\n/\nkubelet_volume_stats_inodes{cluster=\"${cluster.value}\", job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"${namespace.value}\", persistentvolumeclaim=\"${volume.value}\"}\n* 100\n"
+                        }
+                    },
+                    "title": "Volume inodes Usage"
+                },
+                "xPos": 18,
+                "yPos": null,
+                "height": null,
+                "width": 6
+            }
+        ]
+    },
+    "labels": {
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": ""
+    }
+}

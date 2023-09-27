@@ -1,0 +1,194 @@
+{
+    "displayName": "Kubernetes / Networking / Pod",
+    "dashboardFilters": [
+        {
+            "labelKey": "cluster",
+            "templateVariable": "cluster",
+            "stringValue": "",
+            "filterType": "RESOURCE_LABEL"
+        },
+        {
+            "labelKey": "namespace",
+            "templateVariable": "namespace",
+            "stringValue": "kube-system",
+            "filterType": "RESOURCE_LABEL"
+        },
+        {
+            "labelKey": "pod",
+            "templateVariable": "pod",
+            "stringValue": "event-exporter-gke-f66d9f855-lfnpf",
+            "filterType": "METRIC_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(irate(container_network_receive_bytes_total{cluster=~\"${cluster.value}\",namespace=~\"${namespace.value}\", pod=~\"${pod.value}\"}[${__interval}]))"
+                        }
+                    },
+                    "title": "Current Rate of Bytes Received"
+                },
+                "xPos": 0,
+                "yPos": 1,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(irate(container_network_transmit_bytes_total{cluster=~\"${cluster.value}\",namespace=~\"${namespace.value}\", pod=~\"${pod.value}\"}[${__interval}]))"
+                        }
+                    },
+                    "title": "Current Rate of Bytes Transmitted"
+                },
+                "xPos": 12,
+                "yPos": 1,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Receive Bandwidth",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(container_network_receive_bytes_total{cluster=~\"${cluster.value}\",namespace=~\"${namespace.value}\", pod=~\"${pod.value}\"}[${__interval}])) by (pod)"
+                                },
+                                "legendTemplate": "${labels.pod}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 11,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Transmit Bandwidth",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(container_network_transmit_bytes_total{cluster=~\"${cluster.value}\",namespace=~\"${namespace.value}\", pod=~\"${pod.value}\"}[${__interval}])) by (pod)"
+                                },
+                                "legendTemplate": "${labels.pod}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 11,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Rate of Received Packets",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(container_network_receive_packets_total{cluster=~\"${cluster.value}\",namespace=~\"${namespace.value}\", pod=~\"${pod.value}\"}[${__interval}])) by (pod)"
+                                },
+                                "legendTemplate": "${labels.pod}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 21,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Rate of Transmitted Packets",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(container_network_transmit_packets_total{cluster=~\"${cluster.value}\",namespace=~\"${namespace.value}\", pod=~\"${pod.value}\"}[${__interval}])) by (pod)"
+                                },
+                                "legendTemplate": "${labels.pod}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 21,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Rate of Received Packets Dropped",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(container_network_receive_packets_dropped_total{cluster=~\"${cluster.value}\",namespace=~\"${namespace.value}\", pod=~\"${pod.value}\"}[${__interval}])) by (pod)"
+                                },
+                                "legendTemplate": "${labels.pod}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 32,
+                "height": 10,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Rate of Transmitted Packets Dropped",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(container_network_transmit_packets_dropped_total{cluster=~\"${cluster.value}\",namespace=~\"${namespace.value}\", pod=~\"${pod.value}\"}[${__interval}])) by (pod)"
+                                },
+                                "legendTemplate": "${labels.pod}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 32,
+                "height": 10,
+                "width": 12
+            }
+        ]
+    },
+    "labels": {
+        "kube-prometheus-mixin": "",
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": "",
+        "goog-imported-grafana-dashboard": "",
+        "goog-imported-grafana-revision-1": "",
+        "goog-imported-grafana-file-name-networking_pod": ""
+    }
+}

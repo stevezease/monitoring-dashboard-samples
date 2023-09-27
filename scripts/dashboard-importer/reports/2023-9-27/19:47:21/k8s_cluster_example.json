@@ -1,0 +1,173 @@
+{
+    "displayName": "Kubernetes Cluster Overview",
+    "dashboardFilters": [
+        {
+            "labelKey": "node",
+            "templateVariable": "Node",
+            "stringValue": "",
+            "filterType": "METRIC_LABEL"
+        }
+    ],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_memory_working_set_bytes{id=\"/\",node=~\"^${Node.value}$\"}) / sum (machine_memory_bytes{node=~\"^${Node.value}$\"}) * 100"
+                        }
+                    },
+                    "title": "Cluster Memory Usage %"
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 8,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (container_memory_working_set_bytes{id=\"/\",node=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Cluster Used Memory"
+                },
+                "xPos": 6,
+                "yPos": 0,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "gaugeView": {
+                            "lowerBound": 0,
+                            "upperBound": 100
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(irate(container_cpu_usage_seconds_total{id=\"/\",node=~\"^${Node.value}$\"}[1m]))/ sum (machine_cpu_cores{node=~\"^${Node.value}$\"}) * 100"
+                        }
+                    },
+                    "title": "Cluster CPU Usage %"
+                },
+                "xPos": 12,
+                "yPos": 0,
+                "height": 8,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",node=~\"^${Node.value}$\"}[1m]))"
+                        }
+                    },
+                    "title": "Cluster Used CPU"
+                },
+                "xPos": 18,
+                "yPos": 0,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (machine_memory_bytes{node=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Cluster Total Memory"
+                },
+                "xPos": 6,
+                "yPos": 4,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum (machine_cpu_cores{node=~\"^${Node.value}$\"})"
+                        }
+                    },
+                    "title": "Cluster Total CPU"
+                },
+                "xPos": 18,
+                "yPos": 4,
+                "height": 4,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Pod Memory Usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (container_memory_working_set_bytes{image!=\"\",node=~\"^${Node.value}$\"}) by (pod)"
+                                },
+                                "legendTemplate": ""
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 8,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Pods CPU usage",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum (rate (container_cpu_usage_seconds_total{node=~\"^${Node.value}$\"}[1m])) by (pod)"
+                                },
+                                "legendTemplate": "${labels.pod}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 8,
+                "height": 8,
+                "width": 12
+            }
+        ]
+    },
+    "labels": {
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": "",
+        "goog-imported-grafana-dashboard": "",
+        "goog-imported-grafana-revision-3": "",
+        "goog-imported-grafana-file-name-k8s_cluster_example": ""
+    }
+}

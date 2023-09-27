@@ -1,0 +1,892 @@
+{
+    "displayName": "Prometheus 2.0 Overview",
+    "dashboardFilters": [],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "avg(avg_over_time(up{instance=~\"${instance.value}\",job=~\"${job.value}\"}[$interval]) * 100)"
+                        }
+                    },
+                    "title": "Uptime [$interval]"
+                },
+                "xPos": 0,
+                "yPos": 0,
+                "height": 9,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "timeSeriesTable": {
+                        "columnSettings": [
+                            {
+                                "column": "value",
+                                "visible": false
+                            }
+                        ],
+                        "dataSets": [
+                            {
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "up{instance=~\"${instance.value}\",job=~\"${job.value}\"} < 1"
+                                },
+                                "outputFullDuration": true
+                            }
+                        ],
+                        "metricVisualization": "NUMBER"
+                    }
+                },
+                "xPos": 6,
+                "yPos": 0,
+                "height": 9,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(prometheus_tsdb_head_series{job=~\"${job.value}\",instance=~\"${instance.value}\"})"
+                        }
+                    },
+                    "title": "Total Series"
+                },
+                "xPos": 12,
+                "yPos": 0,
+                "height": 9,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(prometheus_tsdb_head_chunks{job=~\"${job.value}\",instance=~\"${instance.value}\"})"
+                        }
+                    },
+                    "title": "Memory Chunks"
+                },
+                "xPos": 18,
+                "yPos": 0,
+                "height": 9,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(sum_over_time(prometheus_evaluator_iterations_missed_total{job=~\"${job.value}\",instance=~\"${instance.value}\"}[$interval]))"
+                        }
+                    },
+                    "title": "Missed Iterations [$interval]"
+                },
+                "xPos": 0,
+                "yPos": 9,
+                "height": 8,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(sum_over_time(prometheus_evaluator_iterations_skipped_total{job=~\"${job.value}\",instance=~\"${instance.value}\"}[$interval]))"
+                        }
+                    },
+                    "title": "Skipped Iterations [$interval]"
+                },
+                "xPos": 4,
+                "yPos": 9,
+                "height": 8,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(sum_over_time(prometheus_target_scrapes_exceeded_sample_limit_total{job=~\"${job.value}\",instance=~\"${instance.value}\"}[$interval]))"
+                        }
+                    },
+                    "title": "Tardy Scrapes [$interval]"
+                },
+                "xPos": 8,
+                "yPos": 9,
+                "height": 8,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(sum_over_time(prometheus_tsdb_reloads_failures_total{job=~\"${job.value}\",instance=~\"${instance.value}\"}[$interval]))"
+                        }
+                    },
+                    "title": "Reload Failures [$interval]"
+                },
+                "xPos": 12,
+                "yPos": 9,
+                "height": 8,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "scorecard": {
+                        "sparkChartView": {
+                            "sparkChartType": "SPARK_LINE"
+                        },
+                        "thresholds": [],
+                        "timeSeriesQuery": {
+                            "prometheusQuery": "sum(sum_over_time(prometheus_target_scrapes_exceeded_sample_limit_total{job=~\"${job.value}\",instance=~\"${instance.value}\"}[$interval])) + \nsum(sum_over_time(prometheus_target_scrapes_sample_duplicate_timestamp_total{job=~\"${job.value}\",instance=~\"${instance.value}\"}[$interval])) + \nsum(sum_over_time(prometheus_target_scrapes_sample_out_of_bounds_total{job=~\"${job.value}\",instance=~\"${instance.value}\"}[$interval])) + \nsum(sum_over_time(prometheus_target_scrapes_sample_out_of_order_total{job=~\"${job.value}\",instance=~\"${instance.value}\"}[$interval])) "
+                        }
+                    },
+                    "title": "Skipped Scrapes [$interval]"
+                },
+                "xPos": 16,
+                "yPos": 9,
+                "height": 8,
+                "width": 4
+            },
+            {
+                "widget": {
+                    "title": "Failures and Errors",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(net_conntrack_dialer_conn_failed_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Failed Connections"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_evaluator_iterations_missed_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Missed Iterations"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_evaluator_iterations_skipped_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Skipped Iterations"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_rule_evaluation_failures_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Evaluation"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_sd_azure_refresh_failures_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Azure Refresh"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_sd_consul_rpc_failures_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Consul RPC"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_sd_dns_lookup_failures_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "DNS Lookup"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_sd_ec2_refresh_failures_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "EC2 Refresh"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_sd_gce_refresh_failures_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "GCE Refresh"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_sd_marathon_refresh_failures_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Marathon Refresh"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_sd_openstack_refresh_failures_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Openstack Refresh"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_sd_triton_refresh_failures_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Triton Refresh"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_target_scrapes_exceeded_sample_limit_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Sample Limit"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_target_scrapes_sample_duplicate_timestamp_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Duplicate Timestamp"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_target_scrapes_sample_out_of_bounds_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Timestamp Out of Bounds"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_target_scrapes_sample_out_of_order_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Sample Out of Order"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_treecache_zookeeper_failures_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Zookeeper"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_tsdb_compactions_failed_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "TSDB Compactions"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_tsdb_head_series_not_found{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Series Not Found"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(prometheus_tsdb_reloads_failures_total{instance=~\"${instance.value}\"}[5m])) > 0"
+                                },
+                                "legendTemplate": "Reload"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 17,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Upness (stacked)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "up{instance=~\"${instance.value}\",job=~\"${job.value}\"}"
+                                },
+                                "legendTemplate": "{{instance}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 26,
+                "height": 4,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Storage Memory Chunks",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "prometheus_tsdb_head_chunks{job=~\"${job.value}\",instance=~\"${instance.value}\"}"
+                                },
+                                "legendTemplate": "{{instance}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 26,
+                "height": 4,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Series Count",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "prometheus_tsdb_head_series{job=~\"${job.value}\",instance=~\"${instance.value}\"}"
+                                },
+                                "legendTemplate": "{{instance}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 30,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Series Created / Removed",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum( increase(prometheus_tsdb_head_series_created_total{instance=~\"${instance.value}\"}[5m]) )"
+                                },
+                                "legendTemplate": "created"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum( increase(prometheus_tsdb_head_series_removed_total{instance=~\"${instance.value}\"}[5m]) )"
+                                },
+                                "legendTemplate": "removed"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 30,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Appended Samples per Second",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(prometheus_tsdb_head_samples_appended_total{job=~\"${job.value}\",instance=~\"${instance.value}\"}[1m])"
+                                },
+                                "legendTemplate": "{{instance}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 39,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Scrape Sync Total",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(prometheus_target_scrape_pool_sync_total{job=~\"${job.value}\",instance=~\"${instance.value}\"}) by (scrape_job)"
+                                },
+                                "legendTemplate": "{{scrape_job}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 48,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Target Sync",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(prometheus_target_sync_length_seconds_sum{job=~\"${job.value}\",instance=~\"${instance.value}\"}[2m])) by (scrape_job) * 1000"
+                                },
+                                "legendTemplate": "{{scrape_job}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 48,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Scrape Duration",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "scrape_duration_seconds{instance=~\"${instance.value}\"}"
+                                },
+                                "legendTemplate": "{{instance}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 57,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Rejected Scrapes",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(prometheus_target_scrapes_exceeded_sample_limit_total{job=~\"${job.value}\",instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "exceeded sample limit"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(prometheus_target_scrapes_sample_duplicate_timestamp_total{job=~\"${job.value}\",instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "duplicate timestamp"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(prometheus_target_scrapes_sample_out_of_bounds_total{job=~\"${job.value}\",instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "out of bounds"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(prometheus_target_scrapes_sample_out_of_order_total{job=~\"${job.value}\",instance=~\"${instance.value}\"}) "
+                                },
+                                "legendTemplate": "out of order"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 57,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Average Rule Evaluation Duration",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "1000 * rate(prometheus_evaluator_duration_seconds_sum{job=~\"${job.value}\", instance=~\"${instance.value}\"}[5m]) / rate(prometheus_evaluator_duration_seconds_count{job=~\"${job.value}\", instance=~\"${instance.value}\"}[5m])"
+                                },
+                                "legendTemplate": "{{instance}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 66,
+                "height": 9,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "HTTP Request Duration",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(http_request_duration_microseconds_count{job=~\"${job.value}\",instance=~\"${instance.value}\"}[1m])) by (handler) > 0"
+                                },
+                                "legendTemplate": "{{handler}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 6,
+                "yPos": 66,
+                "height": 9,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Prometheus Engine Query Duration Seconds",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(prometheus_engine_query_duration_seconds_sum{job=~\"${job.value}\",instance=~\"${instance.value}\"}) by (slice)"
+                                },
+                                "legendTemplate": "{{slice}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 66,
+                "height": 9,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Rule Evaluator Iterations",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(prometheus_evaluator_iterations_total{job=~\"${job.value}\", instance=~\"${instance.value}\"}[5m]))"
+                                },
+                                "legendTemplate": "Total"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(prometheus_evaluator_iterations_missed_total{job=~\"${job.value}\", instance=~\"${instance.value}\"}[5m]))"
+                                },
+                                "legendTemplate": "Missed"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(prometheus_evaluator_iterations_skipped_total{job=~\"${job.value}\", instance=~\"${instance.value}\"}[5m]))"
+                                },
+                                "legendTemplate": "Skipped"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 18,
+                "yPos": 66,
+                "height": 9,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Notifications Sent",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "rate(prometheus_notifications_sent_total[5m])"
+                                },
+                                "legendTemplate": "{{instance}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 75,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Minutes Since Successful Config Reload",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "(time() - prometheus_config_last_reload_success_timestamp_seconds{job=~\"${job.value}\",instance=~\"${instance.value}\"}) / 60"
+                                },
+                                "legendTemplate": "{{instance}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 84,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Successful Config Reload",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "prometheus_config_last_reload_successful{job=~\"${job.value}\",instance=~\"${instance.value}\"}"
+                                },
+                                "legendTemplate": "{{instance}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 84,
+                "height": 9,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "GC Rate / 2m",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(go_gc_duration_seconds_sum{instance=~\"${instance.value}\",job=~\"${job.value}\"}[2m])) by (instance)"
+                                },
+                                "legendTemplate": "{{instance}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 93,
+                "height": 9,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Go Memory Usage (FIXME)",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_alloc_bytes_total{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "alloc_bytes_total"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_alloc_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "allocated"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_buck_hash_sys_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "profiling bucket hash table"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_gc_sys_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "GC metadata"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_heap_alloc_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "heap in-use"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_heap_idle_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "heap idle"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_heap_inuse_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "heap in use"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_heap_released_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "heap released"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_heap_sys_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "heap system"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_mcache_inuse_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "mcache in use"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_mcache_sys_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "mcache sys"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_mspan_inuse_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "mspan in use"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_mspan_sys_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "mspan sys"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_next_gc_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "heap next gc"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_other_sys_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "other sys"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_stack_inuse_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "stack in use"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_stack_sys_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "stack sys"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(go_memstats_sys_bytes{job=~\"${job.value}\", instance=~\"${instance.value}\"})"
+                                },
+                                "legendTemplate": "sys"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 102,
+                "height": 9,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "Scrape Duration",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "prometheus_target_interval_length_seconds{instance=~\"${instance.value}\", job=~\"${job.value}\"}"
+                                },
+                                "legendTemplate": "{{quantile}} {{interval}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 8,
+                "yPos": 102,
+                "height": 9,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "Target Scrapes / 5m",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(prometheus_target_interval_length_seconds_count{job=~\"${job.value}\",instance=~\"${instance.value}\"}[5m])) by (interval)"
+                                },
+                                "legendTemplate": "{{interval}}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 16,
+                "yPos": 102,
+                "height": 9,
+                "width": 8
+            }
+        ]
+    }
+}

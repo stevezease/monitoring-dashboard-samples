@@ -1,0 +1,22 @@
+{
+    "id": "22812",
+    "results": [
+        {
+            "displayName": "Kubernetes Cluster (Prometheus)",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "Panel Cluster Health is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Deployments is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Node is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Pods is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Containers is a smaller height than the min allowed height of 2 and so the tile was skipped",
+                "Panel Jobs is a smaller height than the min allowed height of 2 and so the tile was skipped"
+            ],
+            "errors": [],
+            "outputPath": "reports/8-14-2023/22812/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-14-2023/22812/",
+    "date": "8-14-2023"
+}

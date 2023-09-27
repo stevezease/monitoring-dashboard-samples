@@ -1,0 +1,15 @@
+{
+    "id": "161310",
+    "results": [
+        {
+            "displayName": "Kubernetes Nodes",
+            "sourcePath": "./test/test.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/7-20-2023/161310/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/7-20-2023/161310/",
+    "date": "7-20-2023"
+}

@@ -1,0 +1,19 @@
+{
+    "id": "163429",
+    "results": [
+        {
+            "displayName": "Istio Service Dashboard",
+            "sourcePath": "./test/test.json",
+            "warnings": [
+                "Panel General: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Client Workloads: Collapsible groups currently are not yet supported. Charts will displayed as is",
+                "Panel Service Workloads: Collapsible groups currently are not yet supported. Charts will displayed as is"
+            ],
+            "errors": [],
+            "outputPath": "reports/8-14-2023/163429/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-14-2023/163429/",
+    "date": "8-14-2023"
+}

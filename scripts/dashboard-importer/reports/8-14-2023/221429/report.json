@@ -1,0 +1,15 @@
+{
+    "id": "221429",
+    "results": [
+        {
+            "displayName": "1. Kubernetes Deployment Statefulset Daemonset metrics",
+            "sourcePath": "./test/test.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/8-14-2023/221429/test.json"
+        }
+    ],
+    "sourcePath": "./test/test.json",
+    "outputPath": "reports/8-14-2023/221429/",
+    "date": "8-14-2023"
+}

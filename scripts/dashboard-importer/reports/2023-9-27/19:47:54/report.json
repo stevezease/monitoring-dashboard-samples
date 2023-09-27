@@ -1,0 +1,15 @@
+{
+    "id": "19:47:54",
+    "results": [
+        {
+            "displayName": "Kubernetes Cluster Overview",
+            "sourcePath": "./examples/k8s_cluster_example.json",
+            "warnings": [],
+            "errors": [],
+            "outputPath": "reports/2023-9-27/19:47:54/k8s_cluster_example.json"
+        }
+    ],
+    "sourcePath": "./examples/",
+    "outputPath": "reports/2023-9-27/19:47:54/",
+    "date": "2023-9-27"
+}

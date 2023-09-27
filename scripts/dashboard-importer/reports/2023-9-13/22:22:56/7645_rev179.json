@@ -1,0 +1,586 @@
+{
+    "displayName": "Istio Control Plane Dashboard",
+    "dashboardFilters": [],
+    "mosaicLayout": {
+        "columns": 24,
+        "tiles": [
+            {
+                "widget": {
+                    "title": "Pilot Versions",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(istio_build{component=\"pilot\"}) by (tag)"
+                                },
+                                "legendTemplate": "${labels.tag}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 1,
+                "height": 5,
+                "width": 24
+            },
+            {
+                "widget": {
+                    "title": "Memory",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "process_virtual_memory_bytes{app=\"istiod\"}"
+                                },
+                                "legendTemplate": "Virtual Memory"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "process_resident_memory_bytes{app=\"istiod\"}"
+                                },
+                                "legendTemplate": "Resident Memory"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "go_memstats_heap_sys_bytes{app=\"istiod\"}"
+                                },
+                                "legendTemplate": "heap sys"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "go_memstats_heap_alloc_bytes{app=\"istiod\"}"
+                                },
+                                "legendTemplate": "heap alloc"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "go_memstats_alloc_bytes{app=\"istiod\"}"
+                                },
+                                "legendTemplate": "Alloc"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "go_memstats_heap_inuse_bytes{app=\"istiod\"}"
+                                },
+                                "legendTemplate": "Heap in-use"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "go_memstats_stack_inuse_bytes{app=\"istiod\"}"
+                                },
+                                "legendTemplate": "Stack in-use"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "container_memory_working_set_bytes{container=~\"discovery\", pod=~\"istiod-.*|istio-pilot-.*\"}"
+                                },
+                                "legendTemplate": "Discovery (container)"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "container_memory_working_set_bytes{container=~\"istio-proxy\", pod=~\"istiod-.*|istio-pilot-.*\"}"
+                                },
+                                "legendTemplate": "Sidecar (container)"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 7,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "CPU",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(container_cpu_usage_seconds_total{container=\"discovery\", pod=~\"istiod-.*|istio-pilot-.*\"}[1m]))"
+                                },
+                                "legendTemplate": "Discovery (container)"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "irate(process_cpu_seconds_total{app=\"istiod\"}[1m])"
+                                },
+                                "legendTemplate": "Discovery (process)"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(container_cpu_usage_seconds_total{container=\"istio-proxy\", pod=~\"istiod-.*|istio-pilot-.*\"}[1m]))"
+                                },
+                                "legendTemplate": "Sidecar (container)"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 6,
+                "yPos": 7,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Disk",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "container_fs_usage_bytes{container=\"discovery\", pod=~\"istiod-.*|istio-pilot-.*\"}"
+                                },
+                                "legendTemplate": "Discovery"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "container_fs_usage_bytes{container=\"istio-proxy\", pod=~\"istiod-.*|istio-pilot-.*\"}"
+                                },
+                                "legendTemplate": "Sidecar"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 7,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Goroutines",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "go_goroutines{app=\"istiod\"}"
+                                },
+                                "legendTemplate": "Number of Goroutines"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 18,
+                "yPos": 7,
+                "height": 7,
+                "width": 6
+            },
+            {
+                "widget": {
+                    "title": "Pilot Pushes",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(pilot_xds_pushes{type=\"cds\"}[1m]))"
+                                },
+                                "legendTemplate": "Cluster"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(pilot_xds_pushes{type=\"eds\"}[1m]))"
+                                },
+                                "legendTemplate": "Endpoints"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(pilot_xds_pushes{type=\"lds\"}[1m]))"
+                                },
+                                "legendTemplate": "Listeners"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(pilot_xds_pushes{type=\"rds\"}[1m]))"
+                                },
+                                "legendTemplate": "Routes"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(pilot_xds_pushes{type=\"sds\"}[1m]))"
+                                },
+                                "legendTemplate": "Secrets"
+                            },
+                            {
+                                "plotType": "STACKED_AREA",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(pilot_xds_pushes{type=\"nds\"}[1m]))"
+                                },
+                                "legendTemplate": "Nametables"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 15,
+                "height": 8,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "Pilot Errors",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(pilot_xds_cds_reject{app=\"istiod\"}) or (absent(pilot_xds_cds_reject{app=\"istiod\"}) - 1)"
+                                },
+                                "legendTemplate": "Rejected CDS Configs"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(pilot_xds_eds_reject{app=\"istiod\"}) or (absent(pilot_xds_eds_reject{app=\"istiod\"}) - 1)"
+                                },
+                                "legendTemplate": "Rejected EDS Configs"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(pilot_xds_rds_reject{app=\"istiod\"}) or (absent(pilot_xds_rds_reject{app=\"istiod\"}) - 1)"
+                                },
+                                "legendTemplate": "Rejected RDS Configs"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(pilot_xds_lds_reject{app=\"istiod\"}) or (absent(pilot_xds_lds_reject{app=\"istiod\"}) - 1)"
+                                },
+                                "legendTemplate": "Rejected LDS Configs"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(pilot_xds_write_timeout{app=\"istiod\"}[1m]))"
+                                },
+                                "legendTemplate": "Write Timeouts"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(pilot_total_xds_internal_errors{app=\"istiod\"}[1m]))"
+                                },
+                                "legendTemplate": "Internal Errors"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(pilot_total_xds_rejects{app=\"istiod\"}[1m]))"
+                                },
+                                "legendTemplate": "Config Rejection Rate"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(pilot_xds_push_context_errors{app=\"istiod\"}[1m]))"
+                                },
+                                "legendTemplate": "Push Context Errors"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(pilot_xds_write_timeout{app=\"istiod\"}[1m]))"
+                                },
+                                "legendTemplate": "Push Timeouts"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 8,
+                "yPos": 15,
+                "height": 8,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "Proxy Push Time",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.5, sum(rate(pilot_proxy_convergence_time_bucket[1m])) by (le))"
+                                },
+                                "legendTemplate": "p50 "
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.9, sum(rate(pilot_proxy_convergence_time_bucket[1m])) by (le))"
+                                },
+                                "legendTemplate": "p90"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.99, sum(rate(pilot_proxy_convergence_time_bucket[1m])) by (le))"
+                                },
+                                "legendTemplate": "p99"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "histogram_quantile(0.999, sum(rate(pilot_proxy_convergence_time_bucket[1m])) by (le))"
+                                },
+                                "legendTemplate": "p99.9"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 16,
+                "yPos": 15,
+                "height": 8,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "Conflicts",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "pilot_conflict_inbound_listener{app=\"istiod\"}"
+                                },
+                                "legendTemplate": "Inbound Listeners"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "pilot_conflict_outbound_listener_http_over_current_tcp{app=\"istiod\"}"
+                                },
+                                "legendTemplate": "Outbound Listeners (http over current tcp)"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "pilot_conflict_outbound_listener_tcp_over_current_tcp{app=\"istiod\"}"
+                                },
+                                "legendTemplate": "Outbound Listeners (tcp over current tcp)"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "pilot_conflict_outbound_listener_tcp_over_current_http{app=\"istiod\"}"
+                                },
+                                "legendTemplate": "Outbound Listeners (tcp over current http)"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 23,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "ADS Monitoring",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "avg(pilot_virt_services{app=\"istiod\"})"
+                                },
+                                "legendTemplate": "Virtual Services"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "avg(pilot_services{app=\"istiod\"})"
+                                },
+                                "legendTemplate": "Services"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(pilot_xds{app=\"istiod\"}) by (pod)"
+                                },
+                                "legendTemplate": "Connected Endpoints ${labels.pod}"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 23,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Envoy Details",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(envoy_cluster_upstream_cx_total{cluster_name=\"xds-grpc\"}[1m]))"
+                                },
+                                "legendTemplate": "XDS Connections"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(irate(envoy_cluster_upstream_cx_connect_fail{cluster_name=\"xds-grpc\"}[1m]))"
+                                },
+                                "legendTemplate": "XDS Connection Failures"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(increase(envoy_server_hot_restart_epoch[1m]))"
+                                },
+                                "legendTemplate": "Envoy Restarts"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 32,
+                "height": 8,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "XDS Active Connections",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(envoy_cluster_upstream_cx_active{cluster_name=\"xds-grpc\"})"
+                                },
+                                "legendTemplate": "XDS Active Connections"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 8,
+                "yPos": 32,
+                "height": 8,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "XDS Requests Size",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "max(rate(envoy_cluster_upstream_cx_rx_bytes_total{cluster_name=\"xds-grpc\"}[1m]))"
+                                },
+                                "legendTemplate": "XDS Response Bytes Max"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "quantile(0.5, rate(envoy_cluster_upstream_cx_rx_bytes_total{cluster_name=\"xds-grpc\"}[1m]))"
+                                },
+                                "legendTemplate": "XDS Response Bytes Average"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "max(rate(envoy_cluster_upstream_cx_tx_bytes_total{cluster_name=\"xds-grpc\"}[1m]))"
+                                },
+                                "legendTemplate": "XDS Request Bytes Max"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "quantile(.5, rate(envoy_cluster_upstream_cx_tx_bytes_total{cluster_name=\"xds-grpc\"}[1m]))"
+                                },
+                                "legendTemplate": "XDS Request Bytes Average"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 16,
+                "yPos": 32,
+                "height": 8,
+                "width": 8
+            },
+            {
+                "widget": {
+                    "title": "Configuration Validation",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(galley_validation_passed[1m]))"
+                                },
+                                "legendTemplate": "Validations (Success)"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(galley_validation_failed[1m]))"
+                                },
+                                "legendTemplate": "Validation (Failure)"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 0,
+                "yPos": 41,
+                "height": 8,
+                "width": 12
+            },
+            {
+                "widget": {
+                    "title": "Sidecar Injection",
+                    "xyChart": {
+                        "dataSets": [
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(sidecar_injection_success_total[1m]))"
+                                },
+                                "legendTemplate": "Injections (Success)"
+                            },
+                            {
+                                "plotType": "LINE",
+                                "timeSeriesQuery": {
+                                    "prometheusQuery": "sum(rate(sidecar_injection_failure_total[1m]))"
+                                },
+                                "legendTemplate": "Injections (Failure)"
+                            }
+                        ]
+                    }
+                },
+                "xPos": 12,
+                "yPos": 41,
+                "height": 8,
+                "width": 12
+            }
+        ]
+    },
+    "labels": {
+        "goog-imported-via-script": "",
+        "cloud-ops-grafana-importer": ""
+    }
+}
